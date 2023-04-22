@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Meta from '../components/Meta'
 import BreadCrumb from '../components/BreadCrumb'
 import ProductCard from '../components/ProductCard'
@@ -8,11 +8,52 @@ import Color from "../components/Color"
 import { TbGitCompare } from "react-icons/tb"
 import { AiOutlineHeart } from "react-icons/ai"
 import Container from '../components/Container'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAProduct } from '../features/products/productSlice'
+import { toast } from 'react-toastify'
+import { addProdToCart, getUserCart } from "../features/user/userSlice"
+
 const SingleProduct = () => {
-  const props = { width: 400, height: 600, zoomWidth: "600", img: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" }
+  const [color, setColor] = useState(null)
+  const [quantity, setQuantity] = useState(1)
+  const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const location = useLocation()
+  const navigate = useNavigate()
+  const getProductId = location.pathname.split("/")[2]
+  const dispatch = useDispatch();
+  const ProductState = useSelector(state => state?.product?.singleproduct)
+  const productsState = useSelector(state => state?.product?.product)
+  const cartState = useSelector(state => state?.auth?.cartProducts)
+  useEffect(() => {
+    dispatch(getAProduct(getProductId))
+    dispatch(getUserCart())
+  }, [])
+  useEffect(() => {
+    for (let index = 0; index < cartState?.length; index++) {
+      if (getProductId === cartState[index]?.productId?._id) {
+        setAlreadyAdded(true)
+      }
+    }
+  })
+  const uploadCart = () => {
+    if (color === null) {
+      toast.error("Please Choose A Color")
+      return false
+    } else {
+      dispatch(addProdToCart({ productId: ProductState?._id, quantity, color, price: ProductState?.price }))
+      navigate("/cart")
+    }
+  }
+
+
+
+  const props = {
+    width: 400, height: 600, zoomWidth: "600",
+    img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "ok"
+  }
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
-    console.log("text", text);
     var textField = document.createElement("textarea");
     textField.innerText = text;
     document.body.appendChild(textField);
@@ -20,6 +61,19 @@ const SingleProduct = () => {
     document.execCommand("copy");
     textField.remove();
   }
+  const closeModal = () => { };
+  const [popularProduct, setPopularProduct] = useState([])
+  useEffect(() => {
+    let data = []
+    for (let index = 0; index < productsState.length; index++) {
+      const element = productsState[index];
+      if (element.tags === "popular") {
+        data.push(element)
+      }
+      setPopularProduct(data)
+    }
+  }, [ProductState])
+  console.log(popularProduct)
   return (
     <>
       <Meta title={"Product Name"} />
@@ -33,25 +87,29 @@ const SingleProduct = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              <div><img src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" alt="" className='img-fluid' /></div>
-              <div><img src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" alt="" className='img-fluid' /></div>
-              <div><img src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" alt="" className='img-fluid' /></div>
-              <div><img src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg" alt="" className='img-fluid' /></div>
+              {ProductState?.images.map((item, index) => {
+                return <div>
+                  <img src={item?.url}
+                    alt="" className='img-fluid' />
+                </div>
+              })}
+
+
             </div>
           </div>
           <div className="col-6">
             <div className="main-product-details">
               <div className='border-bottom'>
                 <h3 className='title'>
-                  Kids Headpones Bulk 10 Pack Multi Colored For Students
+                  {ProductState?.title}
                 </h3>
               </div>
               <div className="border-bottom py-3">
                 <p className="price">
-                  $100
+                  Rs.{ProductState?.price}
                 </p>
                 <div className="d-flex align-items-center gap-10">
-                  <ReactStars count={5} size={24} activeColor='#ffd700' value={4} edit={false} />
+                  <ReactStars count={5} size={24} activeColor='#ffd700' value={ProductState?.totalrating} edit={false} />
                   <p className='mb-0 t-review'>(2 Reviews)</p>
                 </div>
                 <a href="#review" className='review-btn'>
@@ -69,11 +127,11 @@ const SingleProduct = () => {
                 </div>
                 <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Category :</h3>
-                  <p className='product-data'>Watch</p>
+                  <p className='product-data'>{ProductState?.category}</p>
                 </div>
                 <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Tags :</h3>
-                  <p className='product-data'>Shirt</p>
+                  <p className='product-data'>{ProductState?.tags}</p>
                 </div>
                 <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Availability :</h3>
@@ -99,18 +157,36 @@ const SingleProduct = () => {
                     </span>
                   </div>
                 </div>
-                <div className='d-flex flex-column gap-10 mt-2 mb-3'>
-                  <h3 className='product-heading'>Color :</h3>
-                  <Color />
-                </div>
+                {
+                  alreadyAdded === false && <>
+                    <div className='d-flex flex-column gap-10 mt-2 mb-3'>
+                      <h3 className='product-heading'>Color :</h3>
+                      <Color setColor={setColor} colorData={ProductState?.color} />
+                    </div>
+                  </>
+                }
                 <div className='d-flex flex-row gap-15 mt-2 mb-3 align-items-center'>
-                  <h3 className='product-heading'>Quantity :</h3>
-                  <div className=''>
-                    <input type="number" style={{ width: "70px" }} min="1" max="10" name='' id='' className='form-control' />
-                  </div>
-                  <div className='d-flex align-items-center gap-30 ms-5'>
-                    <button className='button border-0' type='submit'>Add To Cart</button>
-                    <button className='button signup'>Buy It Now</button>
+                  {alreadyAdded === false && <>
+                    <h3 className='product-heading'>Quantity:</h3>
+                    <div className=''>
+                      <input type="number" name="" min={1} max={10} className='form-control'
+                        style={{ width: "70px" }} id="" onChange={(e) => setQuantity(e.target.value)}
+                        value={quantity} />
+                    </div>
+                  </>
+                  }
+                  <div className={alreadyAdded ? "ms-0" : "ms-5" + 'd-flex align-items-center gap-30 ms-5'}>
+                    <button
+                      className='button border-0'
+                      //  data-bs-toggle="modal"
+                      // data-bs-target="#staticBackDrop"
+                      type='button'
+                      onClick={() => {
+                        alreadyAdded ? navigate('/cart') : uploadCart()
+                      }}>
+                      {alreadyAdded ? "Go to Cart" : "Add to Cart"}
+                    </button>
+                    {/* <button className='button signup'>Buy It Now</button> */}
 
                   </div>
                 </div>
@@ -134,7 +210,9 @@ const SingleProduct = () => {
                 <div className='d-flex align-items-center gap-10 my-3'>
                   <h3 className='product-heading'>Product Link :</h3>
                   <a href="javascript:void(0);" onClick={() => {
-                    copyToClipboard("https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg");
+                    copyToClipboard(
+                      window.location.href
+                    );
                   }}>
                     Copy Product Link                    </a>
                 </div>
@@ -142,19 +220,21 @@ const SingleProduct = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container >
       <Container class1="description-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>
             <div className='bg-white p-3'>
-              <p >
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolore error iste eius minus itaque recusandae sint at? Blanditiis, iste culpa.
+              <p dangerouslySetInnerHTML={{
+                __html: ProductState?.description
+              }} >
+
               </p>
             </div>
           </div>
         </div>
-      </Container>
+      </Container >
       <Container class1="reviews-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -215,7 +295,7 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard data={popularProduct} />
         </div>
       </Container>
     </>

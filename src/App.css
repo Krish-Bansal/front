@@ -8,8 +8,34 @@
   box-sizing: border-box;
 }
 
+img {
+  -webkit-user-drag: none;
+  /* Disable dragging for webkit browsers */
+  -khtml-user-drag: none;
+  /* Disable dragging for khtml browsers */
+  -moz-user-drag: none;
+  /* Disable dragging for mozilla browsers */
+  -o-user-drag: none;
+  /* Disable dragging for opera browsers */
+  user-drag: none;
+  /* Disable dragging for all browsers */
+}
+
 body {
   font-family: "Twentieth Century", sans-serif;
+  /* -webkit-user-select: none; */
+  /* Disable selection for webkit browsers */
+  /* -moz-user-select: none; */
+  /* Disable selection for mozilla browsers */
+  /* -ms-user-select: none; */
+  /* Disable selection for IE */
+  /* user-select: none; */
+  /* Disable selection for all browsers */
+}
+
+.error {
+  color: red;
+  font-size: 12px
 }
 
 :root {
@@ -57,6 +83,64 @@ a {
   gap: 30px;
 }
 
+/* menu */
+.menu-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: #111;
+  z-index: 9999;
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.menu-sidebar .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  background-color: #222;
+}
+
+.menu-sidebar .header h3 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.menu-sidebar .header .close-btn {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 32px;
+  cursor: pointer;
+}
+
+.menu-sidebar nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-sidebar nav li {
+  padding: 15px;
+}
+
+.menu-sidebar nav a {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.menu-sidebar.show {
+  width: 300px;
+}
+
+
 .button {
   background-color: var(--color-232f3e);
   color: white;
@@ -75,10 +159,14 @@ a {
 .header-top-strip {
   border-bottom: 1px solid var(--color-3b4149);
   border-color: var(--color-131921);
+  text-transform: uppercase;
+  font-size: 15px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 .header-upper {
-  border-bottom: 1px solid
+  border-bottom: 1px solid;
+
 }
 
 .header-bottom {
@@ -134,26 +222,59 @@ a {
 
 
 /* Footer Starts Here */
-footer {
+.footer-bottom {
   background-color: var(--color-ffffff);
+  font-size: 13px;
 }
 
-footer:not(:first-child) {
+.footer-middle {
+  margin-top: 10px;
+  font-size: 13.6px;
+}
 
-  border-top: 1px solid var(--color-131921);
+.footer-middle h4 {
+  font-size: 14px;
+  color: inherit;
+  font-weight: inherit;
+  text-transform: uppercase;
+  letter-spacing: .2em;
 
 }
 
-.footer-top-data {
-  font-family: Futura, sans-serif
+.footer-middle .underline {
+  text-decoration: none;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.3);
+  padding-bottom: 0.1;
+  margin-bottom: 0.1;
 }
 
-footer .input-group-text {
-  background-color: var(--color-febd69);
-  padding: 8px 17px;
+
+.footer-middle .underline2 {
+  border-bottom: solid 2px rgba(0, 0, 0, 0.9);
+  padding-bottom: 0.1;
+  margin-bottom: 0.1;
+}
+
+.footer-middle {
+
+  border-top: solid 1px rgba(0, 0, 0, 0.1);
+
+}
+
+.footer-middle ::placeholder {
+  font-size: 13.6px;
+  /* change the font size */
+  font-family: inherit;
+  /* change the font family */
+  font-weight: normal;
+  /* change the font weight, if needed */
+  color: black;
+  /* change the color, if needed */
 }
 
 /* Footer Ends Here */
+
+
 
 /* Home Page Starts Here*/
 .main-banner-content {
@@ -167,7 +288,7 @@ footer .input-group-text {
   line-height: 24px;
   color: var(--color-bf4800);
   margin: 0 0 12px;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
