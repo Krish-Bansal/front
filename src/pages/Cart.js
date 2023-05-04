@@ -9,6 +9,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { deleteCartProduct, getUserCart, updateCartProduct } from '../features/user/userSlice'
 
 const Cart = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const dispatch = useDispatch();
   const [ProductUpdateDetail, setProductUpdateDetail] = useState(null)
   const [totalAmount, setTotalAmount] = useState(null)
@@ -47,6 +56,19 @@ const Cart = () => {
       <BreadCrumb title="Cart" />
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
+          {
+            userCartState && userCartState.length === 0 &&
+            <div className='flex justify-center align-items-center'>
+              <div>
+                {/* <img src={nowish} alt="test" width={320} height={320} /> */}
+              </div>
+              <div className='space-y-3 no-wish-contents'>
+                <h2>Your Wishlist is empty!</h2>
+                <h3>seems like you don't have wishes here.<br />Make a wish!</h3>
+                <Link to="/"><button>Continue to Shopping</button></Link>
+              </div>
+            </div>
+          }
           <div className="col-12">
             <div className='cart-header d-flex justify-content-between align-items-center py-3'>
               <h4 className='cart-col-1'>Product</h4>

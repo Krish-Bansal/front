@@ -4,7 +4,9 @@ import Container from '../components/Container'
 // import BreadCrumb from '../components/BreadCrumb'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUserProductWishlist } from '../features/user/userSlice'
+import nowish from "../assests1/no-results-found.png"
 import { addToWishlist } from '../features/products/productSlice'
+import { Link } from "react-router-dom"
 
 const Wishlist = () => {
   const dispatch = useDispatch();
@@ -30,7 +32,25 @@ const Wishlist = () => {
        py-5">
         <div className="row">
           {
-            wishlistState && wishlistState.length === 0 && < div className='text-center text-lg'> You haven't wishlisted any products</div>
+            wishlistState && wishlistState.length === 0 &&
+            <div className='flex justify-center align-items-center'>
+              <div>
+                <img src={nowish} alt="test" width={320} height={320} />
+              </div>
+              <div className='space-y-3 no-wish-contents'>
+                <h2>Your Wishlist is empty!</h2>
+                <h3>seems like you don't have wishes here.<br />Make a wish!</h3>
+                <Link to="/"><button>Continue to Shopping</button></Link>
+              </div>
+            </div>
+
+
+
+            // < div className='text-center text-lg'>
+            //   div
+            //   <img src="../assests1/no-results-found.png" alt="Picture" />
+            //   You haven't wishlisted any products
+            // </div>
           }
           {
             wishlistState && wishlistState?.map((item, index) => {

@@ -5,6 +5,8 @@ import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import * as yup from "yup"
+import { createAnOrder } from '../features/user/userSlice'
+import { redirect } from 'react-router-dom'
 
 
 const shippingSchema = yup.object({
@@ -17,27 +19,21 @@ const shippingSchema = yup.object({
   pincode: yup.string().required("Pincode is Required"),
   other: yup.string().required("Other Details Are Required"),
 })
-
 const Checkout = (props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const Shippingcost = 100
   const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
-
   const [totalAmount, setTotalAmount] = useState(null)
   const [shippingInfo, setShippingInfo] = useState(null);
   const [cartProductState, setCartProductState] = useState([])
-
-
-
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
       sum = sum + (Number(cartState[index].quantity) * cartState[index].price)
       setTotalAmount(sum)
     }
-
   }, [cartState])
   const formik = useFormik({
     initialValues: {
@@ -52,10 +48,12 @@ const Checkout = (props) => {
     },
     validationSchema: shippingSchema,
     onSubmit: (values) => {
-      setShippingInfo(values)
-      console.log(shippingInfo)
+      setShippingInfo(values);
+      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: totalAmount, orderItems: cartProductState, shippingInfo: shippingInfo }))
     }
   })
+
+
   useEffect(() => {
     let items = []
     for (let index = 0; index < cartState?.length; index++) {
@@ -63,7 +61,6 @@ const Checkout = (props) => {
     }
     setCartProductState(items)
   }, [])
-  console.log(cartProductState)
   return (
     <>
       <Container class1="checkout-wrapper py-5 home-wrapper-2">

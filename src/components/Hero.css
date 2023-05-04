@@ -1,0 +1,110 @@
+.hero {
+  background-color: var(--overlay);
+  color: #fdfdfd;
+  height: 93.9vh;
+  width: 100%;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.hero::before {
+  content: '';
+  /* background: no-repeat center center/cover; */
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* z-index: 0; */
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 8%;
+  max-width: 100px;
+  /* adjust this value as needed */
+  height: 100%;
+  top: 0;
+}
+
+
+.hero .content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1100px;
+  margin: auto;
+  padding: 1rem;
+  opacity: 99%;
+}
+
+.hero .content p:first-child {
+  font-style: italic;
+  font-size: .9rem;
+}
+
+.hero .content p:nth-child(2) {
+  font-size: 1.9rem;
+}
+
+.hero .content p:nth-child(3) {
+  font-size: 5rem;
+  font-weight: 700;
+}
+
+
+.hero .content p:nth-child(4) {
+  font-size: 2.2rem;
+  font-style: italic;
+}
+
+.hero .button {
+  margin: 1rem 0;
+  width: 300px;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  color: #333;
+}
+
+.hero .button:hover {
+  background-color: var(--secondary-dark);
+  border: 1px solid var(--secondary-dark);
+}
+
+@media screen and (max-width:940px) {
+  .hero .content p:nth-child(3) {
+    font-size: 2.6rem;
+  }
+
+  .hero .content p:nth-child(4) {
+    font-size: 1.6rem;
+  }
+}
+
+
+
+/* trasition  */
+/* .custom-carousel .carousel-item {
+  opacity: 0;
+  transition: opactiy 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.custom-carousel .carousel-item.active {
+  opacity: 50;
+} */
+
+
+
+
+/* trasition  */

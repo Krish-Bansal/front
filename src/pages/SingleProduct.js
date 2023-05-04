@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAProduct } from '../features/products/productSlice'
 import { toast } from 'react-toastify'
 import { addProdToCart, getUserCart } from "../features/user/userSlice"
+import { addToWishlist } from '../features/products/productSlice'
 
 const SingleProduct = () => {
   const [color, setColor] = useState(null)
@@ -49,8 +50,7 @@ const SingleProduct = () => {
 
 
   const props = {
-    width: 400, height: 600, zoomWidth: "600",
-    img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "ok"
+    img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
   }
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
@@ -73,17 +73,22 @@ const SingleProduct = () => {
       setPopularProduct(data)
     }
   }, [ProductState])
-  console.log(popularProduct)
+
+  const addToWish = (id) => {
+    dispatch(addToWishlist(id));
+    console.log(id)
+  };
+  console.log(ProductState?._id)
   return (
     <>
       <Meta title={"Product Name"} />
-      <BreadCrumb title="Product Name" />
+      {/* <BreadCrumb title="Product Name" /> */}
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
-          <div className="col-6">
+          <div className="col-7">
             <div className="main-product-image">
-              <div>
-                <ReactImageZoom {...props} />
+              <div className=''>
+                <img src={ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"} alt="" />
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
@@ -97,9 +102,9 @@ const SingleProduct = () => {
 
             </div>
           </div>
-          <div className="col-6">
+          <div className="col-5">
             <div className="main-product-details">
-              <div className='border-bottom'>
+              <div className=''>
                 <h3 className='title'>
                   {ProductState?.title}
                 </h3>
@@ -115,15 +120,12 @@ const SingleProduct = () => {
                 <a href="#review" className='review-btn'>
                   Write a Review
                 </a>
+                <p className='shipping'>Shipping calculated at checkout</p>
               </div>
               <div className="py-3">
                 <div className='d-flex align-items-center gap-10 my-2'>
-                  <h3 className='product-heading'>Type :</h3>
-                  <p className='product-data'>Shirt</p>
-                </div>
-                <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Title :</h3>
-                  <p className='product-data'>Shirt</p>
+                  <p className='product-data'>{ProductState?.title}</p>
                 </div>
                 <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Category :</h3>
@@ -133,10 +135,14 @@ const SingleProduct = () => {
                   <h3 className='product-heading'>Tags :</h3>
                   <p className='product-data'>{ProductState?.tags}</p>
                 </div>
-                <div className='d-flex align-items-center gap-10 my-2'>
-                  <h3 className='product-heading'>Availability :</h3>
-                  <p className='product-data'>In Stock</p>
-                </div>
+                {
+                  alreadyAdded === false && <>
+                    <div className='d-flex gap-10'>
+                      <h3 className='product-heading'>Color :</h3>
+                      <Color setColor={setColor} colorData={ProductState?.color} />
+                    </div>
+                  </>
+                }
                 <div className='d-flex flex-column gap-10 mt-2 mb-3'>
                   <h3 className='product-heading'>Size :</h3>
                   <div className='d-flex flex-wrap gap-15'>
@@ -157,14 +163,7 @@ const SingleProduct = () => {
                     </span>
                   </div>
                 </div>
-                {
-                  alreadyAdded === false && <>
-                    <div className='d-flex flex-column gap-10 mt-2 mb-3'>
-                      <h3 className='product-heading'>Color :</h3>
-                      <Color setColor={setColor} colorData={ProductState?.color} />
-                    </div>
-                  </>
-                }
+
                 <div className='d-flex flex-row gap-15 mt-2 mb-3 align-items-center'>
                   {alreadyAdded === false && <>
                     <h3 className='product-heading'>Quantity:</h3>
@@ -178,8 +177,6 @@ const SingleProduct = () => {
                   <div className={alreadyAdded ? "ms-0" : "ms-5" + 'd-flex align-items-center gap-30 ms-5'}>
                     <button
                       className='button border-0'
-                      //  data-bs-toggle="modal"
-                      // data-bs-target="#staticBackDrop"
                       type='button'
                       onClick={() => {
                         alreadyAdded ? navigate('/cart') : uploadCart()
@@ -193,7 +190,9 @@ const SingleProduct = () => {
                 <div className="d-flex align-items-center gap-15">
                   <div className="">
                     <a href="" className='d-flex flex-row'>
-                      <AiOutlineHeart className='fs-5 me-2' />Add to Wishlist
+                      <AiOutlineHeart className='fs-5 me-2'
+                        onClick={(e) => { addToWish(ProductState._id) }}
+                      />Add to Wishlist
                     </a>
                   </div>
                   <div>
@@ -225,7 +224,7 @@ const SingleProduct = () => {
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>
-            <div className='bg-white p-3'>
+            <div className='bg-white p-3 area'>
               <p dangerouslySetInnerHTML={{
                 __html: ProductState?.description
               }} >
@@ -291,7 +290,7 @@ const SingleProduct = () => {
       <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Our Popular Products</h3>
+            <h3 className="section-heading uppercase">You May Also Like</h3>
           </div>
         </div>
         <div className="row">

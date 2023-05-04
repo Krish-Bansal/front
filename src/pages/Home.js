@@ -12,7 +12,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import wish from "../images/wish.svg"
 import addcart from "../images/add-cart.svg"
 import view from "../images/view.svg"
-import tab2 from "../images/tab2.jpg"
 import { addToWishlist } from '../features/products/productSlice'
 import { getUserCart } from '../features/user/userSlice'
 
@@ -35,7 +34,7 @@ const Home = () => {
   return (
     <>
       <Meta title={"Defy Lifestyle"} />
-      <Container class1="home-wrapper-1 py-5">
+      {/* <Container class1="home-wrapper-1 py-5">
         <div className="row">
           <div className="col-6">
             <div className="main-banner position-relative ">
@@ -87,8 +86,8 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
-      <Container class1="home-wrapper-2 py-5">
+      </Container> */}
+      {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="services d-flex align-items-center justify-content-between
@@ -113,7 +112,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
       {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
@@ -190,36 +189,39 @@ const Home = () => {
       <Container class1="featured-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Featured Collection</h3>
+            <h3 className="section-heading uppercase">Featured Collection</h3>
           </div>
           {productState && productState?.map((item, index) => {
             if (item.tags === "featured") {
               return (
                 <div
                   key={index}
-                  className='col-3'>
+                  className='col-3' onClick={() => {
+                    navigate("/product/" + item?._id);
+                    window.scrollTo(0, 0);
+                  }}>
                   <div
                     className="product-card position-relative">
-                    <div className="wishlist-icon absolute">
+                    {/* <div className="wishlist-icon absolute">
                       <button className='border-0 bg-transparent' onClick={(e) => { addToWish(item?._id) }}>
                         <img src={wish} alt="wishlist" />
                       </button>
-                    </div>
+                    </div> */}
                     <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={200} />
-                      <img src={tab2} className='img-fluid' alt="product image" />
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
 
                     </div>
                     <div className="product-details">
                       <h5 className="product-title">
                         {item?.title}
                       </h5>
-                      <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} />
+                      {/* <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} /> */}
 
 
                       <p className="price">Rs.{item?.price}</p>
                     </div>
-                    <div className="action-bar absolute">
+                    {/* <div className="action-bar absolute">
                       <div className="flex flex-col gap-15">
                         <button className='border-0 bg-transparent'>
                           <img src={view}
@@ -231,7 +233,7 @@ const Home = () => {
                         </button>
 
                       </div>
-                    </div>
+                    </div> */}
                   </div >
                 </div >
               )
@@ -242,7 +244,7 @@ const Home = () => {
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">
+            <h3 className="section-heading uppercase">
               Special Products
             </h3>
           </div>
@@ -265,7 +267,7 @@ const Home = () => {
       <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">Our Popular Products</h3>
+            <h3 className="section-heading uppercase">Our Popular Products</h3>
           </div>
         </div>
         <div className="row">
@@ -274,34 +276,42 @@ const Home = () => {
               return (
                 <div
                   key={index}
-                  className='col-3'>
+                  className='col-3'
+                  onClick={() => {
+                    navigate("/product/" + item?._id);
+                    window.scrollTo(0, 0);
+                  }}
+
+                >
                   <div
 
                     className="product-card position-relative">
-                    <div className="wishlist-icon absolute">
+                    {/* <div className="wishlist-icon absolute">
                       <button className='border-0 bg-transparent' onClick={(e) => { addToWish(item?._id) }}>
                         <img src={wish} alt="wishlist" />
                       </button>
-                    </div>
+                    </div> */}
                     <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={160} />
-                      <img src={tab2} className='img-fluid' alt="product image" />
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
 
                     </div>
                     <div className="product-details">
                       <h5 className="product-title">
                         {item?.title}
                       </h5>
-                      <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} />
+                      {/* <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} class /> */}
 
 
                       <p className="price">Rs.{item?.price}</p>
                     </div>
-                    <div className="action-bar absolute">
+                    {/* <div className="action-bar absolute">
                       <div className="flex flex-col gap-15">
                         <button className='border-0 bg-transparent'>
                           <img src={view}
-                            alt="view" onClick={() => navigate("/product/" + item?._id)} />
+                            alt="view"
+                          //  onClick={() => navigate("/product/" + item?._id)}
+                          />
                         </button>
                         <button className='border-0 bg-transparent'>
                           <img src={addcart}
@@ -309,14 +319,14 @@ const Home = () => {
                         </button>
 
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div >
               )
             }
           })}
         </div>
-      </Container>
+      </Container >
 
 
     </>

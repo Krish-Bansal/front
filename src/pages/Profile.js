@@ -19,6 +19,15 @@ const profileSchema = yup.object({
 
 
 const Profile = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
 
   const dispatch = useDispatch();
   const userState = useSelector(state => state?.auth?.user)
@@ -35,16 +44,16 @@ const Profile = () => {
 
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      dispatch(updateProfile(values))
+      dispatch(updateProfile({ data: values, config2: config2 }))
       setEdit(true)
     }
   })
   return (
     <div>
       <BreadCrumb title="My Profile" />
-      <Container class1='cart-wrapper home-wrapper-2 py-5'>
+      <Container class1='cart-wrapper home-wrapper-2 py-5 update-profile'>
         <div className="row">
-          <div className="col-12">
+          <div className="col-12 ">
             <div className="d-flex justify-content-between align-items-center">
               <h3 className="my-3">Update Profile</h3>
               <FiEdit onClick={() => setEdit(false)} className='fs-5' />
@@ -56,14 +65,14 @@ const Profile = () => {
                 <label htmlFor="example1" className='form-label'>First Name
                 </label>
                 <CustomInput type="text" id="example1" name='firstname' placeholder="First Name" value={formik.values.firstname} onChange={formik.handleChange("firstname")}
-                  onBlur={formik.handleBlur("firstname")} disabled={edit} />
+                  onBlur={formik.handleBlur("firstname")} disabled={edit} className="py-0" />
                 <div className="error">
                   {formik.touched.firstname && formik.errors.firstname}
                 </div>
               </div>
               <div className="mb-3">
                 <label htmlFor="example2" className='form-label'>Last Name</label>
-                <CustomInput type="text" id="example2" name='lastname' placeholder="last Name" value={formik.values.lastname} onChange={formik.handleChange("lastname")}
+                <CustomInput type="text" className="py-0" id="example2" name='lastname' placeholder="last Name" value={formik.values.lastname} onChange={formik.handleChange("lastname")}
                   onBlur={formik.handleBlur("lastname")} disabled={edit} />
                 <div className="error">
                   {formik.touched.lastname && formik.errors.lastname}
@@ -72,7 +81,7 @@ const Profile = () => {
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail" className='form-label'>Email Address
                 </label>
-                <CustomInput type="email" id="exampleInputEmail" name='email' value={formik.values.email} onChange={formik.handleChange("email")}
+                <CustomInput className="py-0" type="email" id="exampleInputEmail" name='email' value={formik.values.email} onChange={formik.handleChange("email")}
                   onBlur={formik.handleBlur("lastname")} disabled={edit} />
                 <div className="error">
                   {formik.touched.email && formik.errors.email}
@@ -81,7 +90,7 @@ const Profile = () => {
               <div className="mb-3">
                 <label htmlFor="exampleInputEmail2" className='form-label'>Mobile No
                 </label>
-                <CustomInput type="number" name='mobile' id="exampleInputEmail2" value={formik.values.mobile} onChange={formik.handleChange("mobile")}
+                <CustomInput className="py-0" type="number" name='mobile' id="exampleInputEmail2" value={formik.values.mobile} onChange={formik.handleChange("mobile")}
                   onBlur={formik.handleBlur("mobile")} disabled={edit} />
                 <div className="error">
                   {formik.touched.mobile && formik.errors.mobile}

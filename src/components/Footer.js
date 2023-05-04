@@ -21,10 +21,10 @@ const Footer = () => {
             <div className="col-4">
               <h4 className='mb-3'> Contact Us</h4>
               <p>
-                <div>
-                  <span>Address:</span>
-                  <address className='mb-2'> National Business Trade Center(NBTC),Khasibazar,1<sup>st</sup> Floor,Shop No.4138,Kathmandu,Nepal </address>
-                </div>
+
+                <span>Address:</span>
+                <address className='mb-2'> National Business Trade Center(NBTC),Khasibazar,1<sup>st</sup> Floor,Shop No.4138,Kathmandu,Nepal </address>
+
 
                 <span>Call: </span><a href='tel:+9779813783811' className='mb-1 underline'> +9779813783811 </a>
                 <div>

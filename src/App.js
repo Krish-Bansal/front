@@ -1,6 +1,7 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
+import Layout2 from './components/Layout2';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -26,12 +27,20 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='login' element={
+          <Route path='login' element={<OpenRoutes><Login /></OpenRoutes>} />
+          <Route path='forgot-password' element={<ForgotPassword />} />
+          <Route path='reset-password/:token' element={<ResetPassword />} />
+          <Route path='signup' element={
             <OpenRoutes>
-              <Login />
+              <Signup />
             </OpenRoutes>} />
-          <Route path='/' element={<Layout />} >
+
+
+          <Route path='/' element={<Layout2 />} >
             <Route index element={<Home />} />
+          </Route>
+          <Route path='/' element={<Layout />} >
+            {/* <Route index element={<Home />} /> */}
             <Route path="about" element={<About />} />
             <Route path='contact' element={<Contact />} />
             <Route path='product' element={<OurStore />} />
@@ -58,7 +67,7 @@ function App() {
               <OpenRoutes>
                 <Signup />
               </OpenRoutes>} />
-            <Route path='reset-password/:token' element={<ResetPassword />} />
+
             <Route path='privacy-policy' element={<PrivacyPolicy />} />
             <Route path='refund-policy' element={<RefundPolicy />} />
             <Route path='shipping-policy' element={<ShippingPolicy />} />
