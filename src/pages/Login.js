@@ -29,11 +29,16 @@ const images = [
 const imageCount = images.length;
 
 const loginSchema = yup.object({
-  email: yup.string().email("Email Should be Valid").required("Email Address is Required"),
+  email: yup
+    .string()
+    .email("Email Should be Valid")
+    .matches(/^[^@]+@[^@]+\.[^@]+$/, "Email Should be Valid")
+    .required("Email Address is Required"),
   password: yup.string().required("Password is Required"),
 })
 
 const Login = () => {
+  const errorMessage = useSelector((state) => state.auth.errorMessagelogin);
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -56,8 +61,12 @@ const Login = () => {
   })
 
   useEffect(() => {
-    if (authState.user !== null && authState.isError === false) {
+    if (authState.user !== null && authState.isSuccess === true) {
       navigate("/")
+      // toast.info("User Logged In Successfully")
+    } else {
+      if (authState.isError === true) {
+      }
     }
   }, [authState])
 
@@ -85,7 +94,12 @@ const Login = () => {
             <div className="mt-0 px-5 w-75 py-3">
               <h1 className='text-left title text-[#260810]' style={{ fontSize: "26px" }}>SignIn</h1>
               <p className='text-left text-[#2F4F5E]'>Login to your account to continue</p>
-              <form action="" className='mt-4' onSubmit={formik.handleSubmit}>
+
+              <form action="" className='mt-2' onSubmit={formik.handleSubmit}>
+                <div>
+                  {/* Render other UI components */}
+                  {errorMessage && <p className='action-error'>{errorMessage}</p>} {/* Render the error message if it exists */}
+                </div>
                 <CustomInput type="text" name="email" label="Email Address" placeholder="Email Address" id="email" value={formik.values.email}
                   onChange={formik.handleChange("email")} />
                 <div className="error">

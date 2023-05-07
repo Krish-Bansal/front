@@ -413,8 +413,8 @@ a {
 
 .section-heading {
   text-align: center;
-  font-family: Nunito, sans-serif;
-  font-weight: 700;
+  font-family: Futura, sans-serif;
+  font-weight: 500;
   font-size: 30.6px;
   margin-bottom: 80px;
 }
@@ -423,6 +423,7 @@ a {
 .home-wrapper-2 {
   background-color: var(--color-ffffff);
 }
+
 
 
 /* home-wrapper 2 Ends Here*/
@@ -569,7 +570,68 @@ a {
   justify-content: center;
 }
 
+.single-product-size {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 14px;
+  padding-right: 14px;
+  border: 1px solid rgba(0, 0, 0, .2);
+  font-family: "Futura";
+  font-size: 14px;
+  color: #3b4149
+}
 
+.single-product-heading {
+  text-align: center;
+  font-family: "Futura", sans-serif;
+  font-size: 19px;
+  padding-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.single-product-data {
+  text-align: center;
+  padding-top: 8px;
+  color: var(--color-777777);
+  font-size: 15px;
+  font-weight: lighter;
+}
+
+/* .single-product-first-policy {
+  border-right: 1px solid rgba(0, 0, 0, .15);
+} */
+
+.single-product-second-policy {
+  border-right: 1px solid rgba(0, 0, 0, .15);
+  padding-left: 4rem;
+  padding-right: 4rem;
+  border-left: 1px solid rgba(0, 0, 0, .15);
+
+
+}
+
+.single-product-button {
+  background-color: black;
+  color: white;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  width: 100%;
+  margin-left: 2px;
+  margin-right: 2px;
+  text-transform: uppercase;
+}
+
+.single-product-button-wishlist {
+  background-color: white;
+  color: black;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  width: 100%;
+  margin-left: 2px;
+  margin-right: 2px;
+  text-transform: capitalize;
+  border: 1px solid rgba(0, 0, 0, .15)
+}
 
 
 /* ProductCard Ends Here */
@@ -581,6 +643,11 @@ a {
   border-radius: 10px;
   background-color: white;
   border: 1px solid rgba(0, 0, 0, .15)
+}
+
+.special-product-card .special-image {
+  width: 100%;
+  height: 100%
 }
 
 
@@ -783,6 +850,7 @@ a {
   line-height: 22px;
   font-weight: 500;
   color: var(--color-1c1c1b);
+  text-align: center;
 }
 
 .wishlist-card h6.price {
@@ -917,7 +985,6 @@ a {
 .main-product-image {
   width: 400;
   height: 600;
-
   padding: 20px;
   background-color: white;
   border-radius: 10px;
@@ -930,24 +997,30 @@ a {
 
 .main-product-image img {
   width: 100% !important;
-  height: 600px !important;
+  height: 100% !important;
   object-fit: cover;
 }
 
 .other-product-images {
   background-color: white;
-  padding: 20px;
+  /* padding: 20px; */
+  padding-top: 6px;
+}
 
+.selected {
+  border: 2px solid rgb(0, 0, 0, 0.7);
+  /* border: 2px solid red !important; */
+  /* Replace with your desired border style */
 }
 
 .other-product-images>div {
-  padding: 20px;
-  width: 48%;
-  border: 1px solid rgb(0, 0, 0, 0.25);
+  /* padding: 40px; */
+  width: 100%;
+  /* border: 1.8px solid rgb(0, 0, 0, 0.7); */
 
 }
 
-.main-product-image .js-image-zoom__zoomed-image {
+.main-product-image {
   left: 60px !important;
   padding: 10px;
   background-color: white;
@@ -1008,10 +1081,16 @@ a {
   color: var(--color-777777);
 }
 
+.product-data-2 {
+  font-size: 17.5px;
+  color: rgb(98, 89, 89);
+}
+
 .main-product-details a {
   font-size: 14px;
   color: var(--color-777777);
 }
+
 
 
 
@@ -1077,22 +1156,31 @@ a {
 
 
 
+
 .no-wish-contents h2 {
   font-size: 26px;
-  color: rgb(246, 4, 4, 0.8);
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
+
 }
 
 
 .no-wish-contents h3 {
   font-size: 22px;
-  color: rgb(123, 193, 253);
+  color: var(--color-777777);
+  margin-top: 2px;
+  margin-bottom: 2px;
 }
 
 
 .no-wish-contents button {
+  margin-top: 5%;
+  /* margin-bottom: 3px; */
+  text-align: center;
   font-size: 21px;
   color: white;
-  background-color: rgb(123, 193, 253);
+  background-color: rgb(246, 199, 107);
   padding-left: 13px;
   padding-right: 13px;
 
@@ -1136,3 +1224,49 @@ a {
 
 
 /* Update Profile   */
+
+
+
+/* action error     */
+
+.action-error {
+  text-align: center;
+  color: red
+}
+
+
+/* action error     */
+
+/* not found page  */
+
+
+.not-found h3 {
+  font-size: 26px;
+  text-align: center;
+  margin-top: 2px;
+  margin-bottom: 2px;
+
+}
+
+
+.not-found h2 {
+  font-size: 22px;
+  color: var(--color-777777);
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+
+.not-found button {
+  margin-top: 5px;
+  /* margin-bottom: 3px; */
+  text-align: center;
+  font-size: 21px;
+  color: white;
+  background-color: rgb(37, 37, 157);
+  padding-left: 13px;
+  padding-right: 13px;
+
+}
+
+/* not found page  */

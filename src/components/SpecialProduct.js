@@ -1,15 +1,17 @@
 import React from 'react'
 import ReactStars from 'react-rating-stars-component'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 
 const SpecialProduct = (props) => {
-  const { title, totalrating, price, sold, quantity, id } = props;
+  const { title, totalrating, price, sold, quantity, id, image } = props;
+  // const productState = useSelector((state) => state?.product?.product)
   return (
     <div className='col-6 mb-3'>
       <div className="special-product-card">
         <div className="flex justify-between">
-          <div>
-            <img src="images/watch.jpg" alt="watch" />
+          <div className='special-image'>
+            <img src={image} alt="watch" className='img-fluid' />
           </div>
           <div className='special-product-content'>
             <h6 className="title">

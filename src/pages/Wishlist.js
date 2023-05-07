@@ -9,6 +9,15 @@ import { addToWishlist } from '../features/products/productSlice'
 import { Link } from "react-router-dom"
 
 const Wishlist = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const dispatch = useDispatch();
   useEffect(() => {
     getWishlistFromDb();
@@ -20,7 +29,7 @@ const Wishlist = () => {
   const removeFromWishlist = (id) => {
     dispatch(addToWishlist(id));
     setTimeout(() => {
-      dispatch(getUserProductWishlist())
+      dispatch(getUserProductWishlist(config2))
     }, 300)
   }
 
@@ -57,7 +66,10 @@ const Wishlist = () => {
               return (
                 <div className="col-3" key={index}>
                   <div className="wishlist-card position-relative">
-                    <img onClick={() => { removeFromWishlist(item?._id) }} src="images/cross.svg" alt="cross" className='position-absolute cross img-fluid' />
+                    <img onClick={() => {
+                      removeFromWishlist(item?._id);
+                      getUserProductWishlist(config2)
+                    }} src="images/cross.svg" alt="cross" className='position-absolute cross img-fluid' />
                     <div className="wishlist-card-image bg-white">
                       <img src={item?.images[0].url ? item?.images[0].url : "images/watch.jpg"} className='img-fluid  d-block mx-auto' alt="watch" width={160} />
                     </div>

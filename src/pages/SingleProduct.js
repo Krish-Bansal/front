@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Meta from '../components/Meta'
-import BreadCrumb from '../components/BreadCrumb'
 import ProductCard from '../components/ProductCard'
 import ReactStars from 'react-rating-stars-component'
-import ReactImageZoom from "react-image-zoom"
 import Color from "../components/Color"
-import { TbGitCompare } from "react-icons/tb"
-import { AiOutlineHeart } from "react-icons/ai"
 import Container from '../components/Container'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -14,8 +10,29 @@ import { getAProduct } from '../features/products/productSlice'
 import { toast } from 'react-toastify'
 import { addProdToCart, getUserCart } from "../features/user/userSlice"
 import { addToWishlist } from '../features/products/productSlice'
+import DOMPurify from 'dompurify';
+
+
 
 const SingleProduct = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
+
+
+  const descriptionRef = useRef(null);
+  useEffect(() => {
+    if (descriptionRef.current) {
+      const description = descriptionRef.current.innerHTML;
+      descriptionRef.current.innerHTML = DOMPurify.sanitize(description);
+    }
+  }, []);
   const [color, setColor] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [alreadyAdded, setAlreadyAdded] = useState(false);
@@ -28,7 +45,7 @@ const SingleProduct = () => {
   const cartState = useSelector(state => state?.auth?.cartProducts)
   useEffect(() => {
     dispatch(getAProduct(getProductId))
-    dispatch(getUserCart())
+    dispatch(getUserCart(config2))
   }, [])
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
@@ -44,14 +61,21 @@ const SingleProduct = () => {
     } else {
       dispatch(addProdToCart({ productId: ProductState?._id, quantity, color, price: ProductState?.price }))
       navigate("/cart")
+      dispatch(getUserCart(config2))
     }
   }
 
 
-
-  const props = {
-    img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
-  }
+  const [selectedImage, setSelectedImage] = useState('');
+  useEffect(() => {
+    setSelectedImage(ProductState?.images[0]?.url || '');
+  }, [ProductState]);
+  const handleImageClick = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+  // const props = {
+  //   img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
+  // }
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
@@ -76,31 +100,33 @@ const SingleProduct = () => {
 
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
-    console.log(id)
   };
-  console.log(ProductState?._id)
   return (
     <>
       <Meta title={"Product Name"} />
       {/* <BreadCrumb title="Product Name" /> */}
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
-          <div className="col-7">
+          <div className="col-1">
+            <div className="other-product-images flex flex-col gap-10">
+              {ProductState?.images.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleImageClick(item?.url)}
+                  className={`image-container ${item?.url === selectedImage ? 'selected' : ''}`}
+                >
+                  <img src={item?.url} alt="" className='img-fluid' />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-6">
             <div className="main-product-image">
               <div className=''>
-                <img src={ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"} alt="" />
+                <img src={selectedImage || "Main Product Image"} alt="" />
               </div>
             </div>
-            <div className="other-product-images d-flex flex-wrap gap-15">
-              {ProductState?.images.map((item, index) => {
-                return <div>
-                  <img src={item?.url}
-                    alt="" className='img-fluid' />
-                </div>
-              })}
 
-
-            </div>
           </div>
           <div className="col-5">
             <div className="main-product-details">
@@ -133,7 +159,7 @@ const SingleProduct = () => {
                 </div>
                 <div className='d-flex align-items-center gap-10 my-2'>
                   <h3 className='product-heading'>Tags :</h3>
-                  <p className='product-data'>{ProductState?.tags}</p>
+                  <p className='product-data capitalize'>{ProductState?.tags}</p>
                 </div>
                 {
                   alreadyAdded === false && <>
@@ -145,26 +171,26 @@ const SingleProduct = () => {
                 }
                 <div className='d-flex flex-column gap-10 mt-2 mb-3'>
                   <h3 className='product-heading'>Size :</h3>
-                  <div className='d-flex flex-wrap gap-15'>
-                    <span className="badge border-1 bg-white text-dark border-secondary">
+                  <div className='d-flex flex-wrap gap-2'>
+                    <button className="single-product-size">
                       S
-                    </span>
-                    <span className="badge border-1 bg-white text-dark border-secondary">
+                    </button>
+                    <button className="single-product-size">
                       M
-                    </span>
-                    <span className="badge border-1 bg-white text-dark border-secondary">
+                    </button>
+                    <button className="single-product-size">
                       L
-                    </span>
-                    <span className="badge border-1 bg-white text-dark border-secondary">
+                    </button>
+                    <button className="single-product-size">
                       XL
-                    </span>
-                    <span className="badge border-1 bg-white text-dark border-secondary">
+                    </button>
+                    <button className="single-product-size">
                       XXL
-                    </span>
+                    </button>
                   </div>
                 </div>
 
-                <div className='d-flex flex-row gap-15 mt-2 mb-3 align-items-center'>
+                <div className='d-flex flex-column gap-15 mt-2 mb-2 '>
                   {alreadyAdded === false && <>
                     <h3 className='product-heading'>Quantity:</h3>
                     <div className=''>
@@ -172,11 +198,21 @@ const SingleProduct = () => {
                         style={{ width: "70px" }} id="" onChange={(e) => setQuantity(e.target.value)}
                         value={quantity} />
                     </div>
+
+                    <div className='d-flex align-items-center gap-10'>
+                      <h3 className='product-heading'>Product Link :</h3>
+                      <a href="javascript:void(0);" onClick={() => {
+                        copyToClipboard(
+                          window.location.href
+                        );
+                      }}>
+                        Copy Product Link                    </a>
+                    </div>
                   </>
                   }
-                  <div className={alreadyAdded ? "ms-0" : "ms-5" + 'd-flex align-items-center gap-30 ms-5'}>
+                  <div className={alreadyAdded ? "ms-0" : "" + 'd-flex align-items-center gap-30 '}>
                     <button
-                      className='button border-0'
+                      className='single-product-button'
                       type='button'
                       onClick={() => {
                         alreadyAdded ? navigate('/cart') : uploadCart()
@@ -187,49 +223,52 @@ const SingleProduct = () => {
 
                   </div>
                 </div>
-                <div className="d-flex align-items-center gap-15">
-                  <div className="">
-                    <a href="" className='d-flex flex-row'>
-                      <AiOutlineHeart className='fs-5 me-2'
-                        onClick={(e) => { addToWish(ProductState._id) }}
-                      />Add to Wishlist
-                    </a>
-                  </div>
-                  <div>
-                    <a href="" className='d-flex flex-row'> <TbGitCompare className='fs-5 me-2' />Add to Compare</a>
-                  </div>
+                {/* <div className="d-flex align-items-center gap-10"> */}
+                <div className="flex align-middle">
+                  <button className='single-product-button-wishlist'
+                    onClick={(e) => { addToWish(ProductState?._id) }}
+                  >
+                    Add to Wishlist
+                  </button>
                 </div>
+                {/* </div> */}
                 <div className='d-flex gap-10 flex-column my-3'>
                   <h3 className='product-heading'>Shipping & Returns :</h3>
                   <p className='product-data'>Free Shipping  and Returns Available on all orders !
                     <br />
                     We Ship all domestic Orders Within <b> 5-10 Business Days!</b></p>
                 </div>
-
-                <div className='d-flex align-items-center gap-10 my-3'>
-                  <h3 className='product-heading'>Product Link :</h3>
-                  <a href="javascript:void(0);" onClick={() => {
-                    copyToClipboard(
-                      window.location.href
-                    );
-                  }}>
-                    Copy Product Link                    </a>
+                <div className="flex flex-col my-2">
+                  <h4 className='product-heading'>Product Description :</h4>
+                  <div className="py-2" ref={descriptionRef} dangerouslySetInnerHTML={{ __html: ProductState?.description }}></div>
+                </div>
+                <div className='flex align-items-center'>
+                  <div className="product-header capitalize">Wash Care:</div>
+                  <div className="product-data">&nbsp;Cold machine wash</div>
+                </div>
+                <div className="my-2">
+                  <p className='text-start product-header'>Actual color of the product may vary slightly due to photographic lighting sources or your devices</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </Container >
-      <Container class1="description-wrapper py-5 home-wrapper-2">
+      <Container class1="pb-5">
         <div className="row">
-          <div className="col-12">
-            <h4>Description</h4>
-            <div className='bg-white p-3 area'>
-              <p dangerouslySetInnerHTML={{
-                __html: ProductState?.description
-              }} >
-
-              </p>
+          <div className="col-12 flex align-middle justify-around p-2">
+            <div className="col-3 single-product-first-policy">
+              <h3 className='single-product-heading'>Product Info</h3>
+              <div className="single-product-data">{ProductState?.title}</div>
+            </div>
+            <div className="col-4 single-product-second-policy">
+              <h3 className='single-product-heading'>Return and refund policy</h3>
+              <div className="single-product-data">Replacement is available for size issues only, and you have to send it by courier yourself and the shipping cost will be beared by the customer. In case the desired size or color is out of stock, we won't be able to replace the product until it's restocked again.
+              </div>
+            </div>
+            <div className="col-3">
+              <h3 className='single-product-heading'>Shipping Info</h3>
+              <div className="single-product-data">After your order being received by us, the order will be dispatched soon, and will be delivered to your doorstep in about 7-10 days. </div>
             </div>
           </div>
         </div>

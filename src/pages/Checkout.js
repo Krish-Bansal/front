@@ -5,7 +5,7 @@ import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import * as yup from "yup"
-import { createAnOrder } from '../features/user/userSlice'
+import { createAnOrder, deleteUserCart, getUserCart, resetState } from '../features/user/userSlice'
 import { redirect } from 'react-router-dom'
 
 
@@ -20,14 +20,24 @@ const shippingSchema = yup.object({
   other: yup.string().required("Other Details Are Required"),
 })
 const Checkout = (props) => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const Shippingcost = 100
   const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
+  const authState = useSelector(state => state?.auth)
   const [totalAmount, setTotalAmount] = useState(null)
   const [shippingInfo, setShippingInfo] = useState(null);
-  const [cartProductState, setCartProductState] = useState([])
+  const [cartProductState, setCartProductState] = useState([]);
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
@@ -35,6 +45,21 @@ const Checkout = (props) => {
       setTotalAmount(sum)
     }
   }, [cartState])
+
+  // useEffect(() => {
+  //   dispatch(getUserCart(config2))
+  // }, [])
+
+  useEffect(() => {
+    if (authState?.orderedProduct?.order !== null && authState?.orderedProduct?.success === true) {
+      navigate("/my-orders")
+      dispatch(resetState())
+
+    }
+  }, [authState])
+
+
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -49,7 +74,10 @@ const Checkout = (props) => {
     validationSchema: shippingSchema,
     onSubmit: (values) => {
       setShippingInfo(values);
-      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: totalAmount, orderItems: cartProductState, shippingInfo: shippingInfo }))
+      localStorage.setItem("address", JSON.stringify(values))
+      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: totalAmount, orderItems: cartProductState, shippingInfo: JSON.parse(localStorage.getItem("address")) }))
+      dispatch(deleteUserCart(config2))
+      localStorage.removeItem("address")
     }
   })
 

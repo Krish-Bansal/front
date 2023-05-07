@@ -17,6 +17,15 @@ import { getUserCart } from '../features/user/userSlice'
 
 
 const Home = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const addToWish = (id) => {
     dispatch(addToWishlist(id));
   };
@@ -25,11 +34,11 @@ const Home = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     getallProducts();
-    getUserCart()
+    getUserCart(config2)
   }, [])
   const getallProducts = () => {
     dispatch(getAllProducts())
-    dispatch(getUserCart())
+    dispatch(getUserCart(config2))
   }
   return (
     <>
@@ -252,16 +261,58 @@ const Home = () => {
         <div className="row">
           {productState && productState?.map((item, index) => {
             if (item.tags === "special") {
-              return <SpecialProduct key={index} title={item?.title}
-                id={item?._id}
-                totalrating={item?.totalrating.toString()}
-                price={item?.price}
-                sold={item?.sold}
-                quantity={item?.quantity} />
+              return (
+                <div
+                  key={index}
+                  className='col-3'
+                  onClick={() => {
+                    navigate("/product/" + item?._id);
+                    window.scrollTo(0, 0);
+                  }}
 
+                >
+                  <div
+
+                    className="product-card position-relative">
+                    {/* <div className="wishlist-icon absolute">
+                      <button className='border-0 bg-transparent' onClick={(e) => { addToWish(item?._id) }}>
+                        <img src={wish} alt="wishlist" />
+                      </button>
+                    </div> */}
+                    <div className="product-image">
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
+
+                    </div>
+                    <div className="product-details">
+                      <h5 className="product-title">
+                        {item?.title}
+                      </h5>
+                      {/* <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} class /> */}
+
+
+                      <p className="price">Rs.{item?.price}</p>
+                    </div>
+                    {/* <div className="action-bar absolute">
+                      <div className="flex flex-col gap-15">
+                        <button className='border-0 bg-transparent'>
+                          <img src={view}
+                            alt="view"
+                          //  onClick={() => navigate("/product/" + item?._id)}
+                          />
+                        </button>
+                        <button className='border-0 bg-transparent'>
+                          <img src={addcart}
+                            alt="addcart" />
+                        </button>
+
+                      </div>
+                    </div> */}
+                  </div>
+                </div >
+              )
             }
           })}
-
         </div>
       </Container>
       <Container class1="popular-wrapper py-5 home-wrapper-2">

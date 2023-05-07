@@ -41,6 +41,7 @@ const signUpSchema = yup.object({
 })
 
 const Signup = () => {
+  const errorMessage = useSelector((state) => state.auth.errorMessagesignup);
   const authState = useSelector(state => state?.auth)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   useEffect(() => {
@@ -84,7 +85,7 @@ const Signup = () => {
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>
               <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
-              <Link to="/login" className='mr-7 inline-flex'>
+              <Link to="/login" key={Math.random()} className='mr-7 inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp;Go Back </Link>
             </div>
             <div className="mt-0 px-5 py-2">
@@ -93,6 +94,13 @@ const Signup = () => {
                 Sign up in just seconds.</p>
 
               <form action="" onSubmit={formik.handleSubmit} className='d-flex flex-column '>
+                <div>
+                  {/* Render other UI components */}
+                  {Array.isArray(errorMessage) && errorMessage.map((message, index) => (
+                    <p key={index} className='action-error'>{message}</p>
+                  ))}
+                </div>
+
                 <CustomInput type="text"
                   label="First Name" name='firstname' placeholder="First Name" value={formik.values.firstname} onChange={formik.handleChange("firstname")}
                   onBlur={formik.handleBlur("firstname")} />
