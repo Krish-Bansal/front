@@ -58,7 +58,7 @@ const SingleProduct = () => {
       toast.error("Please choose a size");
       return false;
     } else {
-      dispatch(addProdToCart({ productId: ProductState?._id, quantity, size: selectedSize, price: ProductState?.price }));
+      dispatch(addProdToCart({ productId: ProductState?._id, quantity, size: selectedSize, price: ProductState?.price, config2: config2 }));
       navigate("/cart");
       dispatch(getUserCart(config2));
     }

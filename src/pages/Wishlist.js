@@ -23,7 +23,7 @@ const Wishlist = () => {
     getWishlistFromDb();
   }, []);
   const getWishlistFromDb = () => {
-    dispatch(getUserProductWishlist())
+    dispatch(getUserProductWishlist(config2))
   };
   const wishlistState = useSelector(state => state?.auth?.wishlist?.wishlist)
   const removeFromWishlist = (id) => {

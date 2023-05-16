@@ -1,5 +1,5 @@
 import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url } from "../../utils/axiosConfig";
 const register = async (userData) => {
   const response = await axios.post(`${base_url}user/register`, userData);
   if (response.data) {
@@ -15,14 +15,14 @@ const login = async (userData) => {
     return response.data;
   }
 }
-const getUserWishlist = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+const getUserWishlist = async (wishData) => {
+  const response = await axios.get(`${base_url}user/wishlist`, wishData);
   if (response.data) {
     return response.data;
   }
 }
 const addToCart = async (cartData) => {
-  const response = await axios.post(`${base_url}user/cart`, cartData, config)
+  const response = await axios.post(`${base_url}user/cart`, cartData, cartData.config2)
   if (response.data) {
     return response.data;
   }
@@ -43,14 +43,14 @@ const removeProductFromCart = async (data) => {
   }
 }
 const updateProductFromCart = async (cartDetail) => {
-  const response = await axios.delete(`${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`, config)
+  const response = await axios.delete(`${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`, cartDetail.config2)
   if (response.data) {
     return response.data
   }
 }
 
 const createOrder = async (orderDetail) => {
-  const response = await axios.post(`${base_url}user/cart/create-order`, orderDetail, config);
+  const response = await axios.post(`${base_url}user/cart/create-order`, orderDetail, orderDetail.config2);
   if (response.data) {
     return response.data
   }
@@ -90,7 +90,7 @@ const emptyCart = async (data) => {
 }
 
 const applycoupon = async (coupon) => {
-  const response = await axios.post(`${base_url}coupon/apply-coupon`, coupon, config);
+  const response = await axios.post(`${base_url}coupon/apply-coupon`, coupon, coupon.config2);
   if (response.data) {
     return response.data
   }

@@ -34,7 +34,6 @@ const Header = () => {
   const [productOpt, setProductOpt] = useState([])
   const authState = useSelector(state => state?.auth)
   const [paginate, setPaginate] = useState(true);
-  console.log(productState);
   const [total, setTotal] = useState(null)
   const navigate = useNavigate();
   // useEffect(() => {

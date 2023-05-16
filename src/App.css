@@ -1173,7 +1173,7 @@ a {
 
 /* No wishlist Products Data   */
 
-.no-wish-contents .lottie {
+.no-wish-contents>div {
   display: flex;
   align-items: center;
   justify-content: center;

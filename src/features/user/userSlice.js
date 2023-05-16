@@ -17,9 +17,9 @@ export const loginUser = createAsyncThunk("auth/login", async (userData, thunkAP
   }
 });
 
-export const getUserProductWishlist = createAsyncThunk("user/wishlist", async (thunkAPI) => {
+export const getUserProductWishlist = createAsyncThunk("user/wishlist", async (wishData, thunkAPI) => {
   try {
-    return await authService.getUserWishlist();
+    return await authService.getUserWishlist(wishData);
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
   }

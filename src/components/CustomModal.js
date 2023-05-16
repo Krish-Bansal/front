@@ -7,7 +7,7 @@ const CustomModal = (props) => {
   return (
     <Modal
       title="Shipping Cost"
-      visible={open}
+      open={open}
       onCancel={hideModal}
       footer={null}
       closable={false}

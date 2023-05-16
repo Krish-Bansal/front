@@ -88,7 +88,7 @@ const Checkout = (props) => {
   let couponCode = '';
   const handleApplyCoupon = () => {
     const couponCode = document.querySelector('.coupon-input').value;
-    dispatch(applyAcoupon({ couponCode: couponCode }));
+    dispatch(applyAcoupon({ couponCode: couponCode, config2: config2 }));
   };
   const resetCouponSection = () => {
     let couponCode = '';
@@ -113,7 +113,7 @@ const Checkout = (props) => {
     onSubmit: (values) => {
       setShippingInfo(values);
       localStorage.setItem("address", JSON.stringify(values))
-      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: grandTotal, orderItems: cartProductState, shippingInfo: JSON.parse(localStorage.getItem("address")) }))
+      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: grandTotal, orderItems: cartProductState, shippingInfo: JSON.parse(localStorage.getItem("address")), config2: config2 }))
       dispatch(deleteUserCart(config2))
       localStorage.removeItem("address")
     }
