@@ -10,12 +10,21 @@ import { IoMdHeartEmpty } from "react-icons/io"
 import { AiOutlineHeart } from "react-icons/ai"
 
 const ProductCard = (props) => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const { grid, data } = props
   const dispatch = useDispatch();
   const navigate = useNavigate()
   let location = useLocation();
-  const addToWish = (id) => {
-    dispatch(addToWishlist(id));
+  const addToWish = (id, config) => {
+    dispatch(addToWishlist({ id, config }));
   };
   return (
     <>
@@ -32,8 +41,7 @@ const ProductCard = (props) => {
               <div
                 className="product-card position-relative">
                 <div className='absolute wish-icon-box cursor-pointer' onClick={(e) => {
-                  addToWish(item?._id);
-                  navigate("/wishlist");
+                  addToWish(item?._id, config2);
                   e.stopPropagation()
                 }}>
                   <AiOutlineHeart className='fs-4' />

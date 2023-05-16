@@ -26,8 +26,8 @@ const Wishlist = () => {
     dispatch(getUserProductWishlist(config2))
   };
   const wishlistState = useSelector(state => state?.auth?.wishlist?.wishlist)
-  const removeFromWishlist = (id) => {
-    dispatch(addToWishlist(id));
+  const removeFromWishlist = (id, config) => {
+    dispatch(addToWishlist({ id, config }));
     setTimeout(() => {
       dispatch(getUserProductWishlist(config2))
     }, 300)
@@ -67,7 +67,7 @@ const Wishlist = () => {
                 <div className="col-3" key={index}>
                   <div className="wishlist-card position-relative">
                     <img onClick={() => {
-                      removeFromWishlist(item?._id);
+                      removeFromWishlist(item?._id, config2);
                       getUserProductWishlist(config2)
                     }} src="images/cross.svg" alt="cross" className='position-absolute cross img-fluid' />
                     <div className="wishlist-card-image bg-white">

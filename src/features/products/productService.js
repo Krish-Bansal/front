@@ -1,5 +1,5 @@
 import axios from "axios";
-import { base_url, config } from "../../utils/axiosConfig";
+import { base_url } from "../../utils/axiosConfig";
 const getProducts = async (data) => {
   console.log(data)
   const response = await axios.get(`${base_url}product?${data?.minPrice ? `price[gte]=${data?.minPrice}&&` : ""}${data?.maxPrice ? `price[lte]=${data?.maxPrice}&&` : ""}${data?.sort ? `sort=${data?.sort}&&` : ""}`
@@ -14,7 +14,8 @@ const getSingleProduct = async (id) => {
     return response.data;
   }
 }
-const addToWishlist = async (prodId) => {
+const addToWishlist = async (prodId, config) => {
+  console.log(prodId, config)
   const response = await axios.put(`${base_url}product/wishlist`, { prodId }, config);
   if (response.data) {
     return response.data;

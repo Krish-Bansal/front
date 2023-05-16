@@ -108,8 +108,8 @@ const SingleProduct = () => {
     }
   }, [ProductState])
 
-  const addToWish = (id) => {
-    dispatch(addToWishlist(id));
+  const addToWish = (id, config) => {
+    dispatch(addToWishlist({ id, config }));
   };
   return (
     <>
@@ -248,7 +248,7 @@ const SingleProduct = () => {
                 </div>
                 <div className="flex align-middle">
                   <button className='single-product-button-wishlist'
-                    onClick={(e) => { addToWish(ProductState?._id) }}
+                    onClick={(e) => { addToWish(ProductState?._id, config2) }}
                   >
                     Add to Wishlist
                   </button>
