@@ -29,7 +29,6 @@ const addToCart = async (cartData) => {
 }
 
 const getCart = async (data) => {
-  console.log(data);
   const response = await axios.get(`${base_url}user/cart`, data)
   if (response.data) {
     return response.data;
@@ -57,8 +56,8 @@ const createOrder = async (orderDetail) => {
   }
 }
 
-const getUserOrders = async () => {
-  const response = await axios.get(`${base_url}user/getmyorders`, config)
+const getUserOrders = async (data) => {
+  const response = await axios.get(`${base_url}user/getmyorders`, data)
   if (response.data) {
     return response.data;
   }
@@ -90,8 +89,14 @@ const emptyCart = async (data) => {
   }
 }
 
+const applycoupon = async (coupon) => {
+  const response = await axios.post(`${base_url}coupon/apply-coupon`, coupon, config);
+  if (response.data) {
+    return response.data
+  }
+}
 
 
 export const authService = {
-  register, login, getUserWishlist, addToCart, getCart, removeProductFromCart, updateProductFromCart, createOrder, getUserOrders, updateUser, forgotPassToken, resetPass, emptyCart
+  register, login, getUserWishlist, addToCart, getCart, removeProductFromCart, updateProductFromCart, createOrder, getUserOrders, updateUser, forgotPassToken, resetPass, emptyCart, applycoupon
 }

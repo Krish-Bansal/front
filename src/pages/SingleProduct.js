@@ -25,7 +25,6 @@ const SingleProduct = () => {
     },
   };
 
-
   const descriptionRef = useRef(null);
   useEffect(() => {
     if (descriptionRef.current) {
@@ -45,7 +44,7 @@ const SingleProduct = () => {
   const cartState = useSelector(state => state?.auth?.cartProducts)
   useEffect(() => {
     dispatch(getAProduct(getProductId))
-    dispatch(getUserCart(config2))
+    // dispatch(getUserCart(config2))
   }, [])
   useEffect(() => {
     for (let index = 0; index < cartState?.length; index++) {
@@ -55,15 +54,15 @@ const SingleProduct = () => {
     }
   })
   const uploadCart = () => {
-    if (color === null) {
-      toast.error("Please Choose A Color")
-      return false
+    if (selectedSize === null) {
+      toast.error("Please choose a size");
+      return false;
     } else {
-      dispatch(addProdToCart({ productId: ProductState?._id, quantity, color, price: ProductState?.price }))
-      navigate("/cart")
-      dispatch(getUserCart(config2))
+      dispatch(addProdToCart({ productId: ProductState?._id, quantity, size: selectedSize, price: ProductState?.price }));
+      navigate("/cart");
+      dispatch(getUserCart(config2));
     }
-  }
+  };
 
 
   const [selectedImage, setSelectedImage] = useState('');
@@ -76,6 +75,17 @@ const SingleProduct = () => {
   // const props = {
   //   img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
   // }
+
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const handleSizeSelection = (size) => {
+    if (selectedSize === size) {
+      // If the same size is clicked again, deselect it
+      setSelectedSize(null);
+    } else {
+      setSelectedSize(size);
+    }
+  };
   const [orderedProduct, setorderedProduct] = useState(true);
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
@@ -161,69 +171,81 @@ const SingleProduct = () => {
                   <h3 className='product-heading'>Tags :</h3>
                   <p className='product-data capitalize'>{ProductState?.tags}</p>
                 </div>
-                {
-                  alreadyAdded === false && <>
-                    <div className='d-flex gap-10'>
-                      <h3 className='product-heading'>Color :</h3>
-                      <Color setColor={setColor} colorData={ProductState?.color} />
-                    </div>
-                  </>
-                }
-                <div className='d-flex flex-column gap-10 mt-2 mb-3'>
-                  <h3 className='product-heading'>Size :</h3>
-                  <div className='d-flex flex-wrap gap-2'>
-                    <button className="single-product-size">
-                      S
-                    </button>
-                    <button className="single-product-size">
-                      M
-                    </button>
-                    <button className="single-product-size">
-                      L
-                    </button>
-                    <button className="single-product-size">
-                      XL
-                    </button>
-                    <button className="single-product-size">
-                      XXL
-                    </button>
-                  </div>
+
+
+                <div className='d-flex gap-10'>
+                  <h3 className='product-heading'>Color :</h3>
+                  <Color setColor={setColor} colorData={ProductState?.color} />
                 </div>
+                {ProductState?.category === 'Shirt' && (
+                  <div className='d-flex flex-column gap-10 mt-2 mb-3'>
+                    <h3 className='product-heading'>Size :</h3>
+                    <div className='d-flex flex-wrap gap-2'>
+                      {['S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
+                        <button
+                          key={size}
+                          className={`single-product-size${selectedSize === size ? ' selected' : ''}${!ProductState.size.includes(size) ? ' disabled' : ''
+                            }`}
+                          disabled={!ProductState.size.includes(size)}
+                          onClick={() => handleSizeSelection(size)}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {ProductState?.category === 'Pant' && (
+                  <div className='d-flex flex-column gap-10 mt-2 mb-3'>
+                    <h3 className='product-heading'>Size :</h3>
+                    <div className='d-flex flex-wrap gap-2'>
+                      {['29', '30', '32', '34', '36', '38'].map((size) => (
+                        <button
+                          key={size}
+                          className={`single-product-size${selectedSize === size ? ' selected' : ''}${!ProductState.size.includes(size) ? ' disabled' : ''
+                            }`}
+                          disabled={!ProductState.size.includes(size)}
+                          onClick={() => handleSizeSelection(size)}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
 
                 <div className='d-flex flex-column gap-15 mt-2 mb-2 '>
-                  {alreadyAdded === false && <>
-                    <h3 className='product-heading'>Quantity:</h3>
-                    <div className=''>
-                      <input type="number" name="" min={1} max={10} className='form-control'
-                        style={{ width: "70px" }} id="" onChange={(e) => setQuantity(e.target.value)}
-                        value={quantity} />
-                    </div>
 
-                    <div className='d-flex align-items-center gap-10'>
-                      <h3 className='product-heading'>Product Link :</h3>
-                      <a href="javascript:void(0);" onClick={() => {
-                        copyToClipboard(
-                          window.location.href
-                        );
-                      }}>
-                        Copy Product Link                    </a>
-                    </div>
-                  </>
-                  }
-                  <div className={alreadyAdded ? "ms-0" : "" + 'd-flex align-items-center gap-30 '}>
-                    <button
-                      className='single-product-button'
-                      type='button'
-                      onClick={() => {
-                        alreadyAdded ? navigate('/cart') : uploadCart()
-                      }}>
-                      {alreadyAdded ? "Go to Cart" : "Add to Cart"}
-                    </button>
-                    {/* <button className='button signup'>Buy It Now</button> */}
-
+                  <h3 className='product-heading'>Quantity:</h3>
+                  <div className=''>
+                    <input type="number" name="" min={1} max={10} className='form-control'
+                      style={{ width: "70px" }} id="" onChange={(e) => setQuantity(e.target.value)}
+                      value={quantity} />
                   </div>
+
+                  <div className='d-flex align-items-center gap-10'>
+                    <h3 className='product-heading'>Product Link :</h3>
+                    <a href="javascript:void(0);" onClick={() => {
+                      copyToClipboard(
+                        window.location.href
+                      );
+                    }}>
+                      Copy Product Link                    </a>
+                  </div>
+
+                  <div className="d-flex align-items-center gap-30">
+                    <button
+                      className="single-product-button"
+                      type="button"
+                      onClick={uploadCart}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+
                 </div>
-                {/* <div className="d-flex align-items-center gap-10"> */}
                 <div className="flex align-middle">
                   <button className='single-product-button-wishlist'
                     onClick={(e) => { addToWish(ProductState?._id) }}

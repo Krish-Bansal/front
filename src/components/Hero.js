@@ -1,10 +1,26 @@
 import React from 'react';
 import './Hero.css';
 import { Carousel } from 'react-bootstrap';
+import { Link } from "react-router-dom"
+import { base_url } from '../utils/axiosConfig';
+import axios from "axios"
+// const handleShopNowClick2 = async () => {
+//   try {
+//     const response = await axios.get(`${base_url}product?category=Pant`);
+//     const products = response.data;
+//     // Sort the products by category "Shirt"
+//     const sortedProducts = products.filter(product => product.category === 'Pant');
+//     // Handle the sorted products as needed
+//     console.log(sortedProducts);
+//   } catch (error) {
+//     // Handle any errors
+//     console.error(error);
+//   }
+// };
 
 const Hero = () => {
   return (
-    <Carousel
+    <Carousel pause={false} interval={5000}
     //  fade={true} interval={4000} className='custom-carousel'
     >
       <Carousel.Item>
@@ -33,7 +49,10 @@ const Hero = () => {
             <p>Cotton Pants</p>
             <p>Embrace Simplicity</p>
             <p>Made For Comfort And Style</p>
-            <button className='button'>Shop Now</button>
+
+            <Link to="product?category=Pant">
+              <button className='button'>Shop Now
+              </button></Link>
           </div>
         </div>
       </Carousel.Item>

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BreadCrumb from '../components/BreadCrumb'
 import Meta from '../components/Meta'
-import watch from "../images/watch.jpg"
 import { AiFillDelete } from "react-icons/ai"
 import { Link } from 'react-router-dom'
 import Container from '../components/Container'
@@ -18,10 +16,10 @@ const Cart = () => {
       Accept: "application/json",
     },
   };
+
   const dispatch = useDispatch();
   const [ProductUpdateDetail, setProductUpdateDetail] = useState(null)
   const [totalAmount, setTotalAmount] = useState(null)
-
   const userCartState = useSelector(state => state.auth.cartProducts)
   useEffect(() => {
     dispatch(getUserCart(config2))
@@ -42,6 +40,7 @@ const Cart = () => {
       dispatch(getUserCart(config2))
     }, 200)
   }
+
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < userCartState?.length; index++) {
@@ -62,7 +61,9 @@ const Cart = () => {
                 {/* <img src={nowish} alt="test" width={320} height={320} /> */}
               </div>
               <div className='no-wish-contents'>
-                <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_oqpbtola.json" background="transparent" speed="1" style={{ width: "300px", height: "300px" }} loop autoplay></lottie-player>
+                <div classname="lottie">
+                  <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_oqpbtola.json" background="transparent" speed="1" style={{ width: "300px", height: "300px" }} loop autoplay></lottie-player>
+                </div>
                 <h2>Your Cart is empty!</h2>
                 <h3>Add something to make me happy :)</h3>
                 <div className='flex align-middle justify-around'>
@@ -80,8 +81,14 @@ const Cart = () => {
                   <h4 className='cart-col-3'>Quantity</h4>
                   <h4 className='cart-col-4'>Total</h4>
                 </div>
+
                 {
                   userCartState && userCartState?.map((item, index) => {
+                    const existingItem = userCartState.find(
+                      (cartItem) =>
+                        cartItem.productId._id === item.productId._id &&
+                        cartItem.size === item.size
+                    );
                     return (
                       <div key={index} className='cart-data py-3 mb-2 d-flex justify-content-between align-items-center'>
                         <div className='cart-col-1 d-flex align-items-center gap-15'>
@@ -95,9 +102,11 @@ const Cart = () => {
                             </p>
                             <p className='d-flex gap-3 mt-1'>
                               Color: <ul className='colors ps-0'>
-                                <li style={{ backgroundColor: item?.color.title }}></li>
+                                <li style={{ backgroundColor: item?.color?.title }}></li>
                               </ul>
-
+                            </p>
+                            <p>
+                              Size: {item?.size}
                             </p>
                           </div>
 
@@ -117,7 +126,7 @@ const Cart = () => {
 
                           </div>
                           <div>
-                            <AiFillDelete className='text-danger ' onClick={() => {
+                            <AiFillDelete className='text-danger cursor-pointer ' onClick={() => {
                               deleteACartProduct(item?._id)
                             }} />
                           </div>
@@ -125,12 +134,12 @@ const Cart = () => {
                         </div>
                         <div className='cart-col-4'>
                           <h5 className="price">Rs{item?.price * item?.quantity}</h5>
-
                         </div>
                       </div>
                     )
                   })
-                }              </div>
+                }
+              </div>
               <div className="col-12 py-2 mt-4">
                 <div className="d-flex justify-content-between align-items-baseline">
                   <Link className='button' to="/product">Continue To Shopping</Link>

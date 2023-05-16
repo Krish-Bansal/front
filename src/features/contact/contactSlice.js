@@ -41,8 +41,13 @@ export const contactSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
 

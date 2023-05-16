@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import { productService } from "./productService";
+import { applyAcoupon } from "../user/userSlice";
 
 export const getAllProducts = createAsyncThunk("product/get", async (data, thunkAPI) => {
   try {
@@ -24,6 +25,7 @@ export const addToWishlist = createAsyncThunk("product/wishlist",
       return thunkAPI.rejectWithValue(error)
     }
   })
+
 
 const productState = {
   product: "",
@@ -64,6 +66,14 @@ export const productSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error;
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
+        }
       })
       .addCase(getAProduct.pending, (state) => {
         state.isLoading = true;

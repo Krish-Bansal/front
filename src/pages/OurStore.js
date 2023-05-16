@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import Meta from '../components/Meta'
-import BreadCrumb from '../components/BreadCrumb'
-import ReactStars from 'react-rating-stars-component'
+// import BreadCrumb from '../components/BreadCrumb'
+// import ReactStars from 'react-rating-stars-component'
 import { useState } from 'react'
 import ProductCard from '../components/ProductCard'
-import Color from '../components/Color'
+// import Color from '../components/Color'
 import { useDispatch, useSelector } from "react-redux"
 
 import Container from '../components/Container'
@@ -14,7 +14,7 @@ const OurStore = () => {
   const [categories, setCategories] = useState([])
   const [tags, setTags] = useState([])
   const [grid, setGrid] = useState(4);
-  const [colors, setColors] = useState([])
+  // const [colors, setColors] = useState([])
 
   const productState = useSelector((state) => state?.product?.product);
   //Filter States

@@ -22,7 +22,6 @@ export const getUserProductWishlist = createAsyncThunk("user/wishlist", async (t
     return await authService.getUserWishlist();
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
-
   }
 })
 export const addProdToCart = createAsyncThunk("user/cart/add", async (cartData, thunkAPI) => {
@@ -59,9 +58,9 @@ export const deleteUserCart = createAsyncThunk("user/cart/delete", async (data, 
   }
 })
 
-export const getOrders = createAsyncThunk("user/order/get", async (thunkAPI) => {
+export const getOrders = createAsyncThunk("user/order/get", async (data, thunkAPI) => {
   try {
-    return await authService.getUserOrders()
+    return await authService.getUserOrders(data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
 
@@ -109,6 +108,13 @@ export const resetPassword = createAsyncThunk("user/password/reset", async (data
     return thunkAPI.rejectWithValue(error)
   }
 
+})
+export const applyAcoupon = createAsyncThunk("coupon/apply-coupon", async (coupon, thunkAPI) => {
+  try {
+    return await authService.applycoupon(coupon)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
 })
 export const resetState = createAction("Reset_all")
 const getUserfromLocalStorage = localStorage.getItem("customer")
@@ -175,6 +181,14 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
+        }
       })
       .addCase(addProdToCart.pending, (state) => {
         state.isLoading = true;
@@ -194,6 +208,14 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
+        }
       })
       .addCase(getUserCart.pending, (state) => {
         state.isLoading = true;
@@ -209,7 +231,15 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
-        state.message = action.error
+        state.message = action.error;
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
+        }
       })
       .addCase(deleteCartProduct.pending, (state) => {
         state.isLoading = true;
@@ -228,8 +258,13 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
       .addCase(updateCartProduct.pending, (state) => {
@@ -240,17 +275,19 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.updatedCartProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product Updated From Cart Successfully")
-        }
       })
       .addCase(updateCartProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
       .addCase(createAnOrder.pending, (state) => {
@@ -270,8 +307,13 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
       .addCase(getOrders.pending, (state) => {
@@ -291,8 +333,13 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
       .addCase(updateProfile.pending, (state) => {
@@ -322,8 +369,13 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
-        if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+        if (state.message = "Please Login Again") {
+          toast.error("Please Login Again")
+        }
+        else {
+          if (state.isError === true) {
+            toast.error("Something Went Wrong!")
+          }
         }
       })
 
@@ -357,7 +409,7 @@ export const authSlice = createSlice({
         state.isSuccess = true;
         state.pass = action.payload;
         if (state.isSuccess === true) {
-          toast.success("Password Changes Successfully")
+          toast.success("Password Changed Successfully")
         }
       })
       .addCase(resetPassword.rejected, (state, action) => {
@@ -383,6 +435,22 @@ export const authSlice = createSlice({
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
+      })
+      .addCase(applyAcoupon.pending, (state) => {
+        state.isLoading = true;
+      }).addCase(applyAcoupon.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.applycoupon = action.payload;
+        state.couponSuccess = action.payload.message;
+        state.couponDiscount = action.payload.discount;
+      }).addCase(applyAcoupon.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.couponMessage = action.payload.response.data.message;
+
       })
       .addCase(resetState, () => initialState)
   }

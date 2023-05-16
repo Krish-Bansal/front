@@ -29,20 +29,20 @@ const Header = () => {
     setShowMenu(!showMenu);
   };
   const dispatch = useDispatch();
-  const cartState = useSelector(state => state?.auth?.cartProducts);
+  // const cartState = useSelector(state => state?.auth?.cartProducts);
   const productState = useSelector(state => state?.product?.product)
   const [productOpt, setProductOpt] = useState([])
   const authState = useSelector(state => state?.auth)
   const [paginate, setPaginate] = useState(true);
   const [total, setTotal] = useState(null)
   const navigate = useNavigate();
-  useEffect(() => {
-    let sum = 0
-    for (let index = 0; index < cartState?.length; index++) {
-      sum = sum + (Number(cartState[index].quantity) * cartState[index].price)
-      setTotal(sum)
-    }
-  }, [cartState])
+  // useEffect(() => {
+  //   let sum = 0
+  //   for (let index = 0; index < cartState?.length; index++) {
+  //     sum = sum + (Number(cartState[index].quantity) * cartState[index].price)
+  //     setTotal(sum)
+  //   }
+  // }, [cartState])
   useEffect(() => {
     let data = []
     for (let index = 0; index < productState?.length; index++) {
@@ -74,7 +74,9 @@ const Header = () => {
 
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
-                    <button onClick={handleLogout} className='text-uppercase text-white' style={{ fontSize: "14px" }}>Logout</button>
+                    {authState?.user ? (
+                      <button onClick={handleLogout} className='text-uppercase text-white' style={{ fontSize: "14px" }}>Logout</button>
+                    ) : null}
 
                   </div>
                 </div>
@@ -97,7 +99,7 @@ const Header = () => {
 
                     id="pagination-example" onPaginate={() => console.log("Results Paginated")}
                     onChange={(selected) => {
-                      navigate(`/product/${selected[0].prod}`)
+                      navigate(`/product/${selected[0]?.prod}`)
                     }}
                     options={productOpt}
                     minLength={2}

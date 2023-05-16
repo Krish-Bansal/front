@@ -5,9 +5,8 @@ import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import * as yup from "yup"
-import { createAnOrder, deleteUserCart, getUserCart, resetState } from '../features/user/userSlice'
-import { redirect } from 'react-router-dom'
-
+import { createAnOrder, deleteUserCart, getUserCart, resetState, applyAcoupon } from '../features/user/userSlice'
+import CustomModal from '../components/CustomModal';
 
 const shippingSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -16,8 +15,9 @@ const shippingSchema = yup.object({
   state: yup.string().required("State is Required"),
   city: yup.string().required("City is Required"),
   country: yup.string().required("Country is Required"),
-  pincode: yup.string().required("Pincode is Required"),
+  pincode: yup.number().required("Pincode is Required").typeError("ZIP code must be a number"),
   other: yup.string().required("Other Details Are Required"),
+  mobile: yup.number().min(1000000000, "Mobile Number must be at least 10 digits").typeError("Mobile Number must be a number").required("Mobile Number is Required"),
 })
 const Checkout = (props) => {
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
@@ -31,13 +31,23 @@ const Checkout = (props) => {
   };
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const Shippingcost = 100
   const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
   const authState = useSelector(state => state?.auth)
   const [totalAmount, setTotalAmount] = useState(null)
+  const [grandTotal, setgrandTotal] = useState(null)
   const [shippingInfo, setShippingInfo] = useState(null);
+  const [shippingCost, setShippingCost] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const [cartProductState, setCartProductState] = useState([]);
+  const couponMessage = useSelector((state) => state.auth.couponMessage);
+  const couponSuccess = useSelector((state) => state?.auth?.couponSuccess);
+  const couponDiscount = useSelector((state) => state?.auth?.couponDiscount);
+  const isSuccess = useSelector((state) => state?.auth?.isSuccess);
+  const isError = useSelector((state) => state?.auth?.isError);
+  const displayDiscount = isSuccess && couponDiscount ? `-${couponDiscount}%` : (isError ? "-0%" : "-0%");
+  const discountedAmount = totalAmount ? (couponDiscount ? totalAmount - (totalAmount * couponDiscount) / 100 : totalAmount) : 0;
+
   useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
@@ -46,20 +56,46 @@ const Checkout = (props) => {
     }
   }, [cartState])
 
-  // useEffect(() => {
-  //   dispatch(getUserCart(config2))
-  // }, [])
+  const calculateGrandTotal = () => {
+    return discountedAmount + shippingCost;
+  };
+
+  useEffect(() => {
+    // Calculate and update the grand total whenever totalAmount or shippingCost changes
+    const updatedGrandTotal = calculateGrandTotal();
+    setgrandTotal(updatedGrandTotal);
+  }, [totalAmount, shippingCost, displayDiscount, grandTotal]);
+
+  useEffect(() => {
+    setIsModalOpen(true);
+  }, []);
 
   useEffect(() => {
     if (authState?.orderedProduct?.order !== null && authState?.orderedProduct?.success === true) {
-      navigate("/my-orders")
-      dispatch(resetState())
-
+      navigate('/my-orders');
+      dispatch(resetState());
     }
-  }, [authState])
+  }, [authState?.orderedProduct?.order, authState?.orderedProduct?.success]);
 
-
-
+  const handleOptionSelect = (option) => {
+    if (option === "Inside Kathmandu Valley") {
+      setShippingCost(0);
+    } else if (option === "Outside Kathmandu Valley") {
+      setShippingCost(100);
+    }
+    setIsModalOpen(false);
+  };
+  let couponCode = '';
+  const handleApplyCoupon = () => {
+    const couponCode = document.querySelector('.coupon-input').value;
+    dispatch(applyAcoupon({ couponCode: couponCode }));
+  };
+  const resetCouponSection = () => {
+    let couponCode = '';
+    let displayDiscount = "-0%";
+    // Additional code to reset any other relevant coupon section variables or elements
+  };
+  window.onbeforeunload = resetCouponSection;
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -70,25 +106,28 @@ const Checkout = (props) => {
       country: "",
       pincode: "",
       other: "",
+      mobile: "",
     },
+
     validationSchema: shippingSchema,
     onSubmit: (values) => {
       setShippingInfo(values);
       localStorage.setItem("address", JSON.stringify(values))
-      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: totalAmount, orderItems: cartProductState, shippingInfo: JSON.parse(localStorage.getItem("address")) }))
+      dispatch(createAnOrder({ totalPrice: totalAmount, totalPriceAfterDiscount: grandTotal, orderItems: cartProductState, shippingInfo: JSON.parse(localStorage.getItem("address")) }))
       dispatch(deleteUserCart(config2))
       localStorage.removeItem("address")
     }
   })
 
-
   useEffect(() => {
     let items = []
     for (let index = 0; index < cartState?.length; index++) {
-      items.push({ product: cartState[index].productId._id, quantity: cartState[index].quantity, color: cartState[index].color._id, price: cartState[index].price })
+      items.push({ product: cartState[index].productId?._id, quantity: cartState[index].quantity, color: cartState[index].productId.color, price: cartState[index].price, size: cartState[index].size })
     }
     setCartProductState(items)
   }, [])
+
+
   return (
     <>
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
@@ -105,16 +144,11 @@ const Checkout = (props) => {
                     <Link to="/cart" className='text-dark total-price'>Cart</Link>
                   </li>
                   &nbsp;/
-                  <li className='breadcrumb-item total-price active' aria-current="page">
-                    Information
-                  </li>
-                  &nbsp;/
+
                   <li className="breadcrumb-item total-price active">
                     Shipping
                   </li>
-                  &nbsp;/
-                  <li className='breadcrumb-item total-price active' aria-current="page">
-                    Payment                    </li>
+                  &nbsp;
                 </ol>
               </nav>
               <h4 className="title total">
@@ -217,12 +251,21 @@ const Checkout = (props) => {
                   </div>
                 </div>
                 <div className='flex-grow-1'>
-                  <input type="text" className="form-control" placeholder='ZIP Code'
+                  <input type="text" className="form-control" placeholder='ZIP code'
                     name="pincode"
                     value={formik.values.pincode} onChange={formik.handleChange("pincode")}
                     onBlur={formik.handleBlur("pincode")} />
                   <div className="error">
                     {formik.touched.pincode && formik.errors.pincode}
+                  </div>
+                </div>
+                <div className='flex-grow-1'>
+                  <input type="text" className="form-control" placeholder='Phone Number'
+                    name="mobile"
+                    value={formik.values.mobile} onChange={formik.handleChange("mobile")}
+                    onBlur={formik.handleBlur("mobile")} />
+                  <div className="error">
+                    {formik.touched.mobile && formik.errors.mobile}
                   </div>
                 </div>
                 <div className="w-100">
@@ -253,7 +296,7 @@ const Checkout = (props) => {
                         </div>
                         <div>
                           <h5 className='total-title'>
-                            {item?.productId?.title}
+                            {item?.productId?.title}({item?.size})
                           </h5>
                           <p className='total-price'>
                             {item?.price}
@@ -274,14 +317,37 @@ const Checkout = (props) => {
                 <p className='total'>Subtotal</p>
                 <p className='total-price'>Rs.{totalAmount ? totalAmount : "0"}</p>
               </div>
+              <div className='coupon-area flex justify-between align-middle'>
+                <div>
+                  <input type='text' placeholder='Enter coupon code' className='coupon-input' />
+                  <button className='apply-button' onClick={handleApplyCoupon}>Apply</button>
+                </div>
+                <div>
+                  <p className="total-price">{displayDiscount}</p>
+                </div>
+              </div>
+              {couponMessage && !isSuccess ? (
+                <p className="coupon-message">{couponMessage}</p>
+              ) : (
+                isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
+              )}
               <div className="d-flex justify-content-between align-items-center">
                 <p className='mb-0 total'>Shipping</p>
-                <p className='mb-0 total-price'>Rs.{Shippingcost}</p>
+                <p className='mb-0 total-price'>Rs.{shippingCost}</p>
+                <CustomModal
+                  open={isModalOpen}
+                  hideModal={() => setIsModalOpen(false)}
+                  handleOptionSelect={handleOptionSelect}
+                  title="Select Shipping Option"
+                />
+
               </div>
             </div>
             <div className='d-flex justify-content-between align-items-center'>
               <h4 className='total'>Total</h4>
-              <h5 className='total-price'>Rs.{totalAmount ? totalAmount + Shippingcost : "0"}</h5>
+              <h5 className='total-price'>Rs.{grandTotal ? grandTotal
+
+                : "0"}</h5>
 
             </div>
 

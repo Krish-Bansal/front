@@ -570,6 +570,7 @@ a {
   justify-content: center;
 }
 
+
 .single-product-size {
   padding-top: 7px;
   padding-bottom: 7px;
@@ -579,6 +580,24 @@ a {
   font-family: "Futura";
   font-size: 14px;
   color: #3b4149
+}
+
+.single-product-size.disabled {
+  position: relative;
+  cursor: not-allowed;
+  color: #e2e2db;
+}
+
+.single-product-size.disabled::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1.4px;
+  background-color: rgba(0, 0, 0, .2);
+  transform: translateY(-55%) rotate(-45deg);
+
 }
 
 .single-product-heading {
@@ -1154,8 +1173,12 @@ a {
 
 /* No wishlist Products Data   */
 
+.no-wish-contents .lottie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-
+}
 
 .no-wish-contents h2 {
   font-size: 26px;
@@ -1270,3 +1293,39 @@ a {
 }
 
 /* not found page  */
+
+
+/* Apply Coupon  */
+.coupon-area .coupon-input {
+  border: 1px solid black;
+  padding-left: 2px;
+  padding-right: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.coupon-area .apply-button {
+  background-color: rgb(23, 19, 2);
+  color: white;
+  border: 1px solid black;
+  padding-left: 4px;
+  padding-right: 4px;
+
+}
+
+.coupon-message {
+  color: red;
+  font-size: 14px;
+}
+
+.coupon-success {
+  color: green;
+  font-size: 14px;
+}
+
+/* Apply Coupon  */
+
+
+.checkout-left-data .website-name {
+  font-size: 29px;
+}

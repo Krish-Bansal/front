@@ -7,11 +7,20 @@ import Meta from '../components/Meta'
 
 
 const Orders = () => {
+  const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
+
+  const config2 = {
+    headers: {
+      Authorization: `Bearer ${getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+        }`,
+      Accept: "application/json",
+    },
+  };
   const dispatch = useDispatch()
   const orderState = useSelector(state => state?.auth?.getorderedProduct?.orders)
   console.log(orderState)
   useEffect(() => {
-    dispatch(getOrders())
+    dispatch(getOrders(config2))
   }, [])
   return (
     <>
@@ -58,11 +67,14 @@ const Orders = () => {
                     <div className="col-3">
                       <h6>Quantity</h6>
                     </div>
-                    <div className="col-3">
+                    <div className="col-2">
                       <h6>Price</h6>
                     </div>
-                    <div className="col-3">
+                    <div className="col-2">
                       <h6>Color</h6>
+                    </div>
+                    <div className="col-2">
+                      <h6>Size</h6>
                     </div>
                     {item?.orderItems?.map((i, index) => {
                       return (<div className="col-12">
@@ -73,15 +85,20 @@ const Orders = () => {
                           <div className="col-3">
                             <p className='text-white'>{i?.quantity}</p>
                           </div>
-                          <div className="col-3">
+                          <div className="col-2">
                             <p className='text-white'>{i?.price}</p>
                           </div>
-                          <div className="col-3">
+                          <div className="col-2">
                             <p>
                               <ul className="colors ps-0">
                                 <div className='bg-white p-[1px]'><li style={{ backgroundColor: i?.color?.title }}></li></div>
 
                               </ul>
+                            </p>
+                          </div>
+                          <div className="col-2">
+                            <p className='text-white'>
+                              {i?.size}
                             </p>
                           </div>
 

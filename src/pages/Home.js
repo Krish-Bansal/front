@@ -38,7 +38,7 @@ const Home = () => {
   }, [])
   const getallProducts = () => {
     dispatch(getAllProducts())
-    dispatch(getUserCart(config2))
+    // dispatch(getUserCart(config2))
   }
   return (
     <>
