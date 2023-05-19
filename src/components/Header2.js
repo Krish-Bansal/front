@@ -1,18 +1,15 @@
 
 import React, { useEffect, useState } from 'react'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-import { CiShoppingCart, CiHeart, CiUser, CiSearch, CiMenuBurger } from 'react-icons/ci'
+import { CiShoppingCart, CiHeart, CiUser, CiSearch } from 'react-icons/ci'
 import Logo from '../assests1/defy_logo-removebg-preview.png';
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import "../styles.css"
 
 const Header = () => {
-  //setting mobile nav
-  const [click, setClick] = useState(false)
-  const handleClick = () => setClick(!click)
-  //change nav color when scrolling
+
   const [color, setColor] = useState(false)
   const changeColor = () => {
     if (window.scrollY >= 90) {
@@ -21,21 +18,19 @@ const Header = () => {
   }
 
   window.addEventListener('scroll', changeColor)
-  //close menu on Click
-  const closeMenu = () => setClick(false)
-  const [showMenu, setShowMenu] = useState(false);
 
-  const handleMenuClick = () => {
-    setShowMenu(!showMenu);
-  };
-  const dispatch = useDispatch();
+
+
+
+
+
   // const cartState = useSelector(state => state?.auth?.cartProducts);
   const productState = useSelector(state => state?.product?.product)
   const [productOpt, setProductOpt] = useState([])
   const authState = useSelector(state => state?.auth)
-  const [paginate, setPaginate] = useState(true);
-  const [total, setTotal] = useState(null)
+  // const [paginate, setPaginate] = useState(true);
   const navigate = useNavigate();
+  // console.log(setPaginate)
   // useEffect(() => {
   //   let sum = 0
   //   for (let index = 0; index < cartState?.length; index++) {
@@ -79,7 +74,7 @@ const Header = () => {
                     }}
                     options={productOpt}
                     minLength={2}
-                    paginate={paginate}
+
                     labelKey={"name"}
                     inputProps={{
                       style: { backgroundColor: 'inherit', color: color ? `black` : `white` },
