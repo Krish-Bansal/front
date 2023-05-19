@@ -5,7 +5,7 @@ import Container from '../components/Container'
 import { useDispatch, useSelector } from "react-redux"
 import { useFormik } from "formik"
 import * as yup from "yup"
-import { createAnOrder, deleteUserCart, getUserCart, resetState, applyAcoupon } from '../features/user/userSlice'
+import { createAnOrder, deleteUserCart, resetState, applyAcoupon } from '../features/user/userSlice'
 import CustomModal from '../components/CustomModal';
 
 const shippingSchema = yup.object({
@@ -37,6 +37,7 @@ const Checkout = (props) => {
   const [totalAmount, setTotalAmount] = useState(null)
   const [grandTotal, setgrandTotal] = useState(null)
   const [shippingInfo, setShippingInfo] = useState(null);
+  console.log(shippingInfo);
   const [shippingCost, setShippingCost] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [cartProductState, setCartProductState] = useState([]);
@@ -64,6 +65,7 @@ const Checkout = (props) => {
     // Calculate and update the grand total whenever totalAmount or shippingCost changes
     const updatedGrandTotal = calculateGrandTotal();
     setgrandTotal(updatedGrandTotal);
+    // eslint-disable-next-line
   }, [totalAmount, shippingCost, displayDiscount, grandTotal]);
 
   useEffect(() => {
@@ -75,6 +77,7 @@ const Checkout = (props) => {
       navigate('/my-orders');
       dispatch(resetState());
     }
+    // eslint-disable-next-line
   }, [authState?.orderedProduct?.order, authState?.orderedProduct?.success]);
 
   const handleOptionSelect = (option) => {
@@ -85,14 +88,13 @@ const Checkout = (props) => {
     }
     setIsModalOpen(false);
   };
-  let couponCode = '';
   const handleApplyCoupon = () => {
     const couponCode = document.querySelector('.coupon-input').value;
     dispatch(applyAcoupon({ couponCode: couponCode, config2: config2 }));
   };
   const resetCouponSection = () => {
-    let couponCode = '';
-    let displayDiscount = "-0%";
+    // let couponCode = '';
+    // let displayDiscount = "-0%";
     // Additional code to reset any other relevant coupon section variables or elements
   };
   window.onbeforeunload = resetCouponSection;
@@ -125,6 +127,7 @@ const Checkout = (props) => {
       items.push({ product: cartState[index].productId?._id, quantity: cartState[index].quantity, color: cartState[index].productId.color, price: cartState[index].price, size: cartState[index].size })
     }
     setCartProductState(items)
+    // eslint-disable-next-line
   }, [])
 
 
@@ -155,7 +158,7 @@ const Checkout = (props) => {
                 Contact Information
               </h4>
               <p className="user-details total">
-                {userState?.firstname + " " + userState?.lastname + " " + "(" + userState?.email + ")"}
+                {`${userState?.firstname} ${userState?.lastname} (${userState?.email})`}
               </p>
               <h4 className='mb-3'>Shipping Address</h4>
               <form action=""

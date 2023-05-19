@@ -67,20 +67,21 @@ const Signup = () => {
   })
   useEffect(() => {
     if (authState?.createdUser !== null && authState?.isError === false) {
-      // navigate("/login")
+      navigate("/login")
     }
+    // eslint-disable-next-line
   }, [authState])
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
-  const toggleShowPassword = () => {
-    setShowPassword(prevShowPassword => !prevShowPassword);
-  };
+  // const toggleShowPassword = () => {
+  //   setShowPassword(prevShowPassword => !prevShowPassword);
+  // };
   return (
     <div>
       <Container fluid>
         <Row>
           <Col md={6} className="p-0">
-            <img src={images[currentImageIndex]} alt="DEFY Picture" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
           </Col>
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>

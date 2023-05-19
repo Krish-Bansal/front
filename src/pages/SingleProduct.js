@@ -51,30 +51,31 @@ const SingleProduct = () => {
     }
   }, []);
   // converting html tags in description  
-  const [color, setColor] = useState(null)
+  // const [color, setColor] = useState(null)
   const [quantity, setQuantity] = useState(1)
-  const [alreadyAdded, setAlreadyAdded] = useState(false);
+  // const [alreadyAdded, setAlreadyAdded] = useState(false);
   const location = useLocation()
   const navigate = useNavigate()
   const getProductId = location.pathname.split("/")[2]
   const dispatch = useDispatch();
   const ProductState = useSelector(state => state?.product?.singleproduct)
   const productsState = useSelector(state => state?.product?.product)
-  const cartState = useSelector(state => state?.auth?.cartProducts)
+  // const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
 
   useEffect(() => {
     dispatch(getAProduct(getProductId))
     // dispatch(getUserCart(config2))
+    // eslint-disable-next-line
   }, [])
-  useEffect(() => {
-    for (let index = 0; index < cartState?.length; index++) {
-      if (getProductId === cartState[index]?.productId?._id) {
-        setAlreadyAdded(true)
-      }
-    }
-  })
-  console.log(userState)
+  // useEffect(() => {
+  //   for (let index = 0; index < cartState?.length; index++) {
+  //     if (getProductId === cartState[index]?.productId?._id) {
+  //       setAlreadyAdded(true)
+  //     }
+  //   }
+  // })
+
   const uploadCart = () => {
     if (selectedSize === null) {
       toast.error("Please choose a size");
@@ -98,16 +99,10 @@ const SingleProduct = () => {
 
 
   // add a review part 
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
 
-  const handleRatingChange = (newRating) => {
-    setRating(newRating);
-  };
 
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
+
+
   const formik = useFormik({
     initialValues: {
       rating: 0,
@@ -165,7 +160,7 @@ const SingleProduct = () => {
     }
   };
   // size selection 
-  const [orderedProduct, setOrderedProduct] = useState(false);
+
   useEffect(() => {
     // Check if the product is in the user's order history
     // const isProductOrdered = checkIfProductOrdered(getProductId); 
@@ -185,7 +180,6 @@ const SingleProduct = () => {
   }
   // copy to clipboard 
 
-  const closeModal = () => { };
   const [popularProduct, setPopularProduct] = useState([])
   useEffect(() => {
     let data = []
@@ -196,6 +190,7 @@ const SingleProduct = () => {
       }
       setPopularProduct(data)
     }
+    // eslint-disable-next-line
   }, [ProductState])
 
   const addToWish = (id, config) => {
@@ -273,7 +268,7 @@ const SingleProduct = () => {
 
                 <div className='d-flex gap-10'>
                   <h3 className='product-heading'>Color :</h3>
-                  <Color setColor={setColor} colorData={ProductState?.color} />
+                  <Color colorData={ProductState?.color} />
                 </div>
                 {ProductState?.category === 'Shirt' && (
                   <div className='d-flex flex-column gap-10 mt-2 mb-3'>
@@ -325,11 +320,13 @@ const SingleProduct = () => {
 
                   <div className='d-flex align-items-center gap-10'>
                     <h3 className='product-heading'>Product Link :</h3>
-                    <a href="javascript:void(0);" onClick={() => {
-                      copyToClipboard(
-                        window.location.href
-                      );
-                    }}>
+                    <a
+                      href={getProductId}
+                      onClick={() => {
+                        copyToClipboard(
+                          window.location.href
+                        );
+                      }}>
                       Copy Product Link                    </a>
                   </div>
 
@@ -416,11 +413,10 @@ const SingleProduct = () => {
                     <p className='mb-0'>Based on {ProductState?.reviews?.length} Reviews</p>
                   </div>
                 </div>
-                {
-                  orderedProduct && (<div>
-                    <a href="" className='text-dark text-decoration-underline'>Write a Review</a>
-                  </div>)
-                }
+                <div>
+                  <a href="#review" className='text-dark text-decoration-underline'>Write a Review</a>
+                </div>
+
               </div>
               <div className="review-form py-4" >
                 <h4>Write a Review</h4>

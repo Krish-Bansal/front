@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import * as yup from "yup"
 import { Container, Row, Col } from 'react-bootstrap';
 import CustomInput from '../components/CustomInput'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import { forgotPasswordToken, loginUser } from '../features/user/userSlice'
+import { forgotPasswordToken } from '../features/user/userSlice'
 import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 
 const images = [
   require('../assests/285820107_969410360393154_8615687616660637758_n.jpg'),
   require('../assests/299934016_606137061154381_4926188596946588395_n.jpg'),
-  require("../assests/315897274_1310933299654769_6150792394996701061_n.jpg"),
-  require("../assests/299228253_760910808572564_2479402739618947677_n.jpg"),
+  // require("../assests/315897274_131093299654769_6150792394996701061_n.jpg"),
   require("../assests/174304971_162941172375004_4470709580256700664_n.jpg"),
   require("../assests/291986335_580280366956910_247166510855750651_n.jpg"),
   require("../assests/299855809_464251461968427_3382595852652178942_n.jpg"),
@@ -39,7 +38,7 @@ const ForgotPassword = () => {
     }, 5500);
     return () => clearInterval(intervalId)
   }, [])
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -56,7 +55,7 @@ const ForgotPassword = () => {
         <Row>
           <Col md={6} className='p-0'>
 
-            <img src={images[currentImageIndex]} alt="DEFY Picture" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
 
 
           </Col>

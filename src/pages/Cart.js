@@ -23,6 +23,7 @@ const Cart = () => {
   const userCartState = useSelector(state => state.auth.cartProducts)
   useEffect(() => {
     dispatch(getUserCart(config2))
+    // eslint-disable-next-line
   }, [])
   useEffect(() => {
     if (ProductUpdateDetail !== null) {
@@ -32,6 +33,7 @@ const Cart = () => {
       }, 200)
 
     }
+    // eslint-disable-next-line
   }, [ProductUpdateDetail])
 
   const deleteACartProduct = (id) => {
@@ -84,16 +86,11 @@ const Cart = () => {
 
                 {
                   userCartState && userCartState?.map((item, index) => {
-                    const existingItem = userCartState.find(
-                      (cartItem) =>
-                        cartItem.productId._id === item.productId._id &&
-                        cartItem.size === item.size
-                    );
                     return (
                       <div key={index} className='cart-data py-3 mb-2 d-flex justify-content-between align-items-center'>
                         <div className='cart-col-1 d-flex align-items-center gap-15'>
                           <div className='w-25'>
-                            <img src={item?.productId?.images[0]?.url} alt="product image" className='img-fluid' />
+                            <img src={item?.productId?.images[0]?.url} alt="Product 1" className='img-fluid' />
 
                           </div>
                           <div className='w-75'>

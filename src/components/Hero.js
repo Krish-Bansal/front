@@ -2,8 +2,7 @@ import React from 'react';
 import './Hero.css';
 import { Carousel } from 'react-bootstrap';
 import { Link } from "react-router-dom"
-import { base_url } from '../utils/axiosConfig';
-import axios from "axios"
+
 // const handleShopNowClick2 = async () => {
 //   try {
 //     const response = await axios.get(`${base_url}product?category=Pant`);

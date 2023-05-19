@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap';
 
 import CustomInput from '../components/CustomInput'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import * as yup from 'yup'
 import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { useFormik } from "formik"
 import { resetPassword } from '../features/user/userSlice'
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
 
 
 const images = [
@@ -33,11 +33,11 @@ const passwordSchema = yup.object({
   password: yup.string().required("Password is Required")
 })
 const ResetPassword = () => {
-  const [showPassword, setShowPassword] = useState(false);
-
-  const toggleShowPassword = () => {
-    setShowPassword(prevShowPassword => !prevShowPassword);
-  };
+  // const [showPassword, setShowPassword] = useState(false);
+  // console.log(showPassword)
+  // const toggleShowPassword = () => {
+  //   setShowPassword(prevShowPassword => !prevShowPassword);
+  // };
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -48,7 +48,7 @@ const ResetPassword = () => {
   const location = useLocation();
   const getToken = location.pathname.split("/")[2]
   console.log(getToken)
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
@@ -65,7 +65,7 @@ const ResetPassword = () => {
       <Container fluid>
         <Row>
           <Col md={6} className='p-0'>
-            <img src={images[currentImageIndex]} alt="DEFY Picture" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
           </Col>
           <Col style={{ fontFamily: "sans-serif" }}>
             <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />

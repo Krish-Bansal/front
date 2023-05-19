@@ -36,7 +36,7 @@ const Contact = () => {
       <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.62642004159!2d85.27744113023991!3d27.689281324788567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19db552e700d%3A0xe8834659e01dc80c!2sDEFY%20LIFESTYLE!5e0!3m2!1sen!2snp!4v1679850407862!5m2!1sen!2snp" width="600" height="450" className='border-0 w-100' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14131.62642004159!2d85.27744113023991!3d27.689281324788567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19db552e700d%3A0xe8834659e01dc80c!2sDEFY%20LIFESTYLE!5e0!3m2!1sen!2snp!4v1679850407862!5m2!1sen!2snp" width="600" height="450" className='border-0 w-100' allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade" title='location'>
             </iframe>
           </div>
           <div className="col-12 mt-5">

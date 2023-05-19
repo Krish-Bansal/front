@@ -11,18 +11,18 @@ import Container from '../components/Container'
 import { getAllProducts } from '../features/products/productSlice'
 
 const OurStore = () => {
-  const [categories, setCategories] = useState([])
-  const [tags, setTags] = useState([])
+  // const [categories, setCategories] = useState([])
+  // const [tags, setTags] = useState([])
   const [grid, setGrid] = useState(4);
   // const [colors, setColors] = useState([])
 
   const productState = useSelector((state) => state?.product?.product);
   //Filter States
-  const [tag, setTag] = useState([])
-  const [category, setCategory] = useState([])
+  // const [tag, setTag] = useState([])
+  // const [category, setCategory] = useState([])
   const dispatch = useDispatch();
-  const [minPrice, setMinPrice] = useState(null);
-  const [maxPrice, setMaxPrice] = useState(null)
+  // const [minPrice, setMinPrice] = useState(null);
+  // const [maxPrice, setMaxPrice] = useState(null)
   const [sort, setSort] = useState(null)
   console.log(sort);
   useEffect(() => {
@@ -35,15 +35,16 @@ const OurStore = () => {
       newtags.push(element.tags)
       newColors.push(element.color)
     }
-    setCategories(category)
-    setTags(newtags)
+    // setCategories(category)
+    // setTags(newtags)
   }, [productState])
 
   useEffect(() => {
     getProducts()
-  }, [sort, tag, category, minPrice, maxPrice])
+    // eslint-disable-next-line
+  }, [sort])
   const getProducts = () => {
-    dispatch(getAllProducts({ sort, tag, category, minPrice, maxPrice }))
+    dispatch(getAllProducts({ sort }))
   }
   return (
     <>

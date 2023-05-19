@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { FaRegPaperPlane } from 'react-icons/fa'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io"
 import { CiMail } from "react-icons/ci"
 
@@ -34,10 +33,10 @@ const Footer = () => {
                 </div>
 
                 <div className='social-icons flex align-middle gap-10 fs-2'>
-                  <a href="">
+                  <a href="https://www.instagram.com/defy.lifestyle/?hl=en">
                     <IoLogoInstagram />
                   </a>
-                  <a href="">
+                  <a href="https://www.facebook.com/defylifestyle/">
                     <IoLogoFacebook />
                   </a>
 

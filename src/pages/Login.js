@@ -9,7 +9,7 @@ import Logo1 from "../assests1/defy_logo-removebg-preview.png";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../features/user/userSlice'
 import { AiOutlineArrowRight } from "react-icons/ai"
-import { toast } from 'react-toastify';
+
 
 const images = [
   require('../assests/285820107_969410360393154_8615687616660637758_n.jpg'),
@@ -68,6 +68,7 @@ const Login = () => {
       if (authState.isError === true) {
       }
     }
+    // eslint-disable-next-line
   }, [authState])
 
 
@@ -82,7 +83,7 @@ const Login = () => {
       <Container fluid>
         <Row>
           <Col md={6} className="p-0">
-            <img src={images[currentImageIndex]} alt="DEFY Picture" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
           </Col>
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>
@@ -129,34 +130,34 @@ const Login = () => {
 
 
 
-{/* <div className="col-6 p-0">
+// {/* <div className="col-6 p-0">
 
-                  <div className="auth-card">
-                    <h3 className='text-center mb-3'>Login</h3>
-                    <form action="" className='d-flex flex-column gap-15' onSubmit={formik.handleSubmit}>
-                      <CustomInput type="email" name='email' placeholder='Email'
-                        onChange={formik.handleChange("email")}
-                        onBlur={formik.handleBlur("email")}
-                        value={formik.values.email} />
-                      <div className="error">
-                        {formik.touched.email && formik.errors.email}
-                      </div>
-                      <CustomInput type="password" name='password' placeholder='Password' onChange={formik.handleChange("password")}
-                        onBlur={formik.handleBlur("password")}
-                        value={formik.values.password} />
-                      <div className="error">
-                        {formik.touched.password && formik.errors.password}
-                      </div>
-                      <div>
-                        <Link to="/forgot-password">Forgot your Password?</Link>
-                        <div className=' mt-3 d-flex justify-content-center align-items-center gap-15'>
-                          <button className='button border-0' type='submit'>Login</button>
-                          <Link className='button signup' to="/signup">SignUp</Link>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div> */}
+//                   <div className="auth-card">
+//                     <h3 className='text-center mb-3'>Login</h3>
+//                     <form action="" className='d-flex flex-column gap-15' onSubmit={formik.handleSubmit}>
+//                       <CustomInput type="email" name='email' placeholder='Email'
+//                         onChange={formik.handleChange("email")}
+//                         onBlur={formik.handleBlur("email")}
+//                         value={formik.values.email} />
+//                       <div className="error">
+//                         {formik.touched.email && formik.errors.email}
+//                       </div>
+//                       <CustomInput type="password" name='password' placeholder='Password' onChange={formik.handleChange("password")}
+//                         onBlur={formik.handleBlur("password")}
+//                         value={formik.values.password} />
+//                       <div className="error">
+//                         {formik.touched.password && formik.errors.password}
+//                       </div>
+//                       <div>
+//                         <Link to="/forgot-password">Forgot your Password?</Link>
+//                         <div className=' mt-3 d-flex justify-content-center align-items-center gap-15'>
+//                           <button className='button border-0' type='submit'>Login</button>
+//                           <Link className='button signup' to="/signup">SignUp</Link>
+//                         </div>
+//                       </div>
+//                     </form>
+//                   </div>
+//                 </div> */}
 
 
 

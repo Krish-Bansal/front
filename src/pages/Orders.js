@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import BreadCrumb from '../components/BreadCrumb'
 import Container from '../components/Container'
 import { useDispatch, useSelector } from 'react-redux'
 import { getOrders } from '../features/user/userSlice'
@@ -21,6 +20,7 @@ const Orders = () => {
   console.log(orderState)
   useEffect(() => {
     dispatch(getOrders(config2))
+    // eslint-disable-next-line
   }, [])
   return (
     <>

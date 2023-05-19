@@ -32,12 +32,11 @@ const Home = () => {
   useEffect(() => {
     getallProducts();
     getUserCart(config2);
-    ;
+    // eslint-disable-next-line
   }, [])
   const getallProducts = () => {
     dispatch(getAllProducts())
     dispatch(getTotalReviews())
-    // dispatch(getHomeReviews())
     // dispatch(getUserCart(config2))
   }
   return (

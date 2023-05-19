@@ -21,6 +21,7 @@ const Wishlist = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     getWishlistFromDb();
+    // eslint-disable-next-line
   }, []);
   const getWishlistFromDb = () => {
     dispatch(getUserProductWishlist(config2))

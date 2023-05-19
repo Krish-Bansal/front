@@ -1,12 +1,7 @@
 import React from 'react'
-import ReactStars from 'react-rating-stars-component'
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import wish from "../images/wish.svg"
-import addcart from "../images/add-cart.svg"
-import view from "../images/view.svg"
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { addToWishlist } from '../features/products/productSlice'
-import { IoMdHeartEmpty } from "react-icons/io"
 import { AiOutlineHeart } from "react-icons/ai"
 
 const ProductCard = (props) => {
@@ -33,7 +28,7 @@ const ProductCard = (props) => {
           return (
             <div
               key={index}
-              className={`${location.pathname == "/product" ? `gr-${grid} cursor-pointer` : "col-3 cursor-pointer"}`}
+              className={`${location.pathname === "/product" ? `gr-${grid} cursor-pointer` : "col-3 cursor-pointer"}`}
               onClick={() => {
                 navigate("/product/" + item?._id);
                 window.scrollTo(0, 0);
@@ -53,8 +48,8 @@ const ProductCard = (props) => {
                   </button>
                 </div> */}
                 <div className="product-image">
-                  <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={160} />
-                  <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
+                  <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 1" width={160} />
+                  <img src={item?.images[1]?.url} className='img-fluid' alt="Product 2" />
                 </div>
                 <div className="product-details">
                   <h5 className="product-title">
