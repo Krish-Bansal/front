@@ -6,15 +6,31 @@ import Color from "../components/Color"
 import Container from '../components/Container'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAProduct } from '../features/products/productSlice'
+import { addReview, getAProduct } from '../features/products/productSlice'
 import { toast } from 'react-toastify'
 import { addProdToCart, getUserCart } from "../features/user/userSlice"
 import { addToWishlist } from '../features/products/productSlice'
 import DOMPurify from 'dompurify';
+import * as yup from "yup"
+import { useFormik } from "formik"
+import StarRatings from 'react-star-ratings';
 
-
+const reviewSchema = yup.object().shape({
+  rating: yup
+    .number()
+    .min(1, 'Rating must be at least 1')
+    .max(5, 'Rating cannot exceed 5')
+    .required('Rating is required'),
+  comment: yup
+    .string()
+    .trim()
+    .required('Comment is required')
+    .max(500, 'Comment cannot exceed 500 characters'),
+});
 
 const SingleProduct = () => {
+
+  // Authorization Token
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
   const config2 = {
@@ -24,7 +40,9 @@ const SingleProduct = () => {
       Accept: "application/json",
     },
   };
+  // Authorization Token
 
+  // converting html tags in description  
   const descriptionRef = useRef(null);
   useEffect(() => {
     if (descriptionRef.current) {
@@ -32,6 +50,7 @@ const SingleProduct = () => {
       descriptionRef.current.innerHTML = DOMPurify.sanitize(description);
     }
   }, []);
+  // converting html tags in description  
   const [color, setColor] = useState(null)
   const [quantity, setQuantity] = useState(1)
   const [alreadyAdded, setAlreadyAdded] = useState(false);
@@ -42,6 +61,8 @@ const SingleProduct = () => {
   const ProductState = useSelector(state => state?.product?.singleproduct)
   const productsState = useSelector(state => state?.product?.product)
   const cartState = useSelector(state => state?.auth?.cartProducts)
+  const userState = useSelector(state => state?.auth?.user)
+
   useEffect(() => {
     dispatch(getAProduct(getProductId))
     // dispatch(getUserCart(config2))
@@ -53,6 +74,7 @@ const SingleProduct = () => {
       }
     }
   })
+  console.log(userState)
   const uploadCart = () => {
     if (selectedSize === null) {
       toast.error("Please choose a size");
@@ -64,7 +86,7 @@ const SingleProduct = () => {
     }
   };
 
-
+  // image selection 
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     setSelectedImage(ProductState?.images[0]?.url || '');
@@ -72,10 +94,66 @@ const SingleProduct = () => {
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
+  // image selection 
+
+
+  // add a review part 
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
+
+  const handleRatingChange = (newRating) => {
+    setRating(newRating);
+  };
+
+  const handleCommentChange = (e) => {
+    setComment(e.target.value);
+  };
+  const formik = useFormik({
+    initialValues: {
+      rating: 0,
+      comment: '',
+    },
+    validationSchema: reviewSchema,
+    onSubmit: (values) => {
+      const updatedValues = {
+        ...values,
+        postedBy: loggedinUser.name  // Replace `loggedInUserName` with the actual variable holding the user's name
+      };
+      console.log(updatedValues)
+      dispatch(addReview({ id: getProductId, values: updatedValues, config: config2 }))
+      formik.resetForm();
+    },
+  });
+
+  // total rating 
+  const reviews = ProductState?.reviews; // Assuming ProductState contains the reviews data
+
+  // Calculate the total rating
+  let totalRating = 0;
+  if (reviews && reviews.length > 0) {
+    reviews.forEach(review => {
+      totalRating += review.rating;
+    });
+    totalRating /= reviews.length;
+  }
+
+  // total rating 
+
+  const loggedinUser = {
+    name: userState?.firstname + " " + userState?.lastname
+  };
+
+  // add a review part 
+
+
+
+
   // const props = {
   //   img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
   // }
 
+
+  // size selection 
   const [selectedSize, setSelectedSize] = useState(null);
 
   const handleSizeSelection = (size) => {
@@ -86,7 +164,17 @@ const SingleProduct = () => {
       setSelectedSize(size);
     }
   };
-  const [orderedProduct, setorderedProduct] = useState(true);
+  // size selection 
+  const [orderedProduct, setOrderedProduct] = useState(false);
+  useEffect(() => {
+    // Check if the product is in the user's order history
+    // const isProductOrdered = checkIfProductOrdered(getProductId); 
+    // Replace `checkIfProductOrdered` with your logic to determine if the product is ordered
+
+    // setOrderedProduct(isProductOrdered);
+  }, [getProductId]);
+
+  // copy to clipboard 
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
     textField.innerText = text;
@@ -95,6 +183,8 @@ const SingleProduct = () => {
     document.execCommand("copy");
     textField.remove();
   }
+  // copy to clipboard 
+
   const closeModal = () => { };
   const [popularProduct, setPopularProduct] = useState([])
   useEffect(() => {
@@ -150,8 +240,16 @@ const SingleProduct = () => {
                   Rs.{ProductState?.price}
                 </p>
                 <div className="d-flex align-items-center gap-10">
-                  <ReactStars count={5} size={24} activeColor='#ffd700' value={ProductState?.totalrating} edit={false} />
-                  <p className='mb-0 t-review'>(2 Reviews)</p>
+                  <StarRatings
+                    rating={totalRating}
+                    starRatedColor="#ffd700"
+                    starEmptyColor="#e4e4e4"
+                    starDimension="18px"
+                    starSpacing="1px"
+                    numberOfStars={5}
+                    name="rating"
+                  />
+                  <p className='mb-0 t-review'>({ProductState?.reviews?.length} Reviews)</p>
                 </div>
                 <a href="#review" className='review-btn'>
                   Write a Review
@@ -302,12 +400,20 @@ const SingleProduct = () => {
             <div className="review-inner-wrapper">
               <div className="review-head d-flex justify-content-between align-items-end">
                 <div>
-                  <h4 className=' mb-2'>
+                  <h4 className='mb-2'>
                     Customer Reviews
                   </h4>
                   <div className='d-flex gap-10 align-items-center'>
-                    <ReactStars count={5} size={24} activeColor='#ffd700' value={4} edit={false} />
-                    <p className='mb-0'>Based on 2 Reviews</p>
+                    <StarRatings
+                      rating={totalRating}
+                      starRatedColor="#ffd700"
+                      starEmptyColor="#e4e4e4"
+                      starDimension="18px"
+                      starSpacing="1px"
+                      numberOfStars={5}
+                      name="rating"
+                    />
+                    <p className='mb-0'>Based on {ProductState?.reviews?.length} Reviews</p>
                   </div>
                 </div>
                 {
@@ -318,31 +424,72 @@ const SingleProduct = () => {
               </div>
               <div className="review-form py-4" >
                 <h4>Write a Review</h4>
-                <form action="" className='d-flex flex-column gap-15'>
+                <form onSubmit={formik.handleSubmit} className='d-flex flex-column gap-15'>
+                  {/* Rating input */}
                   <div>
-                    <ReactStars count={5} size={24} activeColor='#ffd700' value={4} edit={true} />
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      activeColor='#ffd700'
+                      value={formik.values.rating}
+                      edit={true}
+                      onChange={(newRating) => formik.setFieldValue('rating', newRating)}
+                    />
+                    {formik.touched.rating && formik.errors.rating && (
+                      <div className='error'>{formik.errors.rating}</div>
+                    )}
                   </div>
+                  {/* Comment input */}
                   <div>
-                    <textarea name="" id="" cols="30" rows="4" className='w-100 form-control' placeholder='Comments'>
-
-                    </textarea>
+                    <textarea
+                      name='comment'
+                      id='comment'
+                      cols='30'
+                      rows='4'
+                      className='w-100 form-control'
+                      placeholder='Comments'
+                      value={formik.values.comment}
+                      onChange={formik.handleChange}
+                    ></textarea>
+                    {formik.touched.comment && formik.errors.comment && (
+                      <div className='error'>{formik.errors.comment}</div>
+                    )}
                   </div>
+                  {/* Submit button */}
                   <div className='d-flex justify-content-end'>
-                    <button className='button border-0'>Submit Review</button>
+                    <button type='submit' className='button border-0'>
+                      Submit Review
+                    </button>
                   </div>
-
                 </form>
               </div>
-              <div className="reviews mt-4">
-                <div className="review">
-                  <div className='d-flex gap-10 align-items-center'>
-                    <h6 className='mb-0'>Krish Bansal</h6>
-                    <ReactStars count={5} size={24} activeColor='#ffd700' value={4} edit={false} />
-                  </div>
+              <h2 className='text-lg mt-2'>Recent Reviews</h2>
+              <div className="reviews">
+                <div>
+                  {ProductState?.reviews
+                    ?.slice() // Create a shallow copy of the reviews array
+                    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort the reviews by createdAt in descending order
+                    ?.slice(0, 3) // Get the first three reviews
+                    ?.map((review, index) => (
+                      <div className="review mt-4 border-t-2" key={index}>
 
-                  <p className='mt-3'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore tempora ratione, voluptatibus eligendi dignissimos eos? </p>
 
+                        <div className="d-flex align-items-center">
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            activeColor="#ffd700"
+                            edit={false}
+                            value={review.rating}
+                          />
+                        </div>
+                        <h6 className='text-lg text-[#ffd700]'>{review.postedBy}</h6>
+                        <p className='text-xs'>{review?.createdAt && new Date(review.createdAt).toLocaleDateString()}</p>
+                        <h2 className="mt-1 text-lg">{review.comment}</h2>
+                      </div>
+                    ))}
                 </div>
+
               </div>
             </div>
           </div>

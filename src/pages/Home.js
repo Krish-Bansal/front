@@ -3,17 +3,16 @@ import Marquee from 'react-fast-marquee'
 import ProductCard from '../components/ProductCard'
 import SpecialProduct from '../components/SpecialProduct'
 import Container from '../components/Container'
-import { services } from '../utils/Data'
 import Meta from '../components/Meta'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllProducts } from '../features/products/productSlice'
-import ReactStars from 'react-rating-stars-component'
+import { getAllProducts, getTotalReviews } from '../features/products/productSlice'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import wish from "../images/wish.svg"
-import addcart from "../images/add-cart.svg"
-import view from "../images/view.svg"
 import { addToWishlist } from '../features/products/productSlice'
 import { getUserCart } from '../features/user/userSlice'
+import StarRatings from 'react-star-ratings';
+import { Carousel } from 'react-bootstrap';
+
+
 
 
 const Home = () => {
@@ -30,14 +29,18 @@ const Home = () => {
     dispatch(addToWishlist(id));
   };
   const productState = useSelector((state) => state.product.product)
+  const totalState = useSelector((state) => state.product.totalreviews)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     getallProducts();
-    getUserCart(config2)
+    getUserCart(config2);
+    ;
   }, [])
   const getallProducts = () => {
     dispatch(getAllProducts())
+    dispatch(getTotalReviews())
+
     // dispatch(getUserCart(config2))
   }
   return (
@@ -378,6 +381,33 @@ const Home = () => {
           })}
         </div>
       </Container >
+      <Container class1="pb-5">
+        <h3 className='review-heading uppercase'>our Customer Speaks for us</h3>
+        <div className='text-center'>
+          <StarRatings
+            rating={5}
+            starRatedColor="#ffd700"
+            starEmptyColor="#e4e4e4"
+            starDimension="18px"
+            starSpacing="1px"
+            numberOfStars={5}
+            name="rating"
+          /><br />
+          <p className='underline'>from {totalState?.totalReviews} reviews</p>
+        </div>
+        <div className='text-center' >
+          <Carousel pause={false} interval={4500}
+          //  fade={true} interval={4000} className='custom-carousel'
+          >
+            <Carousel.Item>
+              abcd
+            </Carousel.Item>
+            <Carousel.Item>
+              efgh
+            </Carousel.Item>
+          </Carousel>
+        </div>
+      </Container>
 
 
     </>

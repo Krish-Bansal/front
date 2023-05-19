@@ -25,9 +25,9 @@ const Hero = () => {
     >
       <Carousel.Item>
         <div className='hero' style={{
-          backgroundImage: `url(${require('../assests/299934016_606137061154381_4926188596946588395_n.jpg')})`,
+          backgroundImage: `url(${require('../assests/343291640_225935870131192_731814446337725818_n.jpg')})`,
           backgroundRepeat: "no-repeat",
-          backgroundPosition: "center "
+          backgroundPosition: "bottom"
         }}>
           <div className='overlay'></div>
           <div className='content'>

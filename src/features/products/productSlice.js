@@ -27,7 +27,22 @@ export const addToWishlist = createAsyncThunk(
     }
   }
 );
-
+export const addReview = createAsyncThunk("product/review",
+  async ({ id, values, config }, thunkAPI) => {
+    // console.log(id, values, config)
+    try {
+      return await productService.addaReview({ id, values, config })
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error)
+    }
+  })
+export const getTotalReviews = createAsyncThunk("product/total-reviews", async (thunkAPI) => {
+  try {
+    return await productService.getReviews()
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error)
+  }
+})
 
 const productState = {
   product: "",
@@ -88,6 +103,32 @@ export const productSlice = createSlice({
         state.singleproduct = action.payload;
         state.message = "Product Fetched Successfully";
       }).addCase(getAProduct.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(addReview.pending, (state) => {
+        state.isLoading = true;
+      }).addCase(addReview.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.productreview = action.payload;
+        toast.success("Review Added")
+      }).addCase(addReview.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      }).addCase(getTotalReviews.pending, (state) => {
+        state.isLoading = true;
+      }).addCase(getTotalReviews.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.totalreviews = action.payload;
+      }).addCase(getTotalReviews.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;

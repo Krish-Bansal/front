@@ -419,6 +419,14 @@ a {
   margin-bottom: 80px;
 }
 
+.review-heading {
+  text-align: center;
+  font-family: Futura, sans-serif;
+  font-weight: 600;
+  font-size: 30.6px;
+
+}
+
 /* home-wrapper 2 Starts Here */
 .home-wrapper-2 {
   background-color: var(--color-ffffff);

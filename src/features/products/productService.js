@@ -15,14 +15,25 @@ const getSingleProduct = async (id) => {
   }
 }
 const addToWishlist = async (prodId, config) => {
-  console.log(prodId, config)
   const response = await axios.put(`${base_url}product/wishlist`, { prodId }, config);
   if (response.data) {
     return response.data;
   }
 }
+const addaReview = async (id, values, config) => {
+  const response = await axios.post(`${base_url}product/${id.id}/reviews`, id.values, id.config,)
+  if (response.data) {
+    return response.data
+  }
+}
+const getReviews = async () => {
+  const response = await axios.get(`${base_url}product/reviews/total`)
+  if (response.data) {
+    return response.data
+  }
+}
 
 
 export const productService = {
-  getProducts, addToWishlist, getSingleProduct
+  getProducts, addToWishlist, getSingleProduct, addaReview, getReviews
 }
