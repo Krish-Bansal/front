@@ -16,32 +16,9 @@
 
 }
 
-/* abcd 
-/* Color of the links BEFORE scroll */
-/* .navbar-scroll .nav-link,
-.navbar-scroll .navbar-toggler .fa-bars {
-  color: #fff;
-} */
 
-/* Color of the links AFTER scroll */
-/* .navbar-scrolled .nav-link,
-.navbar-scrolled .navbar-toggler .fa-bars {
-  color: #4f4f4f;
-} */
 
-/* Color of the navbar AFTER scroll */
-/* .navbar-scrolled {
-  background-color: #fff;
-} */
 
-/* An optional height of the navbar AFTER scroll */
-/* .navbar.navbar-scroll.navbar-scrolled {
-  padding-top: 5px;
-  padding-bottom: 5px;
-} */
-*/
-
-/* dcba  */
 img {
   -webkit-user-drag: none;
   /* Disable dragging for webkit browsers */
@@ -238,8 +215,6 @@ a {
 }
 
 .header-bottom {
-  /* background: linear-gradient(120deg, #FF0000 0%, #2400FF 100%), linear-gradient(120deg, #FA00FF 0%, #208200 100%), linear-gradient(130deg, #00F0FF 0%, #000000 100%), radial-gradient(110% 140% at 15% 90%, #ffffff 0%, #1700A4 100%), radial-gradient(100% 100% at 50% 0%, #AD00FF 0%, #00FFE0 100%), radial-gradient(100% 100% at 50% 0%, #00FFE0 0%, #7300A9 80%), linear-gradient(30deg, #7ca304 0%, #2200AA 100%);
-  background-blend-mode: overlay, color, overlay, difference, color-dodge, difference, normal; */
   background-color: var(--color-1c1c1b);
 }
 
@@ -493,7 +468,6 @@ a {
 
 .product-image img {
   object-fit: contain;
-
 }
 
 .product-image img:last-child {
@@ -531,10 +505,10 @@ a {
   pointer-events: all;
 }
 
-/* .product-card .product-details h6 {
+ /* .product-card .product-details h6 {
   color: var(--color-bf4800);
   font-size: 13px;
-} */
+}  */
 
 .product-card .product-details h5 {
   text-align: center;
@@ -1336,4 +1310,34 @@ a {
 
 .checkout-left-data .website-name {
   font-size: 29px;
+}
+
+
+
+
+/* Carousel  */
+
+.review-carousel .carousel-control-prev-icon {
+  filter: invert(100%);
+}
+
+.review-carousel .carousel-control-next-icon {
+  filter: invert(100%);
+}
+
+.review-item {
+  text-align: center;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  /* Adjust the height as needed */
+}
+
+.review-image {
+  max-width: 100%;
+  max-height: 100%;
 }

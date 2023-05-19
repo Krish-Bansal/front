@@ -88,10 +88,6 @@ input.rbt-input-main.form-control.rbt-input.my-menu-class-dark::placeholder {
 
 
 .header .navbar {
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
-  /* max-width: 1240px; */
   margin: 0px 20px;
   height: 100%;
   padding: 0 1rem;

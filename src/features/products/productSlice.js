@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { productService } from "./productService";
 import { applyAcoupon } from "../user/userSlice";
 
+
 export const getAllProducts = createAsyncThunk("product/get", async (data, thunkAPI) => {
   try {
     return await productService.getProducts(data)
@@ -29,13 +30,13 @@ export const addToWishlist = createAsyncThunk(
 );
 export const addReview = createAsyncThunk("product/review",
   async ({ id, values, config }, thunkAPI) => {
-    // console.log(id, values, config)
     try {
       return await productService.addaReview({ id, values, config })
     } catch (error) {
       return thunkAPI.rejectWithValue(error)
     }
   })
+
 export const getTotalReviews = createAsyncThunk("product/total-reviews", async (thunkAPI) => {
   try {
     return await productService.getReviews()
@@ -43,6 +44,9 @@ export const getTotalReviews = createAsyncThunk("product/total-reviews", async (
     return thunkAPI.rejectWithValue(error)
   }
 })
+
+
+
 
 const productState = {
   product: "",

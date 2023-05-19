@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react'
-import Marquee from 'react-fast-marquee'
-import ProductCard from '../components/ProductCard'
-import SpecialProduct from '../components/SpecialProduct'
 import Container from '../components/Container'
 import Meta from '../components/Meta'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllProducts, getTotalReviews } from '../features/products/productSlice'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { addToWishlist } from '../features/products/productSlice'
+import { useNavigate } from 'react-router-dom'
+// import { addToWishlist } from '../features/products/productSlice'
 import { getUserCart } from '../features/user/userSlice'
 import StarRatings from 'react-star-ratings';
 import { Carousel } from 'react-bootstrap';
@@ -25,9 +22,9 @@ const Home = () => {
       Accept: "application/json",
     },
   };
-  const addToWish = (id) => {
-    dispatch(addToWishlist(id));
-  };
+  // const addToWish = (id) => {
+  //   dispatch(addToWishlist(id));
+  // };
   const productState = useSelector((state) => state.product.product)
   const totalState = useSelector((state) => state.product.totalreviews)
   const navigate = useNavigate();
@@ -40,7 +37,7 @@ const Home = () => {
   const getallProducts = () => {
     dispatch(getAllProducts())
     dispatch(getTotalReviews())
-
+    // dispatch(getHomeReviews())
     // dispatch(getUserCart(config2))
   }
   return (
@@ -220,8 +217,8 @@ const Home = () => {
                       </button>
                     </div> */}
                     <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
-                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 2" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="Product 1" />
 
                     </div>
                     <div className="product-details">
@@ -250,6 +247,7 @@ const Home = () => {
                 </div >
               )
             }
+            else { return null }
           })}
         </div>
       </Container>
@@ -283,8 +281,8 @@ const Home = () => {
                       </button>
                     </div> */}
                     <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
-                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 1" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="Product 2" />
 
                     </div>
                     <div className="product-details">
@@ -315,6 +313,7 @@ const Home = () => {
                 </div >
               )
             }
+            else { return null }
           })}
         </div>
       </Container>
@@ -346,8 +345,8 @@ const Home = () => {
                       </button>
                     </div> */}
                     <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="product image" width={300} />
-                      <img src={item?.images[1]?.url} className='img-fluid' alt="product image" />
+                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 1" width={300} />
+                      <img src={item?.images[1]?.url} className='img-fluid' alt="Product 2" />
 
                     </div>
                     <div className="product-details">
@@ -378,6 +377,7 @@ const Home = () => {
                 </div >
               )
             }
+            else { return null }
           })}
         </div>
       </Container >
@@ -393,19 +393,46 @@ const Home = () => {
             numberOfStars={5}
             name="rating"
           /><br />
-          <p className='underline'>from {totalState?.totalReviews} reviews</p>
+          <p className='underline'>from {totalState?.numberReviews} reviews</p>
         </div>
-        <div className='text-center' >
-          <Carousel pause={false} interval={4500}
-          //  fade={true} interval={4000} className='custom-carousel'
-          >
-            <Carousel.Item>
-              abcd
-            </Carousel.Item>
-            <Carousel.Item>
-              efgh
-            </Carousel.Item>
+        <div className='text-center mt-11 review-carousel'>
+          <Carousel pause={false} interval={4500} slide={true}>
+            {totalState?.allreviews?.map((review, index) => {
+              if (index % 3 === 0) {
+                const reviewsChunk = totalState?.allreviews.slice(index, index + 3);
+                return (
+                  <Carousel.Item key={index}>
+                    <div className="row px-6">
+                      {reviewsChunk.map((chunkedReview, chunkIndex) => (
+                        <div className="col" key={chunkIndex}>
+                          <StarRatings
+                            rating={chunkedReview?.rating}
+                            starRatedColor="#ffd700"
+                            starEmptyColor="#e4e4e4"
+                            starDimension="18px"
+                            starSpacing="1px"
+                            numberOfStars={5}
+                            name="rating"
+
+                          />
+                          <div className="review-item ">
+                            <div className="img-container mt-2">
+                              <img src={chunkedReview?.image} alt="" className="review-image img-fluid d-block mx-auto" />
+                            </div>
+                            <p className='porduct-data'>{chunkedReview.comment}</p>
+                            <p className='mt-2 font-bold'>{chunkedReview?.postedBy}</p>
+                            <h3 className='font-light fs-6'>{chunkedReview.productTitle}</h3>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </Carousel.Item>
+                );
+              }
+              return null;
+            })}
           </Carousel>
+
         </div>
       </Container>
 
