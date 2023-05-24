@@ -1,4 +1,4 @@
-export const base_url = "https://defy-lifestyle.onrender.com/"
+export const base_url = "https://defy-lifestyle.onrender.com/api/"
 const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
 export const config = {
