@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addToWishlist, getAProduct } from '../features/products/productSlice';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) => {
   const getTokenFromLocalStorage = localStorage.getItem('customer')
@@ -23,7 +23,7 @@ const ProductCard = (props) => {
   const addToWish = (id, config) => {
     dispatch(addToWishlist({ id, config }));
   };
-  const getProductId = location.pathname.split("/")[2]
+  // const getProductId = location.pathname.split("/")[2]
 
   return (
     <>
