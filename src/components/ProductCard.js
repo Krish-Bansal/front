@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addToWishlist, getAProduct } from '../features/products/productSlice';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = (props) => {
   const getTokenFromLocalStorage = localStorage.getItem('customer')
