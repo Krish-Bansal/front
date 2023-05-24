@@ -4,7 +4,7 @@ import ProductCard from '../components/ProductCard'
 import ReactStars from 'react-rating-stars-component'
 import Color from "../components/Color"
 import Container from '../components/Container'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addReview, getAProduct } from '../features/products/productSlice'
 import { toast } from 'react-toastify'

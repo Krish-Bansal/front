@@ -19,7 +19,7 @@ const ProductCard = (props) => {
   const { grid, data } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation()
+  // const location = useLocation()
   const addToWish = (id, config) => {
     dispatch(addToWishlist({ id, config }));
   };
