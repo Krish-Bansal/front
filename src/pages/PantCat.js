@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 import Container from '../components/Container'
 import { getAllProducts } from '../features/products/productSlice'
 
-const OurStore = () => {
+const PantCat = () => {
   const [grid, setGrid] = useState(4);
   const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const OurStore = () => {
       newColors.push(element.color)
     }
   }, [productState])
+
   useEffect(() => {
     getProducts()
     // eslint-disable-next-line
@@ -30,10 +31,12 @@ const OurStore = () => {
   const getProducts = () => {
     dispatch(getAllProducts({ sort }))
   }
+  const pantProducts = productState ? productState.filter(product => product.category === "Pant") : [];
+  const pantProductsCount = pantProducts.length;
   return (
     <>
-      <Meta title={"Our Store"} />
-      {/* <BreadCrumb title="Our Store" /> */}
+      <Meta title={"Pants"} />
+
       <Container class1="store-wrapper home-wrapper-2 py-[5rem]">
         <div className="row">
           {/* <div className="col-3">
@@ -175,7 +178,7 @@ const OurStore = () => {
                 </div>
                 <div className='d-flex align-items-center gap-10 grid'>
                   <p className="totalproducts mb-0">
-                    {productState?.length} Products
+                    {pantProductsCount} Products
                   </p>
                   <div className='d-flex gap-10 align-items-center'>
                     <img src="images/gr4.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(3) }} onLoad={() => { setGrid(3) }} />
@@ -186,9 +189,9 @@ const OurStore = () => {
                 </div>
               </div>
             </div>
-            <div className="products-list pb-3">
+            <div className="products-list pb-5">
               <div className="d-flex gap-10 flex-wrap">
-                <ProductCard data={productState ? productState : []} grid={grid} />
+                <ProductCard data={pantProducts} grid={grid} />
               </div>
             </div>
           </div>
@@ -198,4 +201,4 @@ const OurStore = () => {
   )
 }
 
-export default OurStore
+export default PantCat

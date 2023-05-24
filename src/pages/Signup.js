@@ -6,7 +6,7 @@ import CustomInput from '../components/CustomInput'
 import { useFormik } from "formik"
 import * as yup from 'yup'
 import { useDispatch } from "react-redux"
-import { registerUser } from '../features/user/userSlice'
+import { registerUser, resetState } from '../features/user/userSlice'
 import { useSelector } from "react-redux"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 
@@ -66,11 +66,13 @@ const Signup = () => {
     }
   })
   useEffect(() => {
-    if (authState?.createdUser !== null && authState?.isError === false) {
-      navigate("/login")
+    if (authState?.createdUser !== null && authState?.isSuccess === true && authState?.isError === false) {
+      navigate("/login");
+      dispatch(resetState())
     }
     // eslint-disable-next-line
-  }, [authState])
+  }, [authState]);
+
   // const [showPassword, setShowPassword] = useState(false);
 
   // const toggleShowPassword = () => {

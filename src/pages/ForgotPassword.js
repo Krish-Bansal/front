@@ -5,14 +5,15 @@ import { Container, Row, Col } from 'react-bootstrap';
 import CustomInput from '../components/CustomInput'
 import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
-import { forgotPasswordToken } from '../features/user/userSlice'
+import { forgotPasswordToken, resetState } from '../features/user/userSlice'
 import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { AiOutlineArrowLeft } from "react-icons/ai"
+import { useSelector } from "react-redux"
+
 
 const images = [
   require('../assests/285820107_969410360393154_8615687616660637758_n.jpg'),
   require('../assests/299934016_606137061154381_4926188596946588395_n.jpg'),
-  // require("../assests/315897274_131093299654769_6150792394996701061_n.jpg"),
   require("../assests/174304971_162941172375004_4470709580256700664_n.jpg"),
   require("../assests/291986335_580280366956910_247166510855750651_n.jpg"),
   require("../assests/299855809_464251461968427_3382595852652178942_n.jpg"),
@@ -31,6 +32,8 @@ const emailSchema = yup.object({
 });
 
 const ForgotPassword = () => {
+  const forgotPassErrorMessage = useSelector((state) => state.auth.forgotMsg);
+  const forgotPassSuccessMessage = useSelector((state) => state.auth.forgotSuccess);
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -46,6 +49,7 @@ const ForgotPassword = () => {
     },
     validationSchema: emailSchema,
     onSubmit: (values) => {
+      dispatch(resetState())
       dispatch(forgotPasswordToken(values))
     }
   })
@@ -70,25 +74,35 @@ const ForgotPassword = () => {
             <div className="mt-0 px-5 w-75 py-3">
               <h1 className='text-left title text-[#260810]' style={{ fontSize: "24px" }}>Forgot Password</h1>
               <p className='text-left text-[#2F4F5E]'>Please Enter your registered email to reset password</p>
-              <form action="" onSubmit={formik.handleSubmit} >
-                <CustomInput type="email" name='email' placeholder='Email' label="Email Address"
+              <form action="" onSubmit={formik.handleSubmit}>
+                <CustomInput
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  label="Email Address"
                   onChange={formik.handleChange("email")}
                   onBlur={formik.handleBlur("email")}
-                  value={formik.values.email} />
+                  value={formik.values.email}
+                />
                 <div className="error">
                   {formik.touched.email && formik.errors.email}
                 </div>
+                {forgotPassErrorMessage && (
+                  <div className="error">{forgotPassErrorMessage}</div>
+                )}
+                {forgotPassSuccessMessage && (
+                  <div className="success">{forgotPassSuccessMessage}</div>
+                )}
                 <div>
-
-                  <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3' type="submit" style={{ backgroundColor: "#FBA71A" }}>Send Link</button>
-
-
-
-
-
+                  <button
+                    className="border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3"
+                    type="submit"
+                    style={{ backgroundColor: "#FBA71A" }}
+                  >
+                    Send Link
+                  </button>
                 </div>
               </form>
-
             </div>
           </Col>
         </Row>

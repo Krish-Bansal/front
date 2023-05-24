@@ -3,10 +3,10 @@ import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import { updateProfile } from '../features/user/userSlice'
-import BreadCrumb from '../components/BreadCrumb'
 import Container from '../components/Container'
 import CustomInput from '../components/CustomInput'
 import { FiEdit } from "react-icons/fi"
+import Meta from '../components/Meta'
 
 
 
@@ -50,7 +50,7 @@ const Profile = () => {
   })
   return (
     <div>
-      <BreadCrumb title="My Profile" />
+      <Meta title="Update Profile" />
       <Container class1='cart-wrapper home-wrapper-2 py-5 update-profile'>
         <div className="row">
           <div className="col-12 ">

@@ -4,16 +4,17 @@ import ProductCard from '../components/ProductCard'
 import ReactStars from 'react-rating-stars-component'
 import Color from "../components/Color"
 import Container from '../components/Container'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addReview, getAProduct } from '../features/products/productSlice'
 import { toast } from 'react-toastify'
-import { addProdToCart, getUserCart } from "../features/user/userSlice"
+import { addProdToCart, getOrders, getUserCart } from "../features/user/userSlice"
 import { addToWishlist } from '../features/products/productSlice'
 import DOMPurify from 'dompurify';
 import * as yup from "yup"
 import { useFormik } from "formik"
 import StarRatings from 'react-star-ratings';
+
 
 const reviewSchema = yup.object().shape({
   rating: yup
@@ -62,9 +63,27 @@ const SingleProduct = () => {
   const productsState = useSelector(state => state?.product?.product)
   // const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
+  const orderState = useSelector(state => state?.auth?.getorderedProduct)
+  let isProductAddedToOrders = false;
+  console.log(ProductState)
+  orderState?.orders.forEach(orders => {
+    orders.orderItems.forEach(orderItem => {
+      console.log('Comparing:', orderItem.product?._id, 'with', getProductId);
+      if (orderItem.product?._id === getProductId) {
+        isProductAddedToOrders = true;
+      }
+    });
+  });
+
+
+
+  // console.log(orderItem)
 
   useEffect(() => {
     dispatch(getAProduct(getProductId))
+    if (userState !== null) {
+      dispatch(getOrders(config2))
+    }
     // dispatch(getUserCart(config2))
     // eslint-disable-next-line
   }, [])
@@ -180,25 +199,21 @@ const SingleProduct = () => {
   }
   // copy to clipboard 
 
-  const [popularProduct, setPopularProduct] = useState([])
+  const [allProducts, setAllProducts] = useState([])
   useEffect(() => {
-    let data = []
-    for (let index = 0; index < productsState.length; index++) {
-      const element = productsState[index];
-      if (element.tags === "popular") {
-        data.push(element)
-      }
-      setPopularProduct(data)
-    }
+    const filteredProducts = productsState.filter(
+      (product) => product._id !== getProductId
+    );
+    setAllProducts(filteredProducts);
     // eslint-disable-next-line
-  }, [ProductState])
+  }, [productsState, getProductId]);
 
   const addToWish = (id, config) => {
     dispatch(addToWishlist({ id, config }));
   };
   return (
     <>
-      <Meta title={"Product Name"} />
+      <Meta title={ProductState?.title} />
       {/* <BreadCrumb title="Product Name" /> */}
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
@@ -246,9 +261,11 @@ const SingleProduct = () => {
                   />
                   <p className='mb-0 t-review'>({ProductState?.reviews?.length} Reviews)</p>
                 </div>
-                <a href="#review" className='review-btn'>
-                  Write a Review
-                </a>
+                {isProductAddedToOrders && (
+                  <a href="#review" className='review-btn'>
+                    Write a Review
+                  </a>
+                )}
                 <p className='shipping'>Shipping calculated at checkout</p>
               </div>
               <div className="py-3">
@@ -322,10 +339,9 @@ const SingleProduct = () => {
                     <h3 className='product-heading'>Product Link :</h3>
                     <a
                       href={getProductId}
-                      onClick={() => {
-                        copyToClipboard(
-                          window.location.href
-                        );
+                      onClick={(e) => {
+                        e.preventDefault();
+                        copyToClipboard(window.location.href);
                       }}>
                       Copy Product Link                    </a>
                   </div>
@@ -414,51 +430,58 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <div>
-                  <a href="#review" className='text-dark text-decoration-underline'>Write a Review</a>
+                  {isProductAddedToOrders && (
+                    <a href="#review" className='text-dark text-decoration-underline'>
+                      Write a Review
+                    </a>
+                  )}
                 </div>
 
               </div>
-              <div className="review-form py-4" >
-                <h4>Write a Review</h4>
-                <form onSubmit={formik.handleSubmit} className='d-flex flex-column gap-15'>
-                  {/* Rating input */}
-                  <div>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      activeColor='#ffd700'
-                      value={formik.values.rating}
-                      edit={true}
-                      onChange={(newRating) => formik.setFieldValue('rating', newRating)}
-                    />
-                    {formik.touched.rating && formik.errors.rating && (
-                      <div className='error'>{formik.errors.rating}</div>
-                    )}
-                  </div>
-                  {/* Comment input */}
-                  <div>
-                    <textarea
-                      name='comment'
-                      id='comment'
-                      cols='30'
-                      rows='4'
-                      className='w-100 form-control'
-                      placeholder='Comments'
-                      value={formik.values.comment}
-                      onChange={formik.handleChange}
-                    ></textarea>
-                    {formik.touched.comment && formik.errors.comment && (
-                      <div className='error'>{formik.errors.comment}</div>
-                    )}
-                  </div>
-                  {/* Submit button */}
-                  <div className='d-flex justify-content-end'>
-                    <button type='submit' className='button border-0'>
-                      Submit Review
-                    </button>
-                  </div>
-                </form>
-              </div>
+              {isProductAddedToOrders && (
+                <div className="review-form py-4">
+                  <h4>Write a Review</h4>
+                  <form onSubmit={formik.handleSubmit} className='d-flex flex-column gap-15'>
+                    {/* Rating input */}
+                    <div>
+                      <ReactStars
+                        count={5}
+                        size={24}
+                        activeColor='#ffd700'
+                        value={formik.values.rating}
+                        edit={true}
+                        onChange={(newRating) => formik.setFieldValue('rating', newRating)}
+                      />
+                      {formik.touched.rating && formik.errors.rating && (
+                        <div className='error'>{formik.errors.rating}</div>
+                      )}
+                    </div>
+                    {/* Comment input */}
+                    <div>
+                      <textarea
+                        name='comment'
+                        id='comment'
+                        cols='30'
+                        rows='4'
+                        className='w-100 form-control'
+                        placeholder='Comments'
+                        value={formik.values.comment}
+                        onChange={formik.handleChange}
+                      ></textarea>
+                      {formik.touched.comment && formik.errors.comment && (
+                        <div className='error'>{formik.errors.comment}</div>
+                      )}
+                    </div>
+                    {/* Submit button */}
+                    <div className='d-flex justify-content-end'>
+                      <button type='submit' className='button border-0'>
+                        Submit Review
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
               <h2 className='text-lg mt-2'>Recent Reviews</h2>
               <div className="reviews">
                 <div>
@@ -467,7 +490,7 @@ const SingleProduct = () => {
                     ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort the reviews by createdAt in descending order
                     ?.slice(0, 3) // Get the first three reviews
                     ?.map((review, index) => (
-                      <div className="review mt-4 border-t-2" key={index}>
+                      <div className="review mt-3 border-t-2" key={index}>
 
 
                         <div className="d-flex align-items-center">
@@ -498,7 +521,7 @@ const SingleProduct = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard data={popularProduct} />
+          <ProductCard data={allProducts} grid={3} />
         </div>
       </Container>
     </>

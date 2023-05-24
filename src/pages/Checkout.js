@@ -144,11 +144,11 @@ const Checkout = (props) => {
                 aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link to="/cart" className='text-dark total-price'>Cart</Link>
+                    <Link to="/cart" className='total-price'>Cart</Link>
                   </li>
                   &nbsp;/
 
-                  <li className="breadcrumb-item total-price active">
+                  <li className="breadcrumb-item total-price active text-dark">
                     Shipping
                   </li>
                   &nbsp;
@@ -275,7 +275,6 @@ const Checkout = (props) => {
                   <div className="d-flex justify-content-between align-items-center">
                     <Link to="/cart" className='text-dark d-flex align-items-center'>
                       <BiArrowBack /> Return to Cart</Link>
-                    <Link className="button">Continue to Shipping</Link>
                     <button className='button' type="submit">Place Order
                     </button>
 
@@ -335,7 +334,7 @@ const Checkout = (props) => {
                 isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
               )}
               <div className="d-flex justify-content-between align-items-center">
-                <p className='mb-0 total'>Shipping</p>
+                <p className='mb-0 total'>Shipping (Cash on delivery)</p>
                 <p className='mb-0 total-price'>Rs.{shippingCost}</p>
                 <CustomModal
                   open={isModalOpen}

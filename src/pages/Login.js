@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../features/user/userSlice'
 import { AiOutlineArrowRight } from "react-icons/ai"
 
-
 const images = [
   require('../assests/285820107_969410360393154_8615687616660637758_n.jpg'),
   require('../assests/299934016_606137061154381_4926188596946588395_n.jpg'),

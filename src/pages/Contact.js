@@ -1,6 +1,6 @@
 import React from 'react'
 import Meta from '../components/Meta'
-import BreadCrumb from '../components/BreadCrumb'
+// import BreadCrumb from '../components/BreadCrumb'
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai"
 import { BiPhoneCall, BiInfoCircle } from "react-icons/bi"
 import Container from '../components/Container'
@@ -32,7 +32,7 @@ const Contact = () => {
   return (
     <>
       <Meta title={"Contact Us"} />
-      <BreadCrumb title="Contact Us" />
+      {/* <BreadCrumb title="Contact Us" /> */}
       <Container class1="contact-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -73,14 +73,16 @@ const Contact = () => {
                     </div>
                   </div>
                   <div>
-                    <textarea id=""
+                    <textarea
+                      name="comment"
+                      id="comment"
                       cols="30"
                       rows="4"
-                      className='w-100 form-control' placeholder='Comments'
-                      onChange={formik.handleChange("comment")}
-                      onBlur={formik.handleBlur("comment")}
-                      value={formik.values.comment}>
-                    </textarea>
+                      className="w-100 form-control"
+                      placeholder="Comments &#10;(Please mention order id for exchange/return request)"
+                      value={formik.values.comment}
+                      onChange={formik.handleChange}
+                    ></textarea>
                     <div className="error">
                       {formik.touched.comment && formik.errors.comment}
                     </div>

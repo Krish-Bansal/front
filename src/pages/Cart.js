@@ -60,7 +60,6 @@ const Cart = () => {
           {userCartState && userCartState.length === 0 && (
             <div className='flex justify-center align-items-center'>
               <div>
-                {/* <img src={nowish} alt="test" width={320} height={320} /> */}
               </div>
               <div className='no-wish-contents'>
                 <div classname="lottie">

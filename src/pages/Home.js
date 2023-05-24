@@ -206,7 +206,6 @@ const Home = () => {
                   key={index}
                   className='col-3' onClick={() => {
                     navigate("/product/" + item?._id);
-                    window.scrollTo(0, 0);
                   }}>
                   <div
                     className="product-card position-relative">
@@ -267,7 +266,6 @@ const Home = () => {
                   className='col-3'
                   onClick={() => {
                     navigate("/product/" + item?._id);
-                    window.scrollTo(0, 0);
                   }}
 
                 >
@@ -331,7 +329,6 @@ const Home = () => {
                   className='col-3'
                   onClick={() => {
                     navigate("/product/" + item?._id);
-                    window.scrollTo(0, 0);
                   }}
 
                 >
@@ -401,7 +398,7 @@ const Home = () => {
                 const reviewsChunk = totalState?.allreviews.slice(index, index + 3);
                 return (
                   <Carousel.Item key={index}>
-                    <div className="row px-6">
+                    <div className="row px-16">
                       {reviewsChunk.map((chunkedReview, chunkIndex) => (
                         <div className="col" key={chunkIndex}>
                           <StarRatings

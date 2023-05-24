@@ -2,6 +2,8 @@ import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
 
+
+
 export const registerUser = createAsyncThunk("auth/register", async (userData, thunkAPI) => {
   try {
     return await authService.register(userData)
@@ -96,7 +98,6 @@ export const forgotPasswordToken = createAsyncThunk("user/password/token", async
     return await authService.forgotPassToken(data)
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
-
   }
 })
 
@@ -141,9 +142,9 @@ export const authSlice = createSlice({
       state.isError = false;
       state.isSuccess = true;
       state.createdUser = action.payload;
-      if (state.isSuccess === true) {
-        toast.info("User Created Successfully")
-      }
+      // if (state.isSuccess === true) {
+      //   toast.info("User Created Successfully")
+      // }
     }).addCase(registerUser.rejected, (state, action) => {
       state.isLoading = false;
       state.isError = true;
@@ -324,9 +325,9 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.getorderedProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Orders Fetched Successfully")
-        }
+        // if (state.isSuccess === true) {
+        //   toast.success("Orders Fetched Successfully");
+        // }
       })
       .addCase(getOrders.rejected, (state, action) => {
         state.isLoading = false;
@@ -386,18 +387,18 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.token = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Forgot Password Email Sent Successfully")
-        }
+        state.token = action.payload.token;
+        state.forgotSuccess = action.payload.message;
+        console.log(action.payload.message)
       })
+
       .addCase(forgotPasswordToken.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+          state.forgotMsg = action.payload.response.data.message
         }
       })
       .addCase(resetPassword.pending, (state) => {
@@ -408,9 +409,7 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.pass = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Password Changed Successfully")
-        }
+        state.resetPass = action.payload.message;
       })
       .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
@@ -418,7 +417,8 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error
         if (state.isError === true) {
-          toast.error("Something Went Wrong!")
+          state.resetError = action.payload.response.data.message;
+          console.log(action.payload.response.data.message)
         }
       })
       .addCase(deleteUserCart.pending, (state) => {

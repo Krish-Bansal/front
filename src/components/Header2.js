@@ -7,8 +7,19 @@ import { useSelector } from 'react-redux'
 import { Typeahead } from "react-bootstrap-typeahead";
 import "react-bootstrap-typeahead/css/Typeahead.css"
 import "../styles.css"
+import { AiOutlineClose } from 'react-icons/ai';
+import { CSSTransition } from 'react-transition-group';
 
 const Header = () => {
+  const [showTypeahead, setShowTypeahead] = useState(false);
+
+  const handleSearchIconClick = () => {
+    setShowTypeahead(!showTypeahead);
+  };
+
+  const handleCloseButtonClick = () => {
+    setShowTypeahead(false);
+  };
 
   const [color, setColor] = useState(false)
   const changeColor = () => {
@@ -65,26 +76,41 @@ const Header = () => {
             <div className="col-6">
               <div className="header-upper-links search-bar flex align-items-center justify-end gap-[25px] ">
                 <div className={color ? 'my-menu-class-light input-group' : 'my-menu-class-dark input-group'}>
-                  <Typeahead
-                    menuClassName={color ? 'my-menu-class-light' : 'my-menu-class-dark'}
-
-                    id="pagination-example" onPaginate={() => console.log("Results Paginated")}
-                    onChange={(selected) => {
-                      navigate(`/product/${selected[0].prod}`)
-                    }}
-                    options={productOpt}
-                    minLength={2}
-
-                    labelKey={"name"}
-                    inputProps={{
-                      style: { backgroundColor: 'inherit', color: color ? `black` : `white` },
-                      placeholder: 'Search for products here...',
-                      className: color ? 'typing-black' : "typing-white"
-
-                    }}
-                  />
-                  <span className='fs-2  bg-inherit'>
-                    <CiSearch className={color ? 'lower ml-3 mt-1' : 'upper mt-1 ml-3 '} />
+                  <CSSTransition
+                    in={showTypeahead}
+                    timeout={300}
+                    classNames="typeahead-animation"
+                    unmountOnExit
+                  >
+                    <Typeahead
+                      menuClassName={color ? 'my-menu-class-light' : 'my-menu-class-dark'}
+                      id="pagination-example"
+                      onPaginate={() => console.log("Results Paginated")}
+                      onChange={(selected) => {
+                        navigate(`/product/${selected[0].prod}`)
+                      }}
+                      options={productOpt}
+                      minLength={2}
+                      labelKey={"name"}
+                      inputProps={{
+                        style: { backgroundColor: 'inherit', color: color ? `black` : `white` },
+                        placeholder: 'Search for products here...',
+                        className: color ? 'typing-black' : "typing-white"
+                      }}
+                    />
+                  </CSSTransition>
+                  <span className='fs-2 bg-inherit'>
+                    {showTypeahead ? (
+                      <AiOutlineClose
+                        className={color ? 'lower ml-3 mt-1 cursor-pointer' : 'upper mt-1 ml-3 cursor-pointer'}
+                        onClick={handleCloseButtonClick}
+                      />
+                    ) : (
+                      <CiSearch
+                        className={color ? 'lower ml-3 mt-1 cursor-pointer' : 'upper mt-1 ml-3 cursor-pointer'}
+                        onClick={handleSearchIconClick}
+                      />
+                    )}
                   </span>
 
 
