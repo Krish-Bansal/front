@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @font-face {
   font-family: "Futura";
   src: url("./fonts/SansSerifBookFLF.otf");
@@ -9,12 +5,100 @@
   font-style: normal;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Extra Small (xs) */
+.xs {}
+
+/* Small (sm) */
+@media (max-width: 575.98px) {
+  .sm {
+    font-size: 1.5rem;
+  }
+}
+
+/* Medium (md) */
+@media(min-width: 576px) and (max-width: 767.98px) {
+  .md {}
+}
+
+/* Large (lg) */
+@media(min-width: 768px) and (max-width: 991.98px) {
+  .lg {}
+}
+
+/* Extra Large (xl) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .xl {}
+}
+
+/* Extra Extra Large (xxl) */
+@media (min-width: 1200px) {
+  .xxl {}
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
 }
+
+
+/* Mobile Responsive  */
+/* Extra small devices (phones) */
+@media (max-width: 575.98px) {
+
+  /* Add your CSS styles here */
+  body {
+    font-size: 12px;
+  }
+}
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+  /* Add your CSS styles here */
+  body {
+    font-size: 14px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+
+  /* Add your CSS styles here */
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+
+  /* Add your CSS styles here */
+  body {
+    font-size: 18px;
+  }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+
+  /* Add your CSS styles here */
+  body {
+    font-size: 20px;
+  }
+}
+
+
+
+
+
+/* Mobile Responsive  */
+
 
 
 
@@ -230,8 +314,7 @@ a {
   background-color: var(--color-febd69);
 }
 
-.header-bottom .menu-links a,
-.header-bottom .dropdown button {
+.header-bottom .menu-links a {
   color: var(--color-ffffff);
   font-size: 14px;
   line-height: 18px;
@@ -239,6 +322,160 @@ a {
   letter-spacing: 0.3;
   text-transform: uppercase;
 }
+
+/* Mobile Responsive  */
+/* Mobile Device  */
+@media (max-width: 575.98px) {
+
+  .header-bottom .menu-links a,
+  .header-bottom .menu-links {
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 0.1;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .header-bottom .menu-links>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .header-bottom .menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 10px;
+  }
+}
+
+/* Mobile Device  */
+
+
+/* LandScape Phones */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .header-bottom .menu-links a {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.2;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .header-bottom .menu-links>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 11px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .header-bottom .menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 11px;
+  }
+}
+
+/* LandScape Phones */
+
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .header-bottom .menu-links a {
+    font-size: 14px;
+    line-height: 18px;
+    letter-spacing: 0.3;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .header-bottom .menu-links>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 14px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .header-bottom .menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 10px;
+    gap: 14px;
+  }
+}
+
+/* Tablets */
+
+
+/* Desktops */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header-bottom .menu-links a {
+    font-size: 16px;
+    letter-spacing: 0.3;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header-bottom .menu-links>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header-bottom .menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 15px;
+    gap: 15px;
+  }
+}
+
+/* Desktops */
+/* Large Desktops */
+@media (min-width: 1200px) {
+  .header-bottom .menu-links a {
+    font-size: 16px;
+    letter-spacing: 0.3;
+  }
+}
+
+@media(min-width: 1200px) {
+  .header-bottom .menu-links>div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .header-bottom .menu-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+  }
+}
+
+/* Large Desktops */
+/* Mobile Responsive  */
+
+
+
 
 .header-bottom .dropdown button::before {
   contain:
@@ -290,8 +527,9 @@ a {
   font-weight: inherit;
   text-transform: uppercase;
   letter-spacing: .2em;
-
 }
+
+
 
 .footer-middle .underline {
   text-decoration: none;
@@ -300,7 +538,6 @@ a {
   margin-bottom: 0.1;
 }
 
-
 .footer-middle .underline2 {
   border-bottom: solid 2px rgba(0, 0, 0, 0.9);
   padding-bottom: 0.1;
@@ -308,9 +545,7 @@ a {
 }
 
 .footer-middle {
-
   border-top: solid 1px rgba(0, 0, 0, 0.1);
-
 }
 
 .footer-middle ::placeholder {
@@ -324,8 +559,67 @@ a {
   /* change the color, if needed */
 }
 
-/* Footer Ends Here */
+.social-icons {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
 
+/* Mobile Responsive  */
+/* Mobile Device  */
+@media (max-width: 575.98px) {
+
+  /* Add your CSS styles here */
+  .social-icons {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-mobile {
+    text-align: center;
+  }
+
+  .footer-link {
+    text-align: center;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+  /* Add your CSS styles here */
+  .social-icons {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-mobile {
+    text-align: center;
+  }
+
+  .footer-link {
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .contact-mobile h4,
+  .footer-link h4 {
+    pointer-events: none;
+  }
+}
+
+/* Mobile Device  */
+/* LandScape Phones */
+/* LandScape Phones */
+/* Tablets */
+/* Tablets */
+/* Desktops */
+/* Desktops */
+/* Large Desktops */
+/* Large Desktops */
+/* Mobile Responsive  */
+/* Footer Ends Here */
 
 
 /* Home Page Starts Here*/

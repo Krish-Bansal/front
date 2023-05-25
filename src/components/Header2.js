@@ -68,13 +68,13 @@ const Header = () => {
     <>
       <header className={color ? 'header header-bg ' : 'header mt-4'
       }>
-        <div className='mx-11'>
+        <div className='mx-2'>
           <div className='row align-items-center'>
             <div className="col-6 flex justify-start">
-              <NavLink to={'/'}><img src={Logo} alt="Defy logo" className={color ? 'lower-header-logo header-logo w-40' : 'upper-header-logo header-logo w-40'} /></NavLink>
+              <NavLink to={'/'}><img src={Logo} alt="Defy logo" className={color ? 'lower-header-logo header-logo w-[70%]' : 'upper-header-logo header-logo w-[70%]'} /></NavLink>
             </div>
             <div className="col-6">
-              <div className="header-upper-links search-bar flex align-items-center justify-end gap-[25px] ">
+              <div className="header-upper-links search-bar flex align-items-center justify-end gap-[5%] ">
                 <div className={color ? 'my-menu-class-light input-group' : 'my-menu-class-dark input-group'}>
                   <CSSTransition
                     in={showTypeahead}
@@ -99,7 +99,7 @@ const Header = () => {
                       }}
                     />
                   </CSSTransition>
-                  <span className='fs-2 bg-inherit'>
+                  <span className='sm:fs-2 bg-inherit'>
                     {showTypeahead ? (
                       <AiOutlineClose
                         className={color ? 'lower ml-3 mt-1 cursor-pointer' : 'upper mt-1 ml-3 cursor-pointer'}
@@ -163,19 +163,17 @@ const Header = () => {
           <div className='row'>
             <div className='col-12'>
               <div className="menu-bottom d-flex align-items-center gap-30">
-
                 <div className='menu-links'>
-                  <div className='d-flex align-items-center gap-15'>
+                  <div className=''>
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/my-orders">My Orders</NavLink>
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
                     {authState?.user ? (
-                      <button onClick={handleLogout} className='text-uppercase text-white' style={{ fontSize: "14px" }}>Logout</button>
+                      <NavLink><button onClick={handleLogout} className='text-uppercase text-white'>Logout</button></NavLink>
+
                     ) : null}
-
-
                   </div>
                 </div>
               </div>

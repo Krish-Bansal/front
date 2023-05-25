@@ -90,9 +90,9 @@ const Header = () => {
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
                     {authState?.user ? (
-                      <button onClick={handleLogout} className='text-uppercase text-white' style={{ fontSize: "14px" }}>Logout</button>
-                    ) : null}
+                      <NavLink><button onClick={handleLogout} className='text-uppercase text-white'>Logout</button></NavLink>
 
+                    ) : null}
                   </div>
                 </div>
               </div>
