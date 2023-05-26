@@ -22,6 +22,27 @@ const Home = () => {
       Accept: "application/json",
     },
   };
+
+  // Mobile Responive Starts Here 
+
+  const screenWidth = window.innerWidth;
+
+
+  let numberOfReviews;
+
+  if (screenWidth < 576) {
+    // Small screen (less than 576px)
+    numberOfReviews = 1;
+  } else if (screenWidth < 992) {
+    // Medium screen (between 576px and 991.98px)
+    numberOfReviews = 2;
+  } else {
+    // Large and Extra Large screens (greater than or equal to 992px)
+    numberOfReviews = 3;
+  }
+
+  // Mobile Responive Ends Here 
+
   // const addToWish = (id) => {
   //   dispatch(addToWishlist(id));
   // };
@@ -394,11 +415,10 @@ const Home = () => {
         <div className='text-center mt-11 review-carousel'>
           <Carousel pause={false} interval={4500} slide={true}>
             {totalState?.allreviews?.map((review, index) => {
-              if (index % 3 === 0) {
-                const reviewsChunk = totalState?.allreviews.slice(index, index + 3);
-                return (
+              if (index % numberOfReviews === 0) {
+                const reviewsChunk = totalState?.allreviews.slice(index, index + numberOfReviews); return (
                   <Carousel.Item key={index}>
-                    <div className="row px-16">
+                    <div className="row px-14">
                       {reviewsChunk.map((chunkedReview, chunkIndex) => (
                         <div className="col" key={chunkIndex}>
                           <StarRatings
@@ -409,7 +429,6 @@ const Home = () => {
                             starSpacing="1px"
                             numberOfStars={5}
                             name="rating"
-
                           />
                           <div className="review-item ">
                             <div className="img-container mt-2">

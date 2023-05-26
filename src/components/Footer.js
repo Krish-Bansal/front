@@ -86,7 +86,7 @@ const Footer = () => {
   // };
   return (
     <>
-      <footer className='py-3 footer-middle pt-5'>
+      <footer className='py-2 footer-middle pt-5'>
         <div className="container-xxl">
           <div className="row">
             <div className="col-12 col-md-6 contact-mobile">
