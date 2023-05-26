@@ -521,6 +521,46 @@ a {
   font-size: 13.6px;
 }
 
+
+@media (max-width: 575.98px) {
+  .footer-middle {
+    padding-top: 28px;
+    padding-bottom: 5px;
+  }
+}
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .footer-middle {
+    padding-top: 28px;
+    padding-bottom: 5px;
+  }
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .footer-middle {
+    padding-top: 32px;
+    padding-bottom: 15px;
+  }
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .footer-middle {
+    padding-top: 32px;
+    padding-bottom: 15px;
+  }
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+  .footer-middle {
+    padding-top: 32px;
+    padding-bottom: 15px;
+  }
+}
+
 .footer-middle h4 {
   font-size: 14px;
   color: inherit;
@@ -584,16 +624,13 @@ a {
   }
 }
 
+
 @media (min-width: 576px) and (max-width: 767.98px) {
 
   /* Add your CSS styles here */
   .social-icons {
     justify-content: center;
     align-items: center;
-  }
-
-  .contact-mobile {
-    text-align: center;
   }
 
   .footer-link {
@@ -609,8 +646,56 @@ a {
   }
 }
 
+@media screen and (max-width: 767.98px) {
+  .link-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .link-container.open {
+    max-height: 500px;
+    /* Adjust the value to your desired maximum height */
+    transition: max-height 0.3s ease-in-out;
+  }
+
+  .link-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+  }
+
+  .link-container.open .link-item {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+
+  .link-container.open .link-item:nth-child(2) {
+    transition-delay: 0.2s;
+  }
+
+  .link-container.open .link-item:nth-child(3) {
+    transition-delay: 0.3s;
+  }
+
+  .link-container.open .link-item:nth-child(4) {
+    transition-delay: 0.4s;
+  }
+
+}
+
+
+
+
+
+
 /* Mobile Device  */
+
 /* LandScape Phones */
+
+
+
 /* LandScape Phones */
 /* Tablets */
 /* Tablets */
