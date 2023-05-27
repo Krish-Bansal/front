@@ -49,13 +49,13 @@ const Orders = () => {
           <div className='row my-orders'>
             <div className='col-12'>
               <div className='row'>
-                <div className='col-5 px-[2.5%]'>
+                <div className='col-4 px-[2.5%]'>
                   <h5>Order Id</h5>
                 </div>
                 <div className='col-3 px-[3.5%]'>
                   <h5>Total Amount</h5>
                 </div>
-                <div className='col-2 px-[3.5%]'>
+                <div className='col-3 px-[3.5%]'>
                   <h5>Total Amount After Discount</h5>
                 </div>
                 <div className='col-2 px-[3.5%]'>
@@ -67,13 +67,13 @@ const Orders = () => {
               {orderState && orderState?.map((item, index) => {
                 return (
                   <div style={{ backgroundColor: '#febd69' }} className='row pt-3 my-3' key={index}>
-                    <div className='col-5 pr-[3.5%] pl-0 overflow-auto'>
+                    <div className='col-4 pr-[3.5%] pl-[2%] overflow-auto'>
                       <p>{item?._id}</p>
                     </div>
                     <div className='col-3  px-[3.5%]'>
                       <p>{item?.totalPrice}</p>
                     </div>
-                    <div className='col-2  px-[3.5%]'>
+                    <div className='col-3  px-[3.5%]'>
                       <p>{item?.totalPriceAfterDiscount}</p>
                     </div>
                     <div className='col-2  px-[3.5%]'>
