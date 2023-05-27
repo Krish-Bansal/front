@@ -70,10 +70,10 @@ const Header = () => {
       }>
         <div className='mx-2'>
           <div className='row align-items-center'>
-            <div className="col-4 flex justify-start">
+            <div className="col-6 flex justify-start">
               <NavLink to={'/'}><img src={Logo} alt="Defy logo" className={color ? 'lower-header-logo header-logo w-[60%]' : 'upper-header-logo header-logo w-[60%]'} /></NavLink>
             </div>
-            <div className="col-8 px-[3%]">
+            <div className="col-6 px-[3%]">
               <div className="header-upper-links search-bar flex align-items-center justify-end gap-[4%]">
                 <div className={color ? 'my-menu-class-light input-group' : 'my-menu-class-dark input-group'}>
                   <CSSTransition
