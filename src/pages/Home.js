@@ -463,7 +463,7 @@ const Home = () => {
 
 
       </Container >
-      <Container class1="pb-[5%] mt-[7%]">
+      <Container class1="pb-[5%] mt-[6.5%]">
         <h3 className='review-heading uppercase'>our Customer Speaks for us</h3>
         <div className='text-center'>
           <StarRatings

@@ -9,37 +9,42 @@
   overflow: -moz-hidden-unscrollable;
 }
 
-
-
-@media (max-width: 575.98px) {}
-
-/* Small devices (landscape phones) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-
-  /* Add your CSS styles here */
-  body {
-    font-size: 14px;
+@media screen and (max-width: 575.98px) {
+  .lower-cross {
+    margin-top: 16%;
   }
 }
 
-/* Medium devices (tablets) */
 
-/* Large devices (desktops) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .lower-cross {
+    margin-top: 15%
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .lower-cross {
+    margin-top: 13%
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .lower-cross {
+    margin-top: 11%
+  }
+}
 
 
-/* Extra large devices (large desktops) */
 @media (min-width: 1200px) {
-
-  /* Add your CSS styles here */
-  body {
-    font-size: 20px;
+  .lower-cross {
+    margin-top: 9.5%
   }
 }
 
 
 .header2 {
   position: sticky;
-  height: 90px;
+  height: auto;
   width: 100%;
   top: 0;
   left: 0;
@@ -76,6 +81,8 @@ input.rbt-input-main.form-control.rbt-input.my-menu-class-dark::placeholder {
 .lower {
   color: black;
 }
+
+
 
 .upper-header-logo {
   filter: brightness(0) invert(1);
@@ -146,47 +153,3 @@ input.rbt-input-main.form-control.rbt-input.my-menu-class-dark::placeholder {
 .hamburger {
   display: none;
 }
-
-/* Mobile Nav Starts Here */
-/* 
-@media screen and (max-width:940px) {
-  .header {
-    max-width: 100%;
-    background-color: rgb(255, 255, 255);
-  }
-
-  .header .navbar {
-    max-width: 100%;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .nav-menu {
-    position: fixed;
-    left: -100%;
-    top: 90px;
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 1);
-    width: 100%;
-    height: 90vh;
-    z-index: 999;
-    text-align: center;
-    transition: .3s;
-  }
-
-  .nav-menu.active {
-    left: 0;
-  }
-
-  .nav-item {
-    margin: 1.5rem 0;
-  }
-
-  .header .navbar img {
-    width: 150px;
-  }
-} */
-
-/* Mobile Nav Ends Here */
