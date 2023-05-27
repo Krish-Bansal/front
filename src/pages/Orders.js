@@ -67,9 +67,10 @@ const Orders = () => {
               {orderState && orderState?.map((item, index) => {
                 return (
                   <div style={{ backgroundColor: '#febd69' }} className='row pt-[1%] my-[3%]' key={index}>
-                    <div className='col-4 pr-[3.5%] pl-[2%] overflow-x-auto'>
+                    <div className='col-4 pr-[3.5%] pl-[2%] overflow-x-auto' style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
                       <p>{item?._id}</p>
                     </div>
+
                     <div className='col-3  px-[3.5%]'>
                       <p>{item?.totalPrice}</p>
                     </div>
