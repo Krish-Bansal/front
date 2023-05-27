@@ -59,11 +59,9 @@ const Cart = () => {
         <div className="row">
           {userCartState && userCartState.length === 0 && (
             <div className='flex justify-center align-items-center'>
-              <div>
-              </div>
               <div className='no-wish-contents'>
                 <div classname="lottie">
-                  <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_oqpbtola.json" background="transparent" speed="1" style={{ width: "300px", height: "300px" }} loop autoplay></lottie-player>
+                  <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_oqpbtola.json" background="transparent" speed="1" style={{ width: "50%", height: "50%" }} loop autoplay></lottie-player>
                 </div>
                 <h2>Your Cart is empty!</h2>
                 <h3>Add something to make me happy :)</h3>

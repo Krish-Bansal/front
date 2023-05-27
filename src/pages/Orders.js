@@ -38,8 +38,8 @@ const Orders = () => {
             </div>
             <div className='no-wish-contents'>
               <div classname="lottie">
-                <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_iikbn1ww.json" background="transparent" speed="1" style={{ width: "300px", height: "300px" }} loop autoplay></lottie-player>              </div>
-              <h2>Your Order List is empty!</h2>
+                <lottie-player src="https://assets8.lottiefiles.com/packages/lf20_iikbn1ww.json" background="transparent" speed="1" style={{ width: "50%", height: "50%" }} loop autoplay></lottie-player>              </div>
+              <h2>Your Order List Is Empty!</h2>
               <div className='flex align-middle justify-around'>
                 <Link to="/product"><button className='order-empty'>Continue to Shopping</button></Link>
               </div>

@@ -39,18 +39,21 @@ const Wishlist = () => {
       {/* <Meta title={"Wishlist"} />
       <BreadCrumb title="Wishlist" /> */}
       <Container class1="wishlist-wrapper home-wrapper-2
-       py-5">
+       py-[7%]">
         <div className="row">
           {
             wishlistState && wishlistState.length === 0 &&
             <div className='flex justify-center align-items-center'>
-              <div>
-                <img src={nowish} alt="test" width={320} height={320} />
-              </div>
+
               <div className='space-y-3 no-wish-contents'>
+                <div>
+                  <img src={nowish} alt="test" style={{ width: "50%", height: "50%" }} />
+                </div>
                 <h2>Your Wishlist is empty!</h2>
                 <h3>seems like you don't have wishes here.<br />Make a wish!</h3>
-                <Link to="/"><button>Continue to Shopping</button></Link>
+                <div className='flex align-middle justify-around'>                  <Link to="/"><button>Continue to Shopping</button></Link>
+                </div>
+
               </div>
             </div>
 
