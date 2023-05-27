@@ -1,80 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { IoLogoInstagram, IoLogoFacebook } from "react-icons/io"
+import { useMediaQuery } from 'react-responsive';
 
 
 const Footer = () => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
 
-  //First Column Starts Here
-  const [isContactOpen, setIsContactOpen] = useState(false);
-  useEffect(() => {
-    // Open the contact section by default for screen sizes larger than 1200 pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 768) {
-      setIsContactOpen(true);
-    }
-  }, []);
+  // First Column Starts Here
+  const [isContactOpen, setIsContactOpen] = useState(isDesktop);
   const handleContactToggle = () => {
     setIsContactOpen(!isContactOpen);
   };
-  //First Column Ends Here
+  // First Column Ends Here
 
-  //Second Column Starts Here
-  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
-  useEffect(() => {
-    // Open the contact section by default for screen sizes larger than 768 pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 768) {
-      setIsPolicyOpen(true);
-    }
-  }, []);
-  const [isPolicyVisible, setIsPolicyVisible] = useState(true);
+  // Second Column Starts Here
+  const [isPolicyOpen, setIsPolicyOpen] = useState(isDesktop);
+  const [isPolicyVisible, setIsPolicyVisible] = useState(isMobile);
 
   useEffect(() => {
-    //Terms And Privacy invisible for Screen Size Larger than 768 Pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 768) {
-      setIsPolicyVisible(false);
-    }
-  }, []);
+    setIsPolicyVisible(isMobile);
+  }, [isMobile]);
 
-
-  useEffect(() => {
-    //Terms & Privacy Visible for Screen Size smaller than 768 Pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth < 768) {
-      setIsPolicyVisible(true);
-    }
-  }, []);
   const handlePolicyToggle = () => {
     setIsPolicyOpen(!isPolicyOpen);
   };
-
   // Second Column Ends Here
 
-
   // Third Column Starts Here
-  const [isLinkOpen, setIsLinkOpen] = useState(false);
-  useEffect(() => {
-    // Open the contact section by default for screen sizes larger than 768 pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 768) {
-      setIsLinkOpen(true);
-    }
-  }, []);
-  const [isLinkVisible, setIsLinkVisible] = useState(true);
+  const [isLinkOpen, setIsLinkOpen] = useState(isDesktop);
+  const [isLinkVisible, setIsLinkVisible] = useState(isMobile);
 
   useEffect(() => {
-    //Links invisible for Screen Size Larger than 768 Pixels
-    const screenWidth = window.innerWidth;
-    if (screenWidth > 768) {
-      setIsLinkVisible(false);
-    }
-  }, []);
+    setIsLinkVisible(isMobile);
+  }, [isMobile]);
 
   const handleLinkToggle = () => {
     setIsLinkOpen(!isLinkOpen);
   };
+  // Third Column Ends Here
+
   // Third Column Ends Here
 
   // const [email, setEmail] = useState('');
