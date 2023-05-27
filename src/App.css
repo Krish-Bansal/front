@@ -39,6 +39,10 @@
     font-size: 20px !important;
     margin-bottom: 16px;
   }
+
+  .review-heading {
+    font-size: 20px !important;
+  }
 }
 
 /* Small devices (landscape phones) */
@@ -62,6 +66,10 @@
     font-size: 24px !important;
     margin-bottom: 20px;
   }
+
+  .review-heading {
+    font-size: 24px !important;
+  }
 }
 
 /* Medium devices (tablets) */
@@ -84,6 +92,10 @@
   .section-heading {
     font-size: 24px !important;
     margin-bottom: 20px;
+  }
+
+  .review-heading {
+    font-size: 24px !important;
   }
 }
 
@@ -109,6 +121,9 @@
     margin-bottom: 30px;
   }
 
+  .review-heading {
+    font-size: 28.2px !important;
+  }
 }
 
 /* Extra large devices (large desktops) */
@@ -131,6 +146,10 @@
   .section-heading {
     font-size: 30.6px !important;
     margin-bottom: 45px;
+  }
+
+  .review-heading {
+    font-size: 30.6px !important;
   }
 }
 
@@ -824,8 +843,6 @@ a {
   text-align: center;
   font-family: Futura, sans-serif;
   font-weight: 600;
-  font-size: 30.6px;
-
 }
 
 /* home-wrapper 2 Starts Here */
