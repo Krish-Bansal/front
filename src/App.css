@@ -9,37 +9,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* Extra Small (xs) */
-.xs {}
-
-/* Small (sm) */
-@media (max-width: 575.98px) {
-  .sm {
-    font-size: 1.5rem;
-  }
-}
-
-/* Medium (md) */
-@media(min-width: 576px) and (max-width: 767.98px) {
-  .md {}
-}
-
-/* Large (lg) */
-@media(min-width: 768px) and (max-width: 991.98px) {
-  .lg {}
-}
-
-/* Extra Large (xl) */
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  .xl {}
-}
-
-/* Extra Extra Large (xxl) */
-@media (min-width: 1200px) {
-  .xxl {}
-}
-
 * {
   margin: 0;
   padding: 0;
@@ -51,45 +20,117 @@
 /* Extra small devices (phones) */
 @media (max-width: 575.98px) {
 
-  /* Add your CSS styles here */
-  body {
-    font-size: 12px;
+  .featured-wrapper {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .special-wrapper {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .popular-wrapper {
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .section-heading {
+    font-size: 20px !important;
+    margin-bottom: 16px;
   }
 }
 
 /* Small devices (landscape phones) */
 @media (min-width: 576px) and (max-width: 767.98px) {
+  .featured-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 
-  /* Add your CSS styles here */
-  body {
-    font-size: 14px;
+  .special-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .popular-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .section-heading {
+    font-size: 24px !important;
+    margin-bottom: 20px;
   }
 }
 
 /* Medium devices (tablets) */
 @media (min-width: 768px) and (max-width: 991.98px) {
+  .featured-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
 
-  /* Add your CSS styles here */
-  body {
-    font-size: 16px;
+  .special-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .popular-wrapper {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .section-heading {
+    font-size: 24px !important;
+    margin-bottom: 20px;
   }
 }
 
 /* Large devices (desktops) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
-
-  /* Add your CSS styles here */
-  body {
-    font-size: 18px;
+  .featured-wrapper {
+    padding-top: 22px;
+    padding-bottom: 22px;
   }
+
+  .special-wrapper {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .popular-wrapper {
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+
+  .section-heading {
+    font-size: 28.2px !important;
+    margin-bottom: 30px;
+  }
+
 }
 
 /* Extra large devices (large desktops) */
 @media (min-width: 1200px) {
+  .featured-wrapper {
+    padding-top: 38px;
+    padding-bottom: 26px;
+  }
 
-  /* Add your CSS styles here */
-  body {
-    font-size: 20px;
+  .special-wrapper {
+    padding-top: 38px;
+    padding-bottom: 26px;
+  }
+
+  .popular-wrapper {
+    padding-top: 38px;
+    padding-bottom: 26px;
+  }
+
+  .section-heading {
+    font-size: 30.6px !important;
+    margin-bottom: 45px;
   }
 }
 
@@ -777,8 +818,6 @@ a {
   text-align: center;
   font-family: Futura, sans-serif;
   font-weight: 500;
-  font-size: 30.6px;
-  margin-bottom: 80px;
 }
 
 .review-heading {

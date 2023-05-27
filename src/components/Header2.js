@@ -99,7 +99,7 @@ const Header = () => {
                       }}
                     />
                   </CSSTransition>
-                  <span className='sm:fs-2 bg-inherit'>
+                  <span className='fs-2 bg-inherit'>
                     {showTypeahead ? (
                       <AiOutlineClose
                         className={color ? 'lower ml-3 mt-1 cursor-pointer' : 'upper mt-1 ml-3 cursor-pointer'}
