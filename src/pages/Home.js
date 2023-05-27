@@ -239,7 +239,7 @@ const Home = () => {
         </div>
 
       </Container> */}
-      <Container class1="featured-wrapper home-wrapper-2">
+      <Container class1="popular-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading uppercase">Featured Collection</h3>
@@ -294,7 +294,7 @@ const Home = () => {
           })}
         </div>
       </Container>
-      <Container class1="special-wrapper home-wrapper-2">
+      <Container class1="popular-wrapper home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading uppercase">
@@ -360,6 +360,9 @@ const Home = () => {
         </div>
       </Container>
       <Container class1="popular-wrapper home-wrapper-2">
+        <h3 className="section-heading uppercase">
+          New Arrivals
+        </h3>
         <div>
           {isMobile ? (
             <div className="row row-scroll">

@@ -70,10 +70,13 @@
 }
 
 .hero .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 1rem 0;
-  width: 300px;
+  width: 30%;
   background-color: var(--secondary-color);
-  border: 1px solid var(--secondary-color);
+  border: 0.5px solid var(--secondary-color);
   color: #333;
 }
 
@@ -82,29 +85,137 @@
   border: 1px solid var(--secondary-dark);
 }
 
-@media screen and (max-width:940px) {
+@media screen and (max-width: 575.98px) {
+
+
+
+  .hero .content p:first-child {
+    font-style: italic;
+    font-size: .9rem;
+  }
+
+  .hero .content p:nth-child(2) {
+    font-size: 1.3rem;
+  }
+
+  .hero .content p:nth-child(3) {
+    font-size: 1.8rem;
+  }
+
+  .hero .content p:nth-child(4) {
+    font-size: 1.2rem;
+  }
+
+  .hero .button {
+    width: 45%;
+    height: 38px
+  }
+}
+
+
+@media screen and (max-width: 575.98px) {
+
+  .first-carousel .carousel-control-prev,
+  .first-carousel .carousel-control-next {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+
+
+
+  .hero .content p:first-child {
+    font-style: italic;
+    font-size: 1rem;
+  }
+
+  .hero .content p:nth-child(2) {
+    font-size: 1.5rem;
+  }
+
+  .hero .content p:nth-child(3) {
+    font-size: 2rem;
+  }
+
+  .hero .content p:nth-child(4) {
+    font-size: 1.4rem;
+  }
+
+  .hero .button {
+    width: 50%;
+    height: 38px
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .hero .content p:first-child {
+    font-style: italic;
+    font-size: 1.25rem;
+  }
+
+  .hero .content p:nth-child(2) {
+    font-size: 1.6rem;
+  }
+
+  .hero .content p:nth-child(3) {
+    font-size: 2.1rem;
+  }
+
+  .hero .content p:nth-child(4) {
+    font-size: 1.5rem;
+  }
+
+  .hero .button {
+    width: 40%;
+    height: 40px
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .hero .content p:first-child {
+    font-style: italic;
+    font-size: 1.6rem;
+  }
+
+  .hero .content p:nth-child(2) {
+    font-size: 2.1rem;
+  }
+
   .hero .content p:nth-child(3) {
     font-size: 2.6rem;
   }
 
   .hero .content p:nth-child(4) {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
+  }
+
+  .hero .button {
+    width: 35%;
+    height: 42px
   }
 }
 
+@media (min-width: 1200px) {
+  .hero .content p:first-child {
+    font-style: italic;
+    font-size: 1.8rem;
+  }
 
+  .hero .content p:nth-child(2) {
+    font-size: 2.4rem;
+  }
 
-/* trasition  */
-/* .custom-carousel .carousel-item {
-  opacity: 0;
-  transition: opactiy 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  .hero .content p:nth-child(3) {
+    font-size: 3.2rem;
+  }
+
+  .hero .content p:nth-child(4) {
+    font-size: 2rem;
+  }
+
+  .hero .button {
+    width: 40;
+    height: 46px
+  }
 }
-
-.custom-carousel .carousel-item.active {
-  opacity: 50;
-} */
-
-
-
-
-/* trasition  */

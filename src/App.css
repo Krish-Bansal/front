@@ -37,7 +37,7 @@
 
   .section-heading {
     font-size: 20px !important;
-    margin-bottom: 16px;
+    margin-bottom: 4%;
   }
 
   .review-heading {
@@ -47,7 +47,7 @@
 
 /* Small devices (landscape phones) */
 @media (min-width: 576px) and (max-width: 767.98px) {
-  .featured-wrapper {
+  /* .featured-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
   }
@@ -55,7 +55,7 @@
   .special-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
-  }
+  } */
 
   .popular-wrapper {
     padding-top: 20px;
@@ -74,7 +74,7 @@
 
 /* Medium devices (tablets) */
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .featured-wrapper {
+  /* .featured-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
   }
@@ -82,7 +82,7 @@
   .special-wrapper {
     padding-top: 20px;
     padding-bottom: 20px;
-  }
+  } */
 
   .popular-wrapper {
     padding-top: 20px;
@@ -101,7 +101,7 @@
 
 /* Large devices (desktops) */
 @media (min-width: 992px) and (max-width: 1199.98px) {
-  .featured-wrapper {
+  /* .featured-wrapper {
     padding-top: 22px;
     padding-bottom: 22px;
   }
@@ -109,7 +109,7 @@
   .special-wrapper {
     padding-top: 22px;
     padding-bottom: 22px;
-  }
+  } */
 
   .popular-wrapper {
     padding-top: 22px;
@@ -128,7 +128,7 @@
 
 /* Extra large devices (large desktops) */
 @media (min-width: 1200px) {
-  .featured-wrapper {
+  /* .featured-wrapper {
     padding-top: 38px;
     padding-bottom: 26px;
   }
@@ -136,7 +136,7 @@
   .special-wrapper {
     padding-top: 38px;
     padding-bottom: 26px;
-  }
+  } */
 
   .popular-wrapper {
     padding-top: 38px;
