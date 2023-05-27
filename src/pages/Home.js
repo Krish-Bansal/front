@@ -67,7 +67,7 @@ const Home = () => {
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-  const [showAllProducts, setShowAllProducts] = useState(false);
+  // const [showAllProducts, setShowAllProducts] = useState(false);
 
   const displayedProducts = productState && productState.filter((item) => item.tags === 'popular').slice(0, 8);
 
@@ -422,7 +422,7 @@ const Home = () => {
             </div>
           )}
 
-          {!showAllProducts && Array.isArray(productState) && productState.filter(item => item.tags === "popular").length > 8 && (
+          {Array.isArray(productState) && productState.filter(item => item.tags === "popular").length > 8 && (
             <div className="flex justify-end align-middle">
               <NavLink to="/product">
                 <button className="bg-black text-white px-3 py-1 mt-1">
