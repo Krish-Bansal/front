@@ -31,7 +31,7 @@ const Orders = () => {
     <>
       {/* <BreadCrumb title="My Orders" /> */}
       <Meta title={'My Orders'} />
-      <Container class1='cart-wrapper home-wrapper-2 py-5'>
+      <Container class1='cart-wrapper home-wrapper-2 py-12'>
         {orderState?.length === 0 ? (
           <div className='flex justify-center align-items-center'>
             <div>
@@ -63,11 +63,11 @@ const Orders = () => {
                 </div>
               </div>
             </div>
-            <div className='col-12 mt-3'>
+            <div className='col-12 mt-[.75%]'>
               {orderState && orderState?.map((item, index) => {
                 return (
-                  <div style={{ backgroundColor: '#febd69' }} className='row pt-3 my-3' key={index}>
-                    <div className='col-4 pr-[3.5%] pl-[2%] overflow-auto'>
+                  <div style={{ backgroundColor: '#febd69' }} className='row pt-[1%] my-[3%]' key={index}>
+                    <div className='col-4 pr-[3.5%] pl-[2%] overflow-x-auto overflow-y-hidden'>
                       <p>{item?._id}</p>
                     </div>
                     <div className='col-3  px-[3.5%]'>
@@ -80,7 +80,7 @@ const Orders = () => {
                       <p>{item?.orderStatus}</p>
                     </div>
                     <div className='col-12'>
-                      <div className='row py-3' style={{ backgroundColor: '#232f3e' }}>
+                      <div className='row py-[2.5%]' style={{ backgroundColor: '#232f3e' }}>
                         <div className='col-3 px-[3.5%]'>
                           <h6>Product Name</h6>
                         </div>
@@ -99,7 +99,7 @@ const Orders = () => {
                         {item?.orderItems?.map((i, index) => {
                           return (
                             <div className='col-12'>
-                              <div className='row p-3'>
+                              <div className='row p-[1.1%]'>
                                 <div className='col-3  px-[3.5%]'>
                                   <p className='text-white'>{i?.product?.title}</p>
                                 </div>
