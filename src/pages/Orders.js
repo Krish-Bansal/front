@@ -49,16 +49,16 @@ const Orders = () => {
           <div className='row my-orders'>
             <div className='col-12'>
               <div className='row'>
-                <div className='col-3'>
+                <div className='col-5 px-[2.5%]'>
                   <h5>Order Id</h5>
                 </div>
-                <div className='col-3'>
+                <div className='col-3 px-[3.5%]'>
                   <h5>Total Amount</h5>
                 </div>
-                <div className='col-3'>
+                <div className='col-2 px-[3.5%]'>
                   <h5>Total Amount After Discount</h5>
                 </div>
-                <div className='col-3'>
+                <div className='col-2 px-[3.5%]'>
                   <h5>Status</h5>
                 </div>
               </div>
@@ -67,58 +67,58 @@ const Orders = () => {
               {orderState && orderState?.map((item, index) => {
                 return (
                   <div style={{ backgroundColor: '#febd69' }} className='row pt-3 my-3' key={index}>
-                    <div className='col-3'>
+                    <div className='col-5 pr-[3.5%] pl-0 overflow-auto'>
                       <p>{item?._id}</p>
                     </div>
-                    <div className='col-3'>
+                    <div className='col-3  px-[3.5%]'>
                       <p>{item?.totalPrice}</p>
                     </div>
-                    <div className='col-3'>
+                    <div className='col-2  px-[3.5%]'>
                       <p>{item?.totalPriceAfterDiscount}</p>
                     </div>
-                    <div className='col-3'>
+                    <div className='col-2  px-[3.5%]'>
                       <p>{item?.orderStatus}</p>
                     </div>
                     <div className='col-12'>
                       <div className='row py-3' style={{ backgroundColor: '#232f3e' }}>
-                        <div className='col-3'>
+                        <div className='col-3 px-[3.5%]'>
                           <h6>Product Name</h6>
                         </div>
-                        <div className='col-3'>
+                        <div className='col-3 px-[3.5%]'>
                           <h6>Quantity</h6>
                         </div>
-                        <div className='col-2'>
+                        <div className='col-2 px-[3.5%]'>
                           <h6>Price</h6>
                         </div>
-                        <div className='col-2'>
+                        <div className='col-2 px-[3.5%]'>
                           <h6>Color</h6>
                         </div>
-                        <div className='col-2'>
+                        <div className='col-2 px-[3.5%]'>
                           <h6>Size</h6>
                         </div>
                         {item?.orderItems?.map((i, index) => {
                           return (
                             <div className='col-12'>
                               <div className='row p-3'>
-                                <div className='col-3'>
+                                <div className='col-3  px-[3.5%]'>
                                   <p className='text-white'>{i?.product?.title}</p>
                                 </div>
-                                <div className='col-3'>
+                                <div className='col-3  px-[3.5%]'>
                                   <p className='text-white'>{i?.quantity}</p>
                                 </div>
-                                <div className='col-2'>
+                                <div className='col-2  px-[3.5%]'>
                                   <p className='text-white'>{i?.price}</p>
                                 </div>
-                                <div className='col-2'>
+                                <div className='col-2  px-[3.5%]'>
                                   <p>
                                     <ul className='colors ps-0'>
-                                      <div className='bg-white p-[1px]'>
+                                      <div className='bg-white p-[3.5%]'>
                                         <li style={{ backgroundColor: i?.color?.title }}></li>
                                       </div>
                                     </ul>
                                   </p>
                                 </div>
-                                <div className='col-2'>
+                                <div className='col-2  px-[3.5%]'>
                                   <p className='text-white'>{i?.size}</p>
                                 </div>
                               </div>
