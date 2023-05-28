@@ -289,11 +289,85 @@ const Checkout = (props) => {
                     </div>
                   </div>
                 )}
+                {isMobile && (
+                  <div className="col-12">
+                    <div className="border-bottom py-[4.2%]">
+                      {cartState &&
+                        cartState?.map((item, index) => {
+                          return (
+                            <div key={index} className="d-flex gap-10 mb-2 align-items-center">
+                              <div className="w-75 d-flex gap-10">
+                                <div className="w-25 position-relative">
+                                  <span className="badge bg-secondary text-white rounded-circle p-[8%] position-absolute" style={{ top: "-10px", right: "-2px" }}>
+                                    {item?.quantity}
+                                  </span>
+                                  <img src={item?.productId?.images[0]?.url} alt="product" width={100} height={100} />
+                                </div>
+                                <div>
+                                  <h5 className="total-title">
+                                    {item?.productId?.title}({item?.size})
+                                  </h5>
+                                  <p className="total-price">
+                                    {item?.price}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="flex-grow-1">
+                                <h5 className="total d-flex justify-content-end">Rs {item?.price * item?.quantity}</h5>
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                    <div className="border-bottom py-[4%]">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <p className="total">Subtotal</p>
+                        <p className="total-price">Rs.{totalAmount ? totalAmount : "0"}</p>
+                      </div>
+                      <div className="coupon-area flex justify-between align-middle">
+                        <div>
+                          <input type="text" placeholder="Enter coupon code" className="coupon-input" />
+                          <button className="apply-button" onClick={handleApplyCoupon}>Apply</button>
+                        </div>
+                        <div>
+                          <p className="total-price">{displayDiscount}</p>
+                        </div>
+                      </div>
+                      {couponMessage && !isSuccess ? (
+                        <p className="coupon-message">{couponMessage}</p>
+                      ) : (
+                        isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
+                      )}
+                      <div className="d-flex justify-content-between align-items-center">
+                        <p className="mb-0 total">Shipping (Cash on delivery)</p>
+                        <p className="mb-0 total-price">Rs.{shippingCost}</p>
+                        <CustomModal
+                          open={isModalOpen}
+                          hideModal={() => setIsModalOpen(false)}
+                          handleOptionSelect={handleOptionSelect}
+                          title="Select Shipping Option"
+                        />
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-between align-items-center">
+                      <h4 className="total">Total</h4>
+                      <h5 className="total-price">Rs.{grandTotal ? grandTotal : "0"}</h5>
+                    </div>
+                    <div className="w-100 mt-[4%]">
+                      <div className="d-flex justify-content-between align-items-center">
+                        <Link to="/cart" className="text-dark d-flex align-items-center">
+                          <BiArrowBack /> Return to Cart
+                        </Link>
+                        <button className="button" type="submit">Place Order</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
               </form>
             </div>
           </div>
-          <div className={isMobile ? "col-12" : "col-5"}>
-
+          <div className={isMobile ? "d-none" : "col-5"}>
             <div className='border-bottom py-[4.2%]'>
               {
                 cartState && cartState?.map((item, index) => {
@@ -361,17 +435,6 @@ const Checkout = (props) => {
                 : "0"}</h5>
             </div>
           </div>
-          {isMobile && (
-            <div className="w-100 mt-[4%]">
-              <div className="d-flex justify-content-between align-items-center">
-                <Link to="/cart" className='text-dark d-flex align-items-center'>
-                  <BiArrowBack /> Return to Cart
-                </Link>
-                <button className='button' type="submit">Place Order</button>
-              </div>
-            </div>
-          )}
-
         </div>
       </Container>
     </>
