@@ -578,34 +578,14 @@ const SingleProduct = () => {
                     <div
                       key={index}
                       className="col-6"
-                      onClick={() => {
-                        navigate("/product/" + product?.id);
-                      }}
                     >
-                      <div className="product-card position-relative">
-                        <div className="product-image">
-                          <img
-                            src={product?.images[0]?.url}
-                            className="img-fluid d-block mx-auto"
-                            alt="Product 1"
-                            width={300}
-                          />
-                          <img
-                            src={product?.images[1]?.url}
-                            className="img-fluid"
-                            alt="Product 2"
-                          />
-                        </div>
-                        <div className="product-details">
-                          <h5 className="product-title">{product?.title}</h5>
-                          <p className="price">Rs.{product?.price}</p>
-                        </div>
-                      </div>
+                      <ProductCard data={[product]} />
                     </div>
                   ))}
                 </div>
               </div>
             </div>
+
           ) : (
             <Carousel indicators={false} interval={null}>
               {Array.from({ length: Math.ceil(allProducts.length / 4) }, (_, index) => (
