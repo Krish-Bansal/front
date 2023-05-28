@@ -7,6 +7,7 @@ import { useFormik } from "formik"
 import * as yup from "yup"
 import { createAnOrder, deleteUserCart, resetState, applyAcoupon } from '../features/user/userSlice'
 import CustomModal from '../components/CustomModal';
+import { useMediaQuery } from 'react-responsive';
 
 const shippingSchema = yup.object({
   firstname: yup.string().required("First Name is Required"),
@@ -130,12 +131,13 @@ const Checkout = (props) => {
     // eslint-disable-next-line
   }, [])
 
-
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   return (
     <>
-      <Container class1="checkout-wrapper py-5 home-wrapper-2">
+      <Container class1="checkout-wrapper py-[5%] home-wrapper-2">
         <div className="row">
-          <div className="col-7">
+          <div className={isMobile ? "col-12" : "col-7"}>
             <div className="checkout-left-data">
               <h1 className="website-name">
                 Defy LifeStyle
@@ -204,7 +206,7 @@ const Checkout = (props) => {
                   </div>
                 </div>
                 <div className='w-100'>
-                  <input type="text" name="other" className="form-control" placeholder='Apartment,Suite,etc'
+                  <input type="text" name="other" className="form-control" placeholder='Apartment,Suite,etc(Other Details)'
                     value={formik.values.other} onChange={formik.handleChange("other")}
                     onBlur={formik.handleBlur("other")}
                   />
@@ -271,27 +273,35 @@ const Checkout = (props) => {
                     {formik.touched.mobile && formik.errors.mobile}
                   </div>
                 </div>
-                <div className="w-100">
-                  <div className="d-flex justify-content-between align-items-center">
-                    <Link to="/cart" className='text-dark d-flex align-items-center'>
-                      <BiArrowBack /> Return to Cart</Link>
-                    <button className='button' type="submit">Place Order
-                    </button>
-
+                {!isMobile ? (
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Link to="/cart" className='text-dark d-flex align-items-center'>
+                        <BiArrowBack /> Return to Cart
+                      </Link>
+                      <button className='button' type="submit">Place Order</button>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="w-100">
+                    <div className='text-center'>
+                      <h3 className='uppercase section-heading mb-0 pb-0 mt-[1%]'>Ordered Items</h3>
+                    </div>
+                  </div>
+                )}
               </form>
             </div>
           </div>
-          <div className="col-5">
-            <div className='border-bottom py-4'>
+          <div className={isMobile ? "col-12" : "col-5"}>
+
+            <div className='border-bottom py-[4.2%]'>
               {
                 cartState && cartState?.map((item, index) => {
                   return (
                     <div key={index} className="d-flex gap-10 mb-2 align-items-center">
                       <div className="w-75 d-flex gap-10">
                         <div className="w-25 position-relative">
-                          <span className="badge bg-secondary text-white rounded-circle p-2 position-absolute" style={{ top: "-10px", right: "-2px" }}>
+                          <span className="badge bg-secondary text-white rounded-circle p-[8%] position-absolute" style={{ top: "-10px", right: "-2px" }}>
                             {item?.quantity}
                           </span>
                           <img src={item?.productId?.images[0]?.url} alt="product" width={100} height={100} />
@@ -314,7 +324,7 @@ const Checkout = (props) => {
               }
 
             </div>
-            <div className='border-bottom py-4'>
+            <div className='border-bottom py-[4%]'>
               <div className='d-flex justify-content-between align-items-center'>
                 <p className='total'>Subtotal</p>
                 <p className='total-price'>Rs.{totalAmount ? totalAmount : "0"}</p>
@@ -348,12 +358,20 @@ const Checkout = (props) => {
             <div className='d-flex justify-content-between align-items-center'>
               <h4 className='total'>Total</h4>
               <h5 className='total-price'>Rs.{grandTotal ? grandTotal
-
                 : "0"}</h5>
-
             </div>
-
           </div>
+          {isMobile && (
+            <div className="w-100 mt-[4%]">
+              <div className="d-flex justify-content-between align-items-center">
+                <Link to="/cart" className='text-dark d-flex align-items-center'>
+                  <BiArrowBack /> Return to Cart
+                </Link>
+                <button className='button' type="submit">Place Order</button>
+              </div>
+            </div>
+          )}
+
         </div>
       </Container>
     </>

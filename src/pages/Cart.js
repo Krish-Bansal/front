@@ -74,7 +74,7 @@ const Cart = () => {
           {userCartState && userCartState.length > 0 && (
             <>
               <div className="col-12">
-                <div className='cart-header d-flex justify-content-between align-items-center py-3 mt-2'>
+                <div className='cart-header d-flex justify-content-between align-items-center py-[1.5%] mt-[1%]'>
                   <h4 className='cart-col-1'>Product</h4>
                   <h4 className='cart-col-2'>Price</h4>
                   <h4 className='cart-col-3'>Quantity</h4>
@@ -84,7 +84,7 @@ const Cart = () => {
                 {
                   userCartState && userCartState?.map((item, index) => {
                     return (
-                      <div key={index} className='cart-data py-3 mb-2 d-flex justify-content-between align-items-center'>
+                      <div key={index} className='cart-data py-[1%] d-flex justify-content-between align-items-center'>
                         <div className='cart-col-1 d-flex align-items-center gap-15'>
                           <div className='w-25'>
                             <img src={item?.productId?.images[0]?.url} alt="Product 1" className='img-fluid' />
@@ -94,7 +94,7 @@ const Cart = () => {
                             <p>
                               {item?.productId?.title}
                             </p>
-                            <p className='d-flex gap-3 mt-1'>
+                            <p className='d-flex gap-3 mt-[1%]'>
                               Color: <ul className='colors ps-0'>
                                 <li style={{ backgroundColor: item?.color?.title }}></li>
                               </ul>
@@ -110,14 +110,19 @@ const Cart = () => {
                         </div>
                         <div className='cart-col-3 d-flex align-items-center gap-15'>
                           <div>
-                            <input type="number"
-                              name={"quantity" + item?._id} className='form-control' min={1} max={10} id={"cart" + item?._id}
+                            <input
+                              type="number"
+                              name={"quantity" + item?._id}
+                              style={{ width: "130%", paddingLeft: "20%", paddingRight: "0%" }}
+                              className="form-control"
+                              min={1}
+                              max={10}
+                              id={"cart" + item?._id}
                               value={item?.quantity}
                               onChange={(e) => {
-                                setProductUpdateDetail({ cartItemId: item?._id, quantity: e.target.value })
+                                setProductUpdateDetail({ cartItemId: item?._id, quantity: e.target.value });
                               }}
                             />
-
                           </div>
                           <div>
                             <AiFillDelete className='text-danger cursor-pointer ' onClick={() => {
@@ -134,15 +139,19 @@ const Cart = () => {
                   })
                 }
               </div>
-              <div className="col-12 py-2 mt-4">
+              <div className="col-12 py-[1%] mt-[3%]">
                 <div className="d-flex justify-content-between align-items-baseline">
-                  <Link className='button' to="/product">Continue To Shopping</Link>
+                  <Link className='cart-button text-center' to="/product">Continue To Shopping</Link>
                   {totalAmount !== null && totalAmount !== 0 && (
-                    <div className='d-flex flex-column align-items-end gap-10'>
-                      <h4>SubTotal: Rs.{totalAmount}</h4>
-                      <p>Taxes and Shipping Calulated At Checkout.</p>
+                    <div className='d-flex flex-column align-items-end' style={{ "--gap": "1.2%" }}>
+                      <h4 style={{ marginBottom: "var(--gap)" }}>SubTotal: Rs.{totalAmount}</h4>
+                      <div style={{ marginTop: "auto", marginBottom: "var(--gap)" }}>
+                        <p className='text-right'>Taxes and Shipping Calculated At Checkout.</p>
+                      </div>
                       <Link className='button' to="/checkout">Checkout</Link>
                     </div>
+
+
                   )}
                 </div>
               </div>
