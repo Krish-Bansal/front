@@ -15,8 +15,10 @@ import * as yup from "yup"
 import { useFormik } from "formik"
 import StarRatings from 'react-star-ratings';
 import { useMediaQuery } from 'react-responsive';
+import { Carousel } from 'react-bootstrap';
 
 
+// Rating Schema Starts Here
 const reviewSchema = yup.object().shape({
   rating: yup
     .number()
@@ -29,10 +31,17 @@ const reviewSchema = yup.object().shape({
     .required('Comment is required')
     .max(500, 'Comment cannot exceed 500 characters'),
 });
+// Rating Schema Ends Here
+
 
 const SingleProduct = () => {
+
+  // For Screen less than 768 Pixels  Starts here 
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  // Authorization Token
+  // For Screen less than 768 Pixels  Ends here 
+
+
+  // Authorization Token Starts Here
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
   const config2 = {
@@ -42,9 +51,9 @@ const SingleProduct = () => {
       Accept: "application/json",
     },
   };
-  // Authorization Token
+  // Authorization Token Ends Here
 
-  // converting html tags in description  
+  // converting html tags in description Starts Here
   const descriptionRef = useRef(null);
   useEffect(() => {
     if (descriptionRef.current) {
@@ -52,19 +61,21 @@ const SingleProduct = () => {
       descriptionRef.current.innerHTML = DOMPurify.sanitize(description);
     }
   }, []);
-  // converting html tags in description  
-  // const [color, setColor] = useState(null)
+  // converting html tags in description Ends Here
+
+
+
   const [quantity, setQuantity] = useState(1)
-  // const [alreadyAdded, setAlreadyAdded] = useState(false);
   const location = useLocation()
   const navigate = useNavigate()
   const getProductId = location.pathname.split("/")[2]
   const dispatch = useDispatch();
   const ProductState = useSelector(state => state?.product?.singleproduct)
   const productsState = useSelector(state => state?.product?.product)
-  // const cartState = useSelector(state => state?.auth?.cartProducts)
   const userState = useSelector(state => state?.auth?.user)
   const orderState = useSelector(state => state?.auth?.getorderedProduct)
+
+
   let isProductAddedToOrders = false;
   orderState?.orders.forEach(orders => {
     orders.orderItems.forEach(orderItem => {
@@ -73,25 +84,15 @@ const SingleProduct = () => {
       }
     });
   });
-
-
-
   useEffect(() => {
     dispatch(getAllProducts())
     dispatch(getAProduct(getProductId))
     if (userState !== null) {
       dispatch(getOrders(config2))
     }
-    // dispatch(getUserCart(config2))
     // eslint-disable-next-line
   }, [])
-  // useEffect(() => {
-  //   for (let index = 0; index < cartState?.length; index++) {
-  //     if (getProductId === cartState[index]?.productId?._id) {
-  //       setAlreadyAdded(true)
-  //     }
-  //   }
-  // })
+
 
   const uploadCart = () => {
     if (selectedSize === null) {
@@ -104,7 +105,7 @@ const SingleProduct = () => {
     }
   };
 
-  // image selection 
+  // image selection Starts Here
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
     setSelectedImage(ProductState?.images[0]?.url || '');
@@ -112,14 +113,10 @@ const SingleProduct = () => {
   const handleImageClick = (imageUrl) => {
     setSelectedImage(imageUrl);
   };
-  // image selection 
+  // image selection Ends Here
 
 
-  // add a review part 
-
-
-
-
+  // add a review part Starts Here
   const formik = useFormik({
     initialValues: {
       rating: 0,
@@ -135,8 +132,7 @@ const SingleProduct = () => {
       formik.resetForm();
     },
   });
-
-  // total rating 
+  // total rating  Starts here
   const reviews = ProductState?.reviews; // Assuming ProductState contains the reviews data
 
   // Calculate the total rating
@@ -148,23 +144,16 @@ const SingleProduct = () => {
     totalRating /= reviews.length;
   }
 
-  // total rating 
+  // total rating Ends here
 
   const loggedinUser = {
     name: userState?.firstname + " " + userState?.lastname
   };
 
-  // add a review part 
+  // add a review part Ends Here
 
 
-
-
-  // const props = {
-  //   img: ProductState?.images[0]?.url ? ProductState?.images[0]?.url : "Main Product Image"
-  // }
-
-
-  // size selection 
+  // size selection Starts Here
   const [selectedSize, setSelectedSize] = useState(null);
 
   const handleSizeSelection = (size) => {
@@ -175,17 +164,17 @@ const SingleProduct = () => {
       setSelectedSize(size);
     }
   };
-  // size selection 
+  // size selection Ends Here
 
-  useEffect(() => {
-    // Check if the product is in the user's order history
-    // const isProductOrdered = checkIfProductOrdered(getProductId); 
-    // Replace `checkIfProductOrdered` with your logic to determine if the product is ordered
+  // useEffect(() => {
+  //   // Check if the product is in the user's order history
+  //   // const isProductOrdered = checkIfProductOrdered(getProductId); 
+  //   // Replace `checkIfProductOrdered` with your logic to determine if the product is ordered
 
-    // setOrderedProduct(isProductOrdered);
-  }, [getProductId]);
+  //   // setOrderedProduct(isProductOrdered);
+  // }, [getProductId]);
 
-  // copy to clipboard 
+  // copy to clipboard Starts Here
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
     textField.innerText = text;
@@ -194,7 +183,9 @@ const SingleProduct = () => {
     document.execCommand("copy");
     textField.remove();
   }
-  // copy to clipboard 
+  // copy to clipboard Ends Here
+
+  // You May Also Like Section Starts Here 
 
   const [allProducts, setAllProducts] = useState([])
   useEffect(() => {
@@ -204,17 +195,24 @@ const SingleProduct = () => {
       return;
     }
 
-    const filteredProducts = productsState.filter(
-      (product) => product._id !== getProductId
-    );
+    const filteredProducts = productsState
+      .filter((product) => product._id !== getProductId)
+      .slice(0, 20); // Limit the products to 20
+
     setAllProducts(filteredProducts);
     // eslint-disable-next-line
   }, [productsState, getProductId]);
 
 
+
+  // You May Also Like Section Ends Here 
+
+  // Add to Wishlist Starts Here 
   const addToWish = (id, config) => {
     dispatch(addToWishlist({ id, config }));
   };
+  // Add to Wishlist Starts Here 
+
   return (
     <>
       <Meta title={ProductState?.title} />
@@ -571,9 +569,60 @@ const SingleProduct = () => {
             <h3 className="section-heading uppercase">You May Also Like</h3>
           </div>
         </div>
-        <div className="row">
-          <ProductCard data={allProducts} grid={3} />
+        <div>
+          {isMobile ? (
+            <div className="row row-scroll">
+              <div className="col-12">
+                <div className="d-flex flex-nowrap overflow-auto">
+                  {allProducts.map((product, index) => (
+                    <div
+                      key={index}
+                      className="col-6"
+                      onClick={() => {
+                        navigate("/product/" + product?.id);
+                      }}
+                    >
+                      <div className="product-card position-relative">
+                        <div className="product-image">
+                          <img
+                            src={product?.images[0]?.url}
+                            className="img-fluid d-block mx-auto"
+                            alt="Product 1"
+                            width={300}
+                          />
+                          <img
+                            src={product?.images[1]?.url}
+                            className="img-fluid"
+                            alt="Product 2"
+                          />
+                        </div>
+                        <div className="product-details">
+                          <h5 className="product-title">{product?.title}</h5>
+                          <p className="price">Rs.{product?.price}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Carousel indicators={false} interval={null}>
+              {Array.from({ length: Math.ceil(allProducts.length / 4) }, (_, index) => (
+                <Carousel.Item key={index}>
+                  <div className="row">
+                    {allProducts.slice(index * 4, (index + 1) * 4).map((product) => (
+                      <div className="col-md-3" key={product.id}>
+                        <ProductCard data={[product]} />
+                      </div>
+                    ))}
+                  </div>
+                </Carousel.Item>
+              ))}
+            </Carousel>
+          )}
         </div>
+
       </Container>
     </>
   )
