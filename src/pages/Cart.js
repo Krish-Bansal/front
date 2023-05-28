@@ -85,17 +85,17 @@ const Cart = () => {
                   userCartState && userCartState?.map((item, index) => {
                     return (
                       <div key={index} className='cart-data py-[1%] d-flex justify-content-between align-items-center'>
-                        <div className='cart-col-1 d-flex align-items-center gap-15'>
+                        <div className='cart-col-1 d-flex align-items-center' style={{ gap: '3%' }}>
                           <div className='w-25'>
                             <img src={item?.productId?.images[0]?.url} alt="Product 1" className='img-fluid' />
-
                           </div>
                           <div className='w-75'>
                             <p>
                               {item?.productId?.title}
                             </p>
-                            <p className='d-flex gap-3 mt-[1%]'>
-                              Color: <ul className='colors ps-0'>
+                            <p className='d-flex  mt-[1%]' style={{ gap: '2%' }}>
+                              Color:
+                              <ul className='colors ps-0'>
                                 <li style={{ backgroundColor: item?.color?.title }}></li>
                               </ul>
                             </p>
@@ -103,12 +103,12 @@ const Cart = () => {
                               Size: {item?.size}
                             </p>
                           </div>
-
                         </div>
+
                         <div className='cart-col-2'>
                           <h5 className="price">Rs.{item?.price}</h5>
                         </div>
-                        <div className='cart-col-3 d-flex align-items-center gap-15'>
+                        <div className='cart-col-3 d-flex align-items-center' style={{ gap: '19%' }}>
                           <div>
                             <input
                               type="number"
@@ -144,14 +144,12 @@ const Cart = () => {
                   <Link className='cart-button text-center' to="/product">Continue To Shopping</Link>
                   {totalAmount !== null && totalAmount !== 0 && (
                     <div className='d-flex flex-column align-items-end' style={{ "--gap": "1.2%" }}>
-                      <h4 style={{ marginBottom: "var(--gap)" }}>SubTotal: Rs.{totalAmount}</h4>
+                      <h4 style={{ marginBottom: "var(--gap)" }} className='text-lg'>SubTotal: Rs.{totalAmount}</h4>
                       <div style={{ marginTop: "auto", marginBottom: "var(--gap)" }}>
-                        <p className='text-right'>Taxes and Shipping Calculated At Checkout.</p>
+                        <p className='text-right text-sm'>Taxes and Shipping Calculated At Checkout.</p>
                       </div>
                       <Link className='button' to="/checkout">Checkout</Link>
                     </div>
-
-
                   )}
                 </div>
               </div>
