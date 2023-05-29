@@ -83,7 +83,7 @@ const ResetPassword = () => {
             </Col>
           )}
           <Col style={{ fontFamily: "sans-serif" }}>
-            <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
+            <img src={Logo1} alt="DEFY Logo" style={{ width: '26%', height: "auto" }} />
             <div className="mt-0 px-[5.5%] py-[2.5%]">
               <h1 className='text-center title text-[#260810] text-2xl'>Reset Password</h1>
               <p className='text-center text-[#2F4F5E]'>Please Enter your new password</p>

@@ -93,7 +93,7 @@ const Signup = () => {
           )}
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>
-              <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
+              <img src={Logo1} alt="DEFY Logo" style={{ width: '26%', height: "auto" }} />
               <Link to="/login" key={Math.random()} className='mr-[3.5%] inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp;Go Back </Link>
             </div>
