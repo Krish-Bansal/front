@@ -9,6 +9,8 @@ import { forgotPasswordToken, resetState } from '../features/user/userSlice'
 import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { useSelector } from "react-redux"
+import { useMediaQuery } from 'react-responsive';
+
 
 
 const images = [
@@ -32,6 +34,8 @@ const emailSchema = yup.object({
 });
 
 const ForgotPassword = () => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   const forgotPassErrorMessage = useSelector((state) => state.auth.forgotMsg);
   const forgotPassSuccessMessage = useSelector((state) => state.auth.forgotSuccess);
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -57,23 +61,22 @@ const ForgotPassword = () => {
     <div style={{ background: 'white', minHeight: '100vh' }}>
       <Container fluid>
         <Row>
-          <Col md={6} className='p-0'>
-
-            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
-
-
-          </Col>
+          {!isMobile && (
+            <Col md={6} className="p-0">
+              <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            </Col>
+          )}
           <Col style={{ fontFamily: "sans-serif" }}>
 
             <div className='flex justify-between align-items-center'>
               <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
-              <Link to="/login" className='mr-7 inline-flex'>
+              <Link to="/login" className='mr-[3.5%] inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp; Go Back</Link>
             </div>
 
-            <div className="mt-0 px-5 w-75 py-3">
-              <h1 className='text-left title text-[#260810]' style={{ fontSize: "24px" }}>Forgot Password</h1>
-              <p className='text-left text-[#2F4F5E]'>Please Enter your registered email to reset password</p>
+            <div className="mt-0 px-[5.5%] py-[2.5%]">
+              <h1 className='text-center title text-[#260810] text-2xl'>Forgot Password</h1>
+              <p className='text-center text-[#2F4F5E]'>Please Enter your registered email to reset password</p>
               <form action="" onSubmit={formik.handleSubmit}>
                 <CustomInput
                   type="email"
@@ -95,7 +98,7 @@ const ForgotPassword = () => {
                 )}
                 <div>
                   <button
-                    className="border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3"
+                    className="border-0 rounded-3 px-3 py-1 text-white font-light fs-5 w-100 text-decoration-none my-[2.5%]"
                     type="submit"
                     style={{ backgroundColor: "#FBA71A" }}
                   >

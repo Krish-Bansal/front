@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux"
 import { registerUser, resetState } from '../features/user/userSlice'
 import { useSelector } from "react-redux"
 import { AiOutlineArrowLeft } from "react-icons/ai"
+import { useMediaQuery } from 'react-responsive';
+
 
 
 const images = [
@@ -41,6 +43,8 @@ const signUpSchema = yup.object({
 })
 
 const Signup = () => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   const errorMessage = useSelector((state) => state.auth.errorMessagesignup);
   const authState = useSelector(state => state?.auth)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -82,18 +86,20 @@ const Signup = () => {
     <div>
       <Container fluid>
         <Row>
-          <Col md={6} className="p-0">
-            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
-          </Col>
+          {!isMobile && (
+            <Col md={6} className="p-0">
+              <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            </Col>
+          )}
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>
               <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
-              <Link to="/login" key={Math.random()} className='mr-7 inline-flex'>
+              <Link to="/login" key={Math.random()} className='mr-[3.5%] inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp;Go Back </Link>
             </div>
-            <div className="mt-0 px-5 py-2">
-              <h1 className='text-center title text-[#260810]' style={{ fontSize: "26px" }}>SignUp</h1>
-              <p className='text-center mt-2 text-[#2F4F5E]'>By having a Defy account, you can purchase items,get exciting offers and many more.
+            <div className="mt-0 px-[5.5%] py-[2.5%]">
+              <h1 className='text-center title text-[#260810] text-3xl'>SignUp</h1>
+              <p className='text-center mt-[2%] text-[#2F4F5E]'>By having a Defy account, you can purchase items,get exciting offers and many more.
                 Sign up in just seconds.</p>
 
               <form action="" onSubmit={formik.handleSubmit} className='d-flex flex-column '>
@@ -137,8 +143,8 @@ const Signup = () => {
                 <div className="error">
                   {formik.touched.password && formik.errors.password}
                 </div>
-                <p className='text-center mt-1'>By signing up, you agree to the <Link to="/terms-conditions" className='text-blue-400'>terms and conditions</Link></p>
-                <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3' type="submit" style={{ backgroundColor: "#FBA71A" }}>Create a account</button>
+                <p className='text-center mt-[1%]'>By signing up, you agree to the <Link to="/terms-conditions" className='text-blue-400'>terms and conditions</Link></p>
+                <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]' type="submit" style={{ backgroundColor: "#FBA71A" }}>Create a account</button>
               </form>
             </div>
           </Col>

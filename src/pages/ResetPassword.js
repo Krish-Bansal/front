@@ -7,6 +7,7 @@ import * as yup from 'yup'
 import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { useFormik } from "formik"
 import { resetPassword } from '../features/user/userSlice'
+import { useMediaQuery } from 'react-responsive';
 
 
 
@@ -32,6 +33,8 @@ const passwordSchema = yup.object({
   password: yup.string().required("Password is Required")
 })
 const ResetPassword = () => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   const ResetPassErrorMessage = useSelector((state) => state.auth.resetError);
   const ResetPassSuccessMessage = useSelector((state) => state.auth.resetPass);
   // const [showPassword, setShowPassword] = useState(false);
@@ -74,15 +77,17 @@ const ResetPassword = () => {
     <div style={{ background: 'white', minHeight: '100vh' }}>
       <Container fluid>
         <Row>
-          <Col md={6} className='p-0'>
-            <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
-          </Col>
+          {!isMobile && (
+            <Col md={6} className="p-0">
+              <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
+            </Col>
+          )}
           <Col style={{ fontFamily: "sans-serif" }}>
             <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
-            <div className="mt-0 px-5 w-75 py-3">
-              <h1 className='text-left title text-[#260810]' style={{ fontSize: "26px" }}>Reset Password</h1>
-              <p className='text-left text-[#2F4F5E]'>Please Enter your new password</p>
-              <form action="" className="mt-4" onSubmit={handleSubmit}>
+            <div className="mt-0 px-[5.5%] py-[2.5%]">
+              <h1 className='text-center title text-[#260810] text-2xl'>Reset Password</h1>
+              <p className='text-center text-[#2F4F5E]'>Please Enter your new password</p>
+              <form action="" className="mt-[2%]" onSubmit={handleSubmit}>
                 <CustomInput
                   type="password"
                   name="password"
@@ -102,7 +107,7 @@ const ResetPassword = () => {
                   <div className="error">{ResetPassErrorMessage}</div>
                 )}
                 <button
-                  className="border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3"
+                  className="border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]"
                   type="submit"
                   style={{ backgroundColor: "#FBA71A" }}
                 >

@@ -9,6 +9,7 @@ import Logo1 from "../assests1/defy_logo-removebg-preview.png";
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from '../features/user/userSlice'
 import { AiOutlineArrowRight } from "react-icons/ai"
+import { useMediaQuery } from 'react-responsive';
 
 const images = [
   require('../assests/285820107_969410360393154_8615687616660637758_n.jpg'),
@@ -37,14 +38,9 @@ const loginSchema = yup.object({
 })
 
 const Login = () => {
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   const errorMessage = useSelector((state) => state.auth.errorMessagelogin);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentImageIndex(prevIndex => (prevIndex + 1) % imageCount);
-    }, 5500);
-    return () => clearInterval(intervalId)
-  }, [])
   const authState = useSelector(state => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch();
@@ -58,11 +54,17 @@ const Login = () => {
       dispatch(loginUser(values))
     }
   })
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentImageIndex(prevIndex => (prevIndex + 1) % imageCount);
+    }, 5500);
+    return () => clearInterval(intervalId)
+  }, [])
 
   useEffect(() => {
     if (authState.user !== null && authState.isSuccess === true) {
       navigate("/")
-      // toast.info("User Logged In Successfully")
     } else {
       if (authState.isError === true) {
       }
@@ -72,92 +74,52 @@ const Login = () => {
 
 
   const [showPassword, setShowPassword] = useState(false);
-
   const toggleShowPassword = () => {
     setShowPassword(prevShowPassword => !prevShowPassword);
   };
   return (
-    <div style={{ background: "white", minHeight: '100vh' }}>
 
-      <Container fluid>
-        <Row>
+    <Container fluid>
+      <Row>
+        {/* Assuming you have a state variable 'isMobile' that determines if the device is mobile or not  */}
+        {!isMobile && (
           <Col md={6} className="p-0">
             <img src={images[currentImageIndex]} alt="DEFY Product" className='opacity-80' style={{ width: '100%', height: '100vh', objectFit: 'cover', opacity: "95" }} />
           </Col>
-          <Col style={{ fontFamily: 'sans-serif' }}>
-            <div className='flex justify-between align-items-center'>
-              <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
-              <Link to="/signup" className='mr-7 inline-flex'>Create an account &nbsp;<AiOutlineArrowRight className='pt-0 m-0 fs-4' /></Link>
-            </div>
+        )}
+        <Col style={{ fontFamily: 'sans-serif' }}>
+          <div className='flex justify-between align-items-center'>
+            <img src={Logo1} alt="DEFY Logo" style={{ width: '27%', height: "20%" }} />
+            <Link to="/signup" className='mr-[3.5%] inline-flex'>Create an account &nbsp;<AiOutlineArrowRight className='pt-0 m-0  fs-4' /></Link>
+          </div>
 
 
-            <div className="mt-0 px-5 w-75 py-3">
-              <h1 className='text-left title text-[#260810]' style={{ fontSize: "26px" }}>SignIn</h1>
-              <p className='text-left text-[#2F4F5E]'>Login to your account to continue</p>
-
-              <form action="" className='mt-2' onSubmit={formik.handleSubmit}>
-                <div>
-                  {/* Render other UI components */}
-                  {errorMessage && <p className='action-error'>{errorMessage}</p>} {/* Render the error message if it exists */}
-                </div>
-                <CustomInput type="text" name="email" label="Email Address" placeholder="Email Address" id="email" value={formik.values.email}
-                  onChange={formik.handleChange("email")} />
-                <div className="error">
-                  {formik.touched.email && formik.errors.email}
-                </div>
-                <CustomInput type={showPassword ? "text" : "password"} name="password" placeholder="Email Address" label="Password" id="password" value={formik.values.password}
-                  onChange={formik.handleChange("password")}
-
-                  icon={showPassword ? <FaEyeSlash onClick={toggleShowPassword} /> : <FaEye onClick={toggleShowPassword} />} />
-                <div className="error">
-                  {formik.touched.password && formik.errors.password ? (<div>{formik.errors.password}</div>) : null}
-                </div>
-                <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-35 fs-5 text-decoration-none my-3' type="submit" style={{ backgroundColor: "#FBA71A" }}>Login</button>
-
-                <div className='mb-3 text-start'>
-                  <Link to="/forgot-password" className='text-[#2F4F5E]' style={{ textDecoration: "none", fontSize: "14px", fontFamily: "unset" }}>FORGOT LOGIN PASSWORD?
-                  </Link>
-                </div>
-              </form>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-
-    </div>);
+          {/* <div className="d-flex justify-content-center align-items-center border-black" style={{ height: '100vh', width: "100vh", border: '1px solid black' }}> */}
+          <div className="mt-0 px-[5.5%]  py-[2.5%]">
+            <h1 className='text-center title text-[#260810] text-3xl'>SignIn</h1>
+            <p className='text-center text-[#2F4F5E]'>Login to your account to continue</p>
+            <form action="" className='mt-[3%]' onSubmit={formik.handleSubmit}>
+              <div>
+                {/* Render other UI components */}
+                {errorMessage && <p className='action-error'>{errorMessage}</p>}
+              </div>
+              <CustomInput type="text" name="email" label="Email Address" placeholder="Email Address" id="email" value={formik.values.email} onChange={formik.handleChange("email")} />
+              <div className="error">
+                {formik.touched.email && formik.errors.email}
+              </div>
+              <CustomInput type={showPassword ? "text" : "password"} name="password" placeholder="Email Address" label="Password" id="password" value={formik.values.password} onChange={formik.handleChange("password")} icon={showPassword ? <FaEyeSlash onClick={toggleShowPassword} /> : <FaEye onClick={toggleShowPassword} />} />
+              <div className="error">
+                {formik.touched.password && formik.errors.password ? (<div>{formik.errors.password}</div>) : null}
+              </div>
+              <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]' type="submit" style={{ backgroundColor: "#FBA71A" }}>Login</button>
+              <div className='text-end'>
+                <Link to="/forgot-password" className='text-sm text-[#2F4F5E]' style={{ textDecoration: "none", fontFamily: "unset" }}>FORGOT LOGIN PASSWORD?</Link>
+              </div>
+            </form>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
-
-
-
-// {/* <div className="col-6 p-0">
-
-//                   <div className="auth-card">
-//                     <h3 className='text-center mb-3'>Login</h3>
-//                     <form action="" className='d-flex flex-column gap-15' onSubmit={formik.handleSubmit}>
-//                       <CustomInput type="email" name='email' placeholder='Email'
-//                         onChange={formik.handleChange("email")}
-//                         onBlur={formik.handleBlur("email")}
-//                         value={formik.values.email} />
-//                       <div className="error">
-//                         {formik.touched.email && formik.errors.email}
-//                       </div>
-//                       <CustomInput type="password" name='password' placeholder='Password' onChange={formik.handleChange("password")}
-//                         onBlur={formik.handleBlur("password")}
-//                         value={formik.values.password} />
-//                       <div className="error">
-//                         {formik.touched.password && formik.errors.password}
-//                       </div>
-//                       <div>
-//                         <Link to="/forgot-password">Forgot your Password?</Link>
-//                         <div className=' mt-3 d-flex justify-content-center align-items-center gap-15'>
-//                           <button className='button border-0' type='submit'>Login</button>
-//                           <Link className='button signup' to="/signup">SignUp</Link>
-//                         </div>
-//                       </div>
-//                     </form>
-//                   </div>
-//                 </div> */}
-
-
-
 export default Login
