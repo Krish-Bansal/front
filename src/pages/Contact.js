@@ -44,16 +44,16 @@ const Contact = () => {
             </iframe>
           </div>
           <div className="col-12 mt-[2%]">
-            <div className="contact-inner-wrapper d-flex
-              justify-content-between">
+            <div className={`contact-inner-wrapper ${isMobile ? '' : 'd-flex justify-content-between'}`}>
               <div>
                 <h3 className='contact-title mb-[3%]'>Contact</h3>
                 <form action="" className='d-flex flex-column gap-15' onSubmit={formik.handleSubmit}>
                   <div>
-                    <input type="text" className='form-control' placeholder='Name'
+                    <input type="text" className='form-control w-100' placeholder='Name'
                       onChange={formik.handleChange("name")}
                       onBlur={formik.handleBlur("name")}
-                      value={formik.values.name} />
+                      value={formik.values.name}
+                    />
                     <div className="error">
                       {formik.touched.name && formik.errors.name}
                     </div>
