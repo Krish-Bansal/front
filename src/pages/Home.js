@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { getUserCart } from '../features/user/userSlice'
 import StarRatings from 'react-star-ratings';
 import { Carousel } from 'react-bootstrap';
+import { useMediaQuery } from 'react-responsive';
 
 
 
@@ -26,15 +27,15 @@ const Home = () => {
 
   // Mobile Responive Starts Here 
 
-  const screenWidth = window.innerWidth;
-
+  const isSmallScreen = useMediaQuery({ maxWidth: 576 });
+  const isMediumScreen = useMediaQuery({ maxWidth: 991.98 });
 
   let numberOfReviews;
 
-  if (screenWidth < 576) {
+  if (isSmallScreen) {
     // Small screen (less than 576px)
     numberOfReviews = 1;
-  } else if (screenWidth < 992) {
+  } else if (isMediumScreen) {
     // Medium screen (between 576px and 991.98px)
     numberOfReviews = 2;
   } else {
