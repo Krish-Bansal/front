@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import * as yup from "yup"
 import { Container, Row, Col } from 'react-bootstrap';
 import CustomInput from '../components/CustomInput'
@@ -10,7 +10,6 @@ import Logo1 from "../assests/defy_logo-removebg-preview.png"
 import { AiOutlineArrowLeft } from "react-icons/ai"
 import { useSelector } from "react-redux"
 import { useMediaQuery } from 'react-responsive';
-
 
 
 const images = [
@@ -69,12 +68,14 @@ const ForgotPassword = () => {
           <Col style={{ fontFamily: "sans-serif" }}>
 
             <div className='flex justify-between align-items-center'>
-              <img src={Logo1} alt="DEFY Logo" style={{ width: '26%', height: "auto" }} />
+              <NavLink to={'/'}>
+                <img src={Logo1} alt="DEFY Logo" style={{ width: '56%', height: "auto" }} />
+              </NavLink>
               <Link to="/login" className='mr-[3.5%] inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp; Go Back</Link>
             </div>
 
-            <div className="mt-0 px-[5.5%] py-[2.5%]">
+            <div className="mt-[2%] px-[5.5%] py-[2.5%]">
               <h1 className='text-center title text-[#260810] text-2xl'>Forgot Password</h1>
               <p className='text-center text-[#2F4F5E]'>Please Enter your registered email to reset password</p>
               <form action="" onSubmit={formik.handleSubmit}>

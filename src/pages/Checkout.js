@@ -367,7 +367,7 @@ const Checkout = (props) => {
               </form>
             </div>
           </div>
-          <div className={isMobile ? "d-none" : "col-5"}>
+          <div className={isMobile ? "d-none pointer-events none" : "col-5"}>
             <div className='border-bottom py-[4.2%]'>
               {
                 cartState && cartState?.map((item, index) => {

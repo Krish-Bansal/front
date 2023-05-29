@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from "react-bootstrap"
 import Logo1 from "../assests1/defy_logo-removebg-preview.png";
 import CustomInput from '../components/CustomInput'
@@ -93,11 +93,13 @@ const Signup = () => {
           )}
           <Col style={{ fontFamily: 'sans-serif' }}>
             <div className='flex justify-between align-items-center'>
-              <img src={Logo1} alt="DEFY Logo" style={{ width: '26%', height: "auto" }} />
+              <NavLink to={'/'}>
+                <img src={Logo1} alt="DEFY Logo" style={{ width: '56%', height: "auto" }} />
+              </NavLink>
               <Link to="/login" key={Math.random()} className='mr-[3.5%] inline-flex'>
                 <AiOutlineArrowLeft className='pt-0 m-0 fs-4' />&nbsp;Go Back </Link>
             </div>
-            <div className="mt-0 px-[5.5%] py-[2.5%]">
+            <div className="mt-[2%] px-[5.5%] py-[2.5%]">
               <h1 className='text-center title text-[#260810] text-3xl'>SignUp</h1>
               <p className='text-center mt-[2%] text-[#2F4F5E]'>By having a Defy account, you can purchase items,get exciting offers and many more.
                 Sign up in just seconds.</p>

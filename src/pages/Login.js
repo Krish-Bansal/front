@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { Container, Row, Col } from "react-bootstrap"
 import { useFormik } from "formik"
 import * as yup from 'yup'
@@ -89,13 +89,14 @@ const Login = () => {
         )}
         <Col style={{ fontFamily: 'sans-serif' }}>
           <div className='flex justify-between align-items-center'>
-            <img src={Logo1} alt="DEFY Logo" style={{ width: '26%', height: "auto" }} />
+            <NavLink to={'/'}>
+              <img src={Logo1} alt="DEFY Logo" style={{ width: '56%', height: "auto" }} /></NavLink>
             <Link to="/signup" className='mr-[3.5%] inline-flex'>Create an account &nbsp;<AiOutlineArrowRight className='pt-0 m-0  fs-4' /></Link>
           </div>
 
 
           {/* <div className="d-flex justify-content-center align-items-center border-black" style={{ height: '100vh', width: "100vh", border: '1px solid black' }}> */}
-          <div className="mt-0 px-[5.5%]  py-[2.5%]">
+          <div className="mt-[2%] px-[5.5%]  py-[2.5%]">
             <h1 className='text-center title text-[#260810] text-3xl'>SignIn</h1>
             <p className='text-center text-[#2F4F5E]'>Login to your account to continue</p>
             <form action="" className='mt-[3%]' onSubmit={formik.handleSubmit}>

@@ -986,13 +986,13 @@ a {
 }
 
 .product-card .product-image {
-  height: 310px;
+  height: 100%;
 }
 
 .product-card .product-image img {
   object-fit: cover;
   width: 100%;
-  height: 380px;
+  height: 100%;
 }
 
 .product-card .product-image>img:last-child {
@@ -1013,7 +1013,7 @@ a {
 .product-card .product-details h5 {
   text-align: center;
   font-size: 16px;
-  margin-top: 80px;
+  margin-top: 1%;
   margin-bottom: 0;
   color: var(--color-1c1c1b);
 }
