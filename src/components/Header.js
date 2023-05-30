@@ -101,7 +101,7 @@ const Header = () => {
         </div>
       </header>
       <header className='header2'>
-        <div className='mx-2'>
+        <div className='mx-3'>
           <div className='row align-items-center'>
             <div className="col-6 flex justify-start">
               <NavLink to={'/'}><img src={Logo} alt="Defy logo" className='lower-header-logo header-logo w-[60%]' /></NavLink>

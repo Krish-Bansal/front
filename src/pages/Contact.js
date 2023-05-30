@@ -44,8 +44,8 @@ const Contact = () => {
             </iframe>
           </div>
           <div className="col-12 mt-[2%]">
-            <div className={`contact-inner-wrapper ${isMobile ? '' : 'd-flex justify-content-between'}`}>
-              <div>
+            <div className={`contact-inner-wrapper ${isMobile ? 'flex flex-col gap-4' : 'd-flex justify-content-between'}`}>
+              <div className={`${isMobile ? 'w-100' : ''}`}>
                 <h3 className='contact-title mb-[3%]'>Contact</h3>
                 <form action="" className='d-flex flex-column gap-15' onSubmit={formik.handleSubmit}>
                   <div>
