@@ -5,13 +5,16 @@ import ProductCard from '../components/ProductCard'
 import { useDispatch, useSelector } from "react-redux"
 import Container from '../components/Container'
 import { getAllProducts } from '../features/products/productSlice'
+import { useMediaQuery } from 'react-responsive';
+
 
 const PantCat = () => {
-  const [grid, setGrid] = useState(4);
+  const isSmall = useMediaQuery({ maxWidth: 575.98 });
+  const isMiddle = useMediaQuery({ minWidth: 576, maxWidth: 991.98 });
+  const width = isSmall ? '20px' : isMiddle ? '80px' : '100px';
   const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
   const [sort, setSort] = useState(null)
-  console.log(sort);
   useEffect(() => {
     let category = []
     let newtags = [];
@@ -167,7 +170,7 @@ const PantCat = () => {
             <div className="filter-sort-grid mb-4">
               <div className="d-flex justify-content-between align-items-center">
                 <div className='d-flex align-items-center gap-10'>
-                  <p className="mb-0 d-block" style={{ "width": "100px" }}>Sort By:</p>
+                  <p className="mb-0 d-block" style={{ width }}>Sort By:</p>
 
                   <select name="" id="" className='form-control form-select' onChange={(e) => setSort(e.target.value)}>
                     <option value="title">Alphabetically, A-Z</option>
@@ -180,18 +183,15 @@ const PantCat = () => {
                   <p className="totalproducts mb-0">
                     {pantProductsCount} Products
                   </p>
-                  <div className='d-flex gap-10 align-items-center'>
-                    <img src="images/gr4.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(3) }} onLoad={() => { setGrid(3) }} />
-                    <img src="images/gr3.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(4) }} />
-                    <img src="images/gr2.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(6) }} />
-                    <img src="images/gr.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(12); }} />
-                  </div>
                 </div>
               </div>
             </div>
             <div className="products-list pb-5">
-              <div className="d-flex gap-10 flex-wrap">
-                <ProductCard data={pantProducts} grid={grid} />
+              <div className="d-flex justify-around flex-wrap" style={{ gap: '0%' }}>
+                <ProductCard
+                  data={pantProducts ? pantProducts : []}
+                  grid={isSmall ? 6 : isMiddle ? 4 : 3}
+                />
               </div>
             </div>
           </div>

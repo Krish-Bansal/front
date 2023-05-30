@@ -7,8 +7,13 @@ import { getUserProductWishlist } from '../features/user/userSlice'
 import nowish from "../assests1/no-results-found.png"
 import { addToWishlist } from '../features/products/productSlice'
 import { Link } from "react-router-dom"
+import { useMediaQuery } from 'react-responsive';
+
 
 const Wishlist = () => {
+  const isSmall = useMediaQuery({ maxWidth: 575.98 });
+  const isMiddle = useMediaQuery({ minWidth: 576, maxWidth: 991.98 });
+  const colClass = isSmall ? 'col-6' : isMiddle ? 'col-4' : 'col-3';
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
   const config2 = {
@@ -68,7 +73,7 @@ const Wishlist = () => {
           {
             wishlistState && wishlistState?.map((item, index) => {
               return (
-                <div className="col-3" key={index}>
+                <div className={colClass} key={index}>
                   <div className="wishlist-card position-relative">
                     <img onClick={() => {
                       removeFromWishlist(item?._id, config2);
@@ -77,7 +82,7 @@ const Wishlist = () => {
                     <div className="wishlist-card-image bg-white">
                       <img src={item?.images[0].url ? item?.images[0].url : "images/watch.jpg"} className='img-fluid  d-block mx-auto' alt="watch" width={160} />
                     </div>
-                    <div className='px-3 py-3'>
+                    <div className='px-[2%] py-[2%]'>
                       <h5 className="title">
                         {item?.title}
                       </h5>

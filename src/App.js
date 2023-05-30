@@ -30,45 +30,40 @@ function App() {
     <>
 
       <Routes>
-        <Route path='login' element={<OpenRoutes><Login /></OpenRoutes>} />
-        <Route path='forgot-password' element={<ForgotPassword />} />
-        <Route path='reset-password/:token' element={<ResetPassword />} />
+
+        <Route path='login' element={<OpenRoutes><Login /></OpenRoutes>} />  {/* Mobile Done */}
+        <Route path='forgot-password' element={<ForgotPassword />} /> {/* Mobile Done */}
+        <Route path='reset-password/:token' element={<ResetPassword />} />{/* Mobile Done */}
         <Route path='signup' element={
           <OpenRoutes>
-            <Signup />
+            <Signup />{/* Mobile Done */}
           </OpenRoutes>} />
         <Route path='*' element={<NotFound />} />
         <Route path='/' element={<Layout2 />} >
-          <Route index element={<Home />} />
+          <Route index element={<Home />} /> {/* Mobile Done */}
         </Route>
         <Route path='/' element={<Layout />} >
           <Route path="about" element={<About />} />
-          <Route path='contact' element={<Contact />} />
-          <Route path='product' element={<OurStore />} />
-          <Route path='shirt' element={<ShirtCat />} />
-          <Route path='pant' element={<PantCat />} />
-
-          <Route path='product/:id' element={<SingleProduct />} />
+          <Route path='contact' element={<Contact />} /> {/* Mobile Done */}
+          <Route path='product' element={<OurStore />} /> {/* Mobile Done */}
+          <Route path='shirt' element={<ShirtCat />} /> {/* Mobile Done */}
+          <Route path='pant' element={<PantCat />} />{/* Mobile Done */}
+          <Route path='product/:id' element={<SingleProduct />} /> {/* Mobile Done */}
           <Route path='Wishlist' element={<PrivateRoutes>
-            <Wishlist />
+            <Wishlist /> {/* Mobile Done */}
           </PrivateRoutes>} />
-          <Route path='forgot-password' element={<ForgotPassword />} />
           <Route path='cart' element={<PrivateRoutes>
             <Cart />
           </PrivateRoutes>} />
           <Route path='my-orders' element={<PrivateRoutes>
-            <Orders />
+            <Orders /> {/* Mobile Done */}
           </PrivateRoutes>} />
           <Route path='my-profile' element={<PrivateRoutes>
-            <Profile />
+            <Profile /> {/* Mobile Done */}
           </PrivateRoutes>} />
           <Route path='checkout' element={<PrivateRoutes>
             <Checkout />
           </PrivateRoutes>} />
-          <Route path='signup' element={
-            <OpenRoutes>
-              <Signup />
-            </OpenRoutes>} />
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
           <Route path='refund-policy' element={<RefundPolicy />} />
           <Route path='shipping-policy' element={<ShippingPolicy />} />

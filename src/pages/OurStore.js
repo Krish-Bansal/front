@@ -5,13 +5,17 @@ import ProductCard from '../components/ProductCard'
 import { useDispatch, useSelector } from "react-redux"
 import Container from '../components/Container'
 import { getAllProducts } from '../features/products/productSlice'
+import { useMediaQuery } from 'react-responsive';
 
 const OurStore = () => {
-  const [grid, setGrid] = useState(4);
+  const isSmall = useMediaQuery({ maxWidth: 575.98 });
+  const isMiddle = useMediaQuery({ minWidth: 576, maxWidth: 991.98 });
+  const width = isSmall ? '20px' : isMiddle ? '80px' : '100px';
+
+  // const [grid, setGrid] = useState(4);
   const productState = useSelector((state) => state?.product?.product);
   const dispatch = useDispatch();
   const [sort, setSort] = useState(null)
-  console.log(sort);
   useEffect(() => {
     let category = []
     let newtags = [];
@@ -34,7 +38,7 @@ const OurStore = () => {
     <>
       <Meta title={"Our Store"} />
       {/* <BreadCrumb title="Our Store" /> */}
-      <Container class1="store-wrapper home-wrapper-2 py-[5rem]">
+      <Container class1="store-wrapper home-wrapper-2 py-[5%]">
         <div className="row">
           {/* <div className="col-3">
             <div className='filter-card mb-3'>
@@ -161,11 +165,10 @@ const OurStore = () => {
             </div>
           </div> */}
           <div className="col-12">
-            <div className="filter-sort-grid mb-4">
+            <div className="filter-sort-grid mb-[3%]">
               <div className="d-flex justify-content-between align-items-center">
-                <div className='d-flex align-items-center gap-10'>
-                  <p className="mb-0 d-block" style={{ "width": "100px" }}>Sort By:</p>
-
+                <div className='d-flex align-items-center '>
+                  <p className="mb-0 d-block" style={{ width }}>Sort By:</p>
                   <select name="" id="" className='form-control form-select' onChange={(e) => setSort(e.target.value)}>
                     <option value="title">Alphabetically, A-Z</option>
                     <option value="-title">Alphabetically,Z-A</option>
@@ -173,22 +176,25 @@ const OurStore = () => {
                     <option value="-price">Price, high to low</option>
                   </select>
                 </div>
-                <div className='d-flex align-items-center gap-10 grid'>
+                <div className='d-flex align-items-center grid'>
                   <p className="totalproducts mb-0">
                     {productState?.length} Products
                   </p>
-                  <div className='d-flex gap-10 align-items-center'>
+                  {/* <div className='d-flex gap-10 align-items-center'>
                     <img src="images/gr4.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(3) }} onLoad={() => { setGrid(3) }} />
                     <img src="images/gr3.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(4) }} />
                     <img src="images/gr2.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(6) }} />
                     <img src="images/gr.svg" alt="grid" className='d-block img-fluid' onClick={() => { setGrid(12); }} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
-            <div className="products-list pb-3">
-              <div className="d-flex gap-10 flex-wrap">
-                <ProductCard data={productState ? productState : []} grid={grid} />
+            <div className="products-list pb-[3%]">
+              <div className="d-flex justify-around flex-wrap" style={{ gap: '0%' }}>
+                <ProductCard
+                  data={productState ? productState : []}
+                  grid={isSmall ? 6 : isMiddle ? 4 : 3}
+                />
               </div>
             </div>
           </div>
