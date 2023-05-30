@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom'
 import Container from '../components/Container'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCartProduct, getUserCart, updateCartProduct } from '../features/user/userSlice'
+import { useMediaQuery } from 'react-responsive';
 
 const Cart = () => {
+
+  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const isMobile = !isDesktop;
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
   const config2 = {
@@ -89,7 +93,7 @@ const Cart = () => {
                           <div className='w-25'>
                             <img src={item?.productId?.images[0]?.url} alt="Product 1" className='img-fluid' />
                           </div>
-                          <div className='w-75'>
+                          <div className='w-75 cart-item-data'>
                             <p>
                               {item?.productId?.title}
                             </p>
@@ -106,7 +110,7 @@ const Cart = () => {
                         </div>
 
                         <div className='cart-col-2'>
-                          <h5 className="price">Rs.{item?.price}</h5>
+                          <h5 className="cart-price">Rs.{item?.price}</h5>
                         </div>
                         <div className='cart-col-3 d-flex align-items-center' style={{ gap: '19%' }}>
                           <div>
@@ -132,7 +136,7 @@ const Cart = () => {
 
                         </div>
                         <div className='cart-col-4'>
-                          <h5 className="price">Rs{item?.price * item?.quantity}</h5>
+                          <h5 className="cart-price">Rs{item?.price * item?.quantity}</h5>
                         </div>
                       </div>
                     )
@@ -144,11 +148,14 @@ const Cart = () => {
                   <Link className='cart-button text-center' to="/product">Continue To Shopping</Link>
                   {totalAmount !== null && totalAmount !== 0 && (
                     <div className='d-flex flex-column align-items-end' style={{ "--gap": "1.2%" }}>
-                      <h4 style={{ marginBottom: "var(--gap)" }} className='text-lg'>SubTotal: Rs.{totalAmount}</h4>
-                      <div style={{ marginTop: "auto", marginBottom: "var(--gap)" }}>
-                        <p className='text-right text-sm'>Taxes and Shipping Calculated At Checkout.</p>
+                      <h4 style={{ marginBottom: "var(--gap)" }} className='cart-total'>SubTotal: Rs.{totalAmount}</h4>
+                      <div style={{ marginTop: "auto", marginBottom: "var(--gap)" }} className=''>
+                        <p className='text-right '>Taxes and Shipping Calculated At Checkout.</p>
                       </div>
-                      <Link className='button' to="/checkout">Checkout</Link>
+                      <Link className={isMobile ? 'checkout-button' : 'button'} to="/checkout">
+                        Checkout
+                      </Link>
+
                     </div>
                   )}
                 </div>

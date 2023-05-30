@@ -365,6 +365,7 @@ const Checkout = (props) => {
                 )}
 
               </form>
+
             </div>
           </div>
           <div className={isMobile ? "d-none pointer-events none" : "col-5"}>
@@ -386,7 +387,7 @@ const Checkout = (props) => {
                           </h5>
                           <p className='total-price'>
                             {item?.price}
-                          </p>
+                          </p>z
                         </div>
                       </div>
                       <div className="flex-grow-1">

@@ -32,6 +32,14 @@
   .totalproducts {
     font-size: 13px !important;
   }
+
+  .cart-price {
+    font-size: 10px !important;
+  }
+
+  .cart-item-data p {
+    font-size: 10px !important;
+  }
 }
 
 
@@ -51,6 +59,10 @@
   .totalproducts {
     font-size: 14px !important;
   }
+
+  .cart-item-data p {
+    font-size: 14px !important;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
@@ -64,6 +76,10 @@
 
   .totalproducts {
     font-size: 15px !important;
+  }
+
+  .cart-item-data p {
+    font-size: 14px !important;
   }
 }
 
@@ -79,6 +95,10 @@
   .totalproducts {
     font-size: 16px !important;
   }
+
+  .cart-item-data p {
+    font-size: 14px !important;
+  }
 }
 
 
@@ -93,6 +113,10 @@
 
   .totalproducts {
     font-size: 16px !important;
+  }
+
+  .cart-item-data p {
+    font-size: 14px !important;
   }
 }
 
@@ -430,9 +454,17 @@ a {
   .cart-button {
     background-color: var(--color-232f3e);
     color: white;
-    font-size: .8rem;
+    font-size: 12px;
     padding: 2% 3%;
     border-radius: 15px;
+  }
+
+  .checkout-button {
+    background-color: var(--color-232f3e);
+    color: white;
+    font-size: 12px;
+    padding: 2% 4%;
+    border-radius: 25px;
   }
 }
 
@@ -442,6 +474,14 @@ a {
     color: white;
     font-size: 14px;
     padding: 1% 4%;
+    border-radius: 25px;
+  }
+
+  .checkout-button {
+    background-color: var(--color-232f3e);
+    color: white;
+    font-size: 12px;
+    padding: 2% 4%;
     border-radius: 25px;
   }
 }
