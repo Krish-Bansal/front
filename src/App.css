@@ -24,6 +24,14 @@
   .product-card .product-details h5 {
     font-size: 14px !important;
   }
+
+  .store-sort {
+    font-size: 13px !important;
+  }
+
+  .totalproducts {
+    font-size: 13px !important;
+  }
 }
 
 
@@ -36,11 +44,26 @@
     font-size: 15px !important;
   }
 
+  .store-sort {
+    font-size: 14px !important;
+  }
+
+  .totalproducts {
+    font-size: 14px !important;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
   .lower-cross {
     margin-top: 13%
+  }
+
+  .store-sort {
+    font-size: 15px !important;
+  }
+
+  .totalproducts {
+    font-size: 15px !important;
   }
 }
 
@@ -48,12 +71,28 @@
   .lower-cross {
     margin-top: 11%
   }
+
+  .store-sort {
+    font-size: 16px !important;
+  }
+
+  .totalproducts {
+    font-size: 16px !important;
+  }
 }
 
 
 @media (min-width: 1200px) {
   .lower-cross {
     margin-top: 9.5%
+  }
+
+  .store-sort {
+    font-size: 16px !important;
+  }
+
+  .totalproducts {
+    font-size: 16px !important;
   }
 }
 

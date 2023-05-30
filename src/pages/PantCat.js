@@ -170,9 +170,8 @@ const PantCat = () => {
             <div className="filter-sort-grid mb-4">
               <div className="d-flex justify-content-between align-items-center">
                 <div className='d-flex align-items-center gap-10'>
-                  <p className="mb-0 d-block" style={{ width }}>Sort By:</p>
-
-                  <select name="" id="" className='form-control form-select' onChange={(e) => setSort(e.target.value)}>
+                  <p className="mb-0 d-block store-sort" style={{ width }}>Sort By:</p>
+                  <select name="" id="" className='form-control form-select py-[2%] ' onChange={(e) => setSort(e.target.value)}>
                     <option value="title">Alphabetically, A-Z</option>
                     <option value="-title">Alphabetically,Z-A</option>
                     <option value="price">Price, low to high</option>

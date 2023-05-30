@@ -10,7 +10,7 @@ import { useMediaQuery } from 'react-responsive';
 const OurStore = () => {
   const isSmall = useMediaQuery({ maxWidth: 575.98 });
   const isMiddle = useMediaQuery({ minWidth: 576, maxWidth: 991.98 });
-  const width = isSmall ? '20px' : isMiddle ? '80px' : '100px';
+  const width = isSmall ? '30px' : isMiddle ? '80px' : '100px';
 
   // const [grid, setGrid] = useState(4);
   const productState = useSelector((state) => state?.product?.product);
@@ -168,9 +168,9 @@ const OurStore = () => {
             <div className="filter-sort-grid mb-[3%]">
               <div className="d-flex justify-content-between align-items-center">
                 <div className='d-flex align-items-center '>
-                  <p className="mb-0 d-block" style={{ width }}>Sort By:</p>
-                  <select name="" id="" className='form-control form-select' onChange={(e) => setSort(e.target.value)}>
-                    <option value="title">Alphabetically, A-Z</option>
+                  <p className="mb-0 d-block store-sort" style={{ width }}>Sort By:</p>
+                  <select name="" id="" className='form-control form-select py-[2%] ' onChange={(e) => setSort(e.target.value)}>
+                    <option value="title" className='store-option'>Alphabetically, A-Z</option>
                     <option value="-title">Alphabetically,Z-A</option>
                     <option value="price">Price, low to high</option>
                     <option value="-price">Price, high to low</option>

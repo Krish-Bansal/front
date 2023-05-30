@@ -96,7 +96,7 @@ const Cart = () => {
                             <p className='d-flex  mt-[1%]' style={{ gap: '2%' }}>
                               Color:
                               <ul className='colors ps-0'>
-                                <li style={{ backgroundColor: item?.color?.title }}></li>
+                                <li style={{ backgroundColor: item?.color[0]?.title }}></li>
                               </ul>
                             </p>
                             <p>
