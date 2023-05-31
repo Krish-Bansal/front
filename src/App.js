@@ -62,7 +62,7 @@ function App() {
             <Profile /> {/* Mobile Done */}
           </PrivateRoutes>} />
           <Route path='checkout' element={<PrivateRoutes>
-            <Checkout />
+            <Checkout />  {/* Mobile Done */}
           </PrivateRoutes>} />
           <Route path='privacy-policy' element={<PrivacyPolicy />} />
           <Route path='refund-policy' element={<RefundPolicy />} />

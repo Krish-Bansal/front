@@ -137,6 +137,459 @@ const Checkout = (props) => {
     <>
       <Container class1="checkout-wrapper py-[5%] home-wrapper-2">
         <div className="row">
+          {isMobile ? (
+            <div className="col-12">
+              {/* Second div content */}
+              <div className="checkout-left-data">
+                <h1 className="website-name">
+                  Defy LifeStyle
+                </h1>
+                <nav style={{ "--bs-breadcrumb-divider": ">" }}
+                  aria-label="breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/cart" className='total-price'>Cart</Link>
+                    </li>
+                    &nbsp;/
+
+                    <li className="breadcrumb-item total-price active text-dark">
+                      Shipping
+                    </li>
+                    &nbsp;
+                  </ol>
+                </nav>
+              </div>
+
+              <div className='border-bottom py-[4.2%]'>
+                {
+                  cartState && cartState?.map((item, index) => {
+                    return (
+                      <div key={index} className="d-flex gap-10 mb-2 align-items-center">
+                        <div className="w-75 d-flex gap-10">
+                          <div className="w-25 position-relative">
+                            <span className="badge bg-secondary text-white rounded-circle p-[8%] position-absolute" style={{ top: "-10px", right: "-2px" }}>
+                              {item?.quantity}
+                            </span>
+                            <img src={item?.productId?.images[0]?.url} alt="product" width={100} height={100} />
+                          </div>
+                          <div>
+                            <h5 className='total-title'>
+                              {item?.productId?.title}({item?.size})
+                            </h5>
+                            <p className='total-price'>
+                              {item?.price}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <h5 className='total d-flex justify-content-end'>Rs {item?.price * item?.quantity}</h5>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className='border-bottom py-[4%]'>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <p className='total'>Subtotal</p>
+                  <p className='total-price'>Rs.{totalAmount ? totalAmount : "0"}</p>
+                </div>
+                <div className='coupon-area flex justify-between align-middle'>
+                  <div>
+                    <input type='text' placeholder='Enter coupon code' className='coupon-input' />
+                    <button className='apply-button' onClick={handleApplyCoupon}>Apply</button>
+                  </div>
+                  <div>
+                    <p className="total-price">{displayDiscount}</p>
+                  </div>
+                </div>
+                {couponMessage && !isSuccess ? (
+                  <p className="coupon-message">{couponMessage}</p>
+                ) : (
+                  isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
+                )}
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className='mb-0 total'>Shipping (Cash on delivery)</p>
+                  <p className='mb-0 total-price'>Rs.{shippingCost}</p>
+                  <CustomModal
+                    open={isModalOpen}
+                    hideModal={() => setIsModalOpen(false)}
+                    handleOptionSelect={handleOptionSelect}
+                    title="Select Shipping Option"
+                  />
+
+                </div>
+              </div>
+              <div className='d-flex justify-content-between align-items-center'>
+                <h4 className='total'>Total</h4>
+                <h5 className='total-price'>Rs.{grandTotal ? grandTotal
+                  : "0"}</h5>
+              </div>
+            </div>
+          ) : (
+            <div className="col-7">
+              {/* First div content */}
+              <div className="checkout-left-data">
+                <h1 className="website-name">
+                  Defy LifeStyle
+                </h1>
+                <nav style={{ "--bs-breadcrumb-divider": ">" }}
+                  aria-label="breadcrumb">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/cart" className='total-price'>Cart</Link>
+                    </li>
+                    &nbsp;/
+
+                    <li className="breadcrumb-item total-price active text-dark">
+                      Shipping
+                    </li>
+                    &nbsp;
+                  </ol>
+                </nav>
+                <h4 className="title total">
+                  Contact Information
+                </h4>
+                <p className="user-details total">
+                  {`${userState?.firstname} ${userState?.lastname} (${userState?.email})`}
+                </p>
+                <h4 className='mb-3'>Shipping Address</h4>
+                <form action=""
+                  onSubmit={formik.handleSubmit}
+                  className='d-flex gap-15 flex-wrap justify-content-between'>
+                  <div className='w-100'>
+                    <select name="country" value={formik.values.country} onChange={formik.handleChange("country")}
+                      onBlur={formik.handleBlur("country")} id="" className='form-control form-select'>
+                      <option value="" selected disabled>Select Country
+                      </option>
+                      <option value="Nepal">
+                        Nepal
+                      </option>
+                    </select>
+                    <div className="error ms-1">
+                      {formik.touched.country && formik.errors.country}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='First Name'
+                      value={formik.values.firstname} onChange={formik.handleChange("firstname")}
+                      onBlur={formik.handleBlur("firstname")} />
+                    <div className="error ms-1">
+                      {formik.touched.firstname && formik.errors.firstname}
+                    </div>
+                  </div>
+
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='Last Name'
+                      value={formik.values.lastname} onChange={formik.handleChange("lastname")}
+                      onBlur={formik.handleBlur("lastname")} />
+                    <div className="error ms-1">
+                      {formik.touched.lastname && formik.errors.lastname}
+                    </div>
+                  </div>
+                  <div className='w-100'>
+                    <input type="text" className="form-control" placeholder='Address'
+                      name="address"
+                      value={formik.values.address} onChange={formik.handleChange("address")}
+                      onBlur={formik.handleBlur("address")} />
+                    <div className="error ms-1">
+                      {formik.touched.address && formik.errors.address}
+                    </div>
+                  </div>
+                  <div className='w-100'>
+                    <input type="text" name="other" className="form-control" placeholder='Apartment,Suite,etc(Other Details)'
+                      value={formik.values.other} onChange={formik.handleChange("other")}
+                      onBlur={formik.handleBlur("other")}
+                    />
+                    <div className="error ms-1">
+                      {formik.touched.other && formik.errors.other}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='City'
+                      name="city"
+                      value={formik.values.city} onChange={formik.handleChange("city")}
+                      onBlur={formik.handleBlur("city")} />
+                    <div className="error ms-1">
+                      {formik.touched.city && formik.errors.city}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <select name="state" id="" className='form-control form-select' value={formik.values.state} onChange={formik.handleChange("state")}
+                      onBlur={formik.handleBlur("state")}>
+                      <option value="" selected disabled>
+                        Select State
+                      </option>
+                      <option value="Koshi" >
+                        Koshi
+                      </option>
+                      <option value="Madhesh" >
+                        Madhesh
+                      </option>
+                      <option value="Bagmati" >
+                        Bagmati
+                      </option>
+                      <option value="Gandaki" >
+                        Gandaki
+                      </option>
+                      <option value="Lumbini" >
+                        Lumbini
+                      </option>
+                      <option value="Karnali" >
+                        Karnali
+                      </option>
+                      <option value="Sudurpashchim" >
+                        Sudurpashchim
+                      </option>
+                    </select>
+                    <div className="error ms-1">
+                      {formik.touched.state && formik.errors.state}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='ZIP code'
+                      name="pincode"
+                      value={formik.values.pincode} onChange={formik.handleChange("pincode")}
+                      onBlur={formik.handleBlur("pincode")} />
+                    <div className="error">
+                      {formik.touched.pincode && formik.errors.pincode}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='Phone Number'
+                      name="mobile"
+                      value={formik.values.mobile} onChange={formik.handleChange("mobile")}
+                      onBlur={formik.handleBlur("mobile")} />
+                    <div className="error">
+                      {formik.touched.mobile && formik.errors.mobile}
+                    </div>
+                  </div>
+
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Link to="/cart" className='text-dark d-flex align-items-center'>
+                        <BiArrowBack /> Return to Cart
+                      </Link>
+                      <button className='button' type="submit">Place Order</button>
+                    </div>
+                  </div>
+
+
+                </form>
+
+              </div>
+            </div>
+          )}
+          {isMobile ? (
+            <div className="col-12">
+              {/* First div content */}
+              <div className="checkout-left-data">
+
+
+                <h4 className='mt-3 text-lg'>Shipping Address</h4>
+                <h4 className="title total">
+                  Contact Information
+                </h4>
+                <p className="user-details total">
+                  {`${userState?.firstname} ${userState?.lastname} (${userState?.email})`}
+                </p>
+                <form action=""
+                  onSubmit={formik.handleSubmit}
+                  className='d-flex gap-15 flex-wrap justify-content-between'>
+                  <div className='w-100'>
+                    <select name="country" value={formik.values.country} onChange={formik.handleChange("country")}
+                      onBlur={formik.handleBlur("country")} id="" className='form-control form-select'>
+                      <option value="" selected disabled>Select Country
+                      </option>
+                      <option value="Nepal">
+                        Nepal
+                      </option>
+                    </select>
+                    <div className="error ms-1">
+                      {formik.touched.country && formik.errors.country}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='First Name'
+                      value={formik.values.firstname} onChange={formik.handleChange("firstname")}
+                      onBlur={formik.handleBlur("firstname")} />
+                    <div className="error ms-1">
+                      {formik.touched.firstname && formik.errors.firstname}
+                    </div>
+                  </div>
+
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='Last Name'
+                      value={formik.values.lastname} onChange={formik.handleChange("lastname")}
+                      onBlur={formik.handleBlur("lastname")} />
+                    <div className="error ms-1">
+                      {formik.touched.lastname && formik.errors.lastname}
+                    </div>
+                  </div>
+                  <div className='w-100'>
+                    <input type="text" className="form-control" placeholder='Address'
+                      name="address"
+                      value={formik.values.address} onChange={formik.handleChange("address")}
+                      onBlur={formik.handleBlur("address")} />
+                    <div className="error ms-1">
+                      {formik.touched.address && formik.errors.address}
+                    </div>
+                  </div>
+                  <div className='w-100'>
+                    <input type="text" name="other" className="form-control" placeholder='Apartment,Suite,etc(Other Details)'
+                      value={formik.values.other} onChange={formik.handleChange("other")}
+                      onBlur={formik.handleBlur("other")}
+                    />
+                    <div className="error ms-1">
+                      {formik.touched.other && formik.errors.other}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='City'
+                      name="city"
+                      value={formik.values.city} onChange={formik.handleChange("city")}
+                      onBlur={formik.handleBlur("city")} />
+                    <div className="error ms-1">
+                      {formik.touched.city && formik.errors.city}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <select name="state" id="" className='form-control form-select' value={formik.values.state} onChange={formik.handleChange("state")}
+                      onBlur={formik.handleBlur("state")}>
+                      <option value="" selected disabled>
+                        Select State
+                      </option>
+                      <option value="Koshi" >
+                        Koshi
+                      </option>
+                      <option value="Madhesh" >
+                        Madhesh
+                      </option>
+                      <option value="Bagmati" >
+                        Bagmati
+                      </option>
+                      <option value="Gandaki" >
+                        Gandaki
+                      </option>
+                      <option value="Lumbini" >
+                        Lumbini
+                      </option>
+                      <option value="Karnali" >
+                        Karnali
+                      </option>
+                      <option value="Sudurpashchim" >
+                        Sudurpashchim
+                      </option>
+                    </select>
+                    <div className="error ms-1">
+                      {formik.touched.state && formik.errors.state}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='ZIP code'
+                      name="pincode"
+                      value={formik.values.pincode} onChange={formik.handleChange("pincode")}
+                      onBlur={formik.handleBlur("pincode")} />
+                    <div className="error">
+                      {formik.touched.pincode && formik.errors.pincode}
+                    </div>
+                  </div>
+                  <div className='flex-grow-1'>
+                    <input type="text" className="form-control" placeholder='Phone Number'
+                      name="mobile"
+                      value={formik.values.mobile} onChange={formik.handleChange("mobile")}
+                      onBlur={formik.handleBlur("mobile")} />
+                    <div className="error">
+                      {formik.touched.mobile && formik.errors.mobile}
+                    </div>
+                  </div>
+
+                  <div className="w-100">
+                    <div className="d-flex justify-content-between align-items-center">
+                      <Link to="/cart" className='text-dark d-flex align-items-center'>
+                        <BiArrowBack /> Return to Cart
+                      </Link>
+                      <button className='button' type="submit">Place Order</button>
+                    </div>
+                  </div>
+
+
+                </form>
+
+              </div>
+              {/* ... */}
+            </div>
+          ) : (
+            <div className="col-5">
+              <div className='border-bottom py-[4.2%]'>
+                {
+                  cartState && cartState?.map((item, index) => {
+                    return (
+                      <div key={index} className="d-flex gap-10 mb-2 align-items-center">
+                        <div className="w-75 d-flex gap-10">
+                          <div className="w-25 position-relative">
+                            <span className="badge bg-secondary text-white rounded-circle p-[8%] position-absolute" style={{ top: "-10px", right: "-2px" }}>
+                              {item?.quantity}
+                            </span>
+                            <img src={item?.productId?.images[0]?.url} alt="product" width={100} height={100} />
+                          </div>
+                          <div>
+                            <h5 className='total-title'>
+                              {item?.productId?.title}({item?.size})
+                            </h5>
+                            <p className='total-price'>
+                              {item?.price}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex-grow-1">
+                          <h5 className='total d-flex justify-content-end'>Rs {item?.price * item?.quantity}</h5>
+                        </div>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className='border-bottom py-[4%]'>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <p className='total'>Subtotal</p>
+                  <p className='total-price'>Rs.{totalAmount ? totalAmount : "0"}</p>
+                </div>
+                <div className='coupon-area flex justify-between align-middle'>
+                  <div>
+                    <input type='text' placeholder='Enter coupon code' className='coupon-input' />
+                    <button className='apply-button' onClick={handleApplyCoupon}>Apply</button>
+                  </div>
+                  <div>
+                    <p className="total-price">{displayDiscount}</p>
+                  </div>
+                </div>
+                {couponMessage && !isSuccess ? (
+                  <p className="coupon-message">{couponMessage}</p>
+                ) : (
+                  isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
+                )}
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className='mb-0 total'>Shipping (Cash on delivery)</p>
+                  <p className='mb-0 total-price'>Rs.{shippingCost}</p>
+                  <CustomModal
+                    open={isModalOpen}
+                    hideModal={() => setIsModalOpen(false)}
+                    handleOptionSelect={handleOptionSelect}
+                    title="Select Shipping Option"
+                  />
+
+                </div>
+              </div>
+              <div className='d-flex justify-content-between align-items-center'>
+                <h4 className='total'>Total</h4>
+                <h5 className='total-price'>Rs.{grandTotal ? grandTotal
+                  : "0"}</h5>
+              </div>
+            </div>
+          )}
+        </div>
+        {/* <div className="row">
           <div className={isMobile ? "col-12" : "col-7"}>
             <div className="checkout-left-data">
               <h1 className="website-name">
@@ -273,102 +726,22 @@ const Checkout = (props) => {
                     {formik.touched.mobile && formik.errors.mobile}
                   </div>
                 </div>
-                {!isMobile ? (
-                  <div className="w-100">
-                    <div className="d-flex justify-content-between align-items-center">
-                      <Link to="/cart" className='text-dark d-flex align-items-center'>
-                        <BiArrowBack /> Return to Cart
-                      </Link>
-                      <button className='button' type="submit">Place Order</button>
-                    </div>
+
+                <div className="w-100">
+                  <div className="d-flex justify-content-between align-items-center">
+                    <Link to="/cart" className='text-dark d-flex align-items-center'>
+                      <BiArrowBack /> Return to Cart
+                    </Link>
+                    <button className='button' type="submit">Place Order</button>
                   </div>
-                ) : (
-                  <div className="w-100">
-                    <div className='text-center'>
-                      <h3 className='uppercase section-heading mb-0 pb-0 mt-[1%]'>Ordered Items</h3>
-                    </div>
-                  </div>
-                )}
-                {isMobile && (
-                  <div className="col-12">
-                    <div className="border-bottom py-[4.2%]">
-                      {cartState &&
-                        cartState?.map((item, index) => {
-                          return (
-                            <div key={index} className="d-flex gap-10 mb-2 align-items-center">
-                              <div className="w-75 d-flex gap-10">
-                                <div className="w-25 position-relative">
-                                  <span className="badge bg-secondary text-white rounded-circle p-[8%] position-absolute" style={{ top: "-10px", right: "-2px" }}>
-                                    {item?.quantity}
-                                  </span>
-                                  <img src={item?.productId?.images[0]?.url} alt="product" width={100} height={100} />
-                                </div>
-                                <div>
-                                  <h5 className="total-title">
-                                    {item?.productId?.title}({item?.size})
-                                  </h5>
-                                  <p className="total-price">
-                                    {item?.price}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="flex-grow-1">
-                                <h5 className="total d-flex justify-content-end">Rs {item?.price * item?.quantity}</h5>
-                              </div>
-                            </div>
-                          );
-                        })}
-                    </div>
-                    <div className="border-bottom py-[4%]">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <p className="total">Subtotal</p>
-                        <p className="total-price">Rs.{totalAmount ? totalAmount : "0"}</p>
-                      </div>
-                      <div className="coupon-area flex justify-between align-middle">
-                        <div>
-                          <input type="text" placeholder="Enter coupon code" className="coupon-input" />
-                          <button className="apply-button" onClick={handleApplyCoupon}>Apply</button>
-                        </div>
-                        <div>
-                          <p className="total-price">{displayDiscount}</p>
-                        </div>
-                      </div>
-                      {couponMessage && !isSuccess ? (
-                        <p className="coupon-message">{couponMessage}</p>
-                      ) : (
-                        isSuccess && couponSuccess && <p className="coupon-success">{couponSuccess}</p>
-                      )}
-                      <div className="d-flex justify-content-between align-items-center">
-                        <p className="mb-0 total">Shipping (Cash on delivery)</p>
-                        <p className="mb-0 total-price">Rs.{shippingCost}</p>
-                        <CustomModal
-                          open={isModalOpen}
-                          hideModal={() => setIsModalOpen(false)}
-                          handleOptionSelect={handleOptionSelect}
-                          title="Select Shipping Option"
-                        />
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <h4 className="total">Total</h4>
-                      <h5 className="total-price">Rs.{grandTotal ? grandTotal : "0"}</h5>
-                    </div>
-                    <div className="w-100 mt-[4%]">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Link to="/cart" className="text-dark d-flex align-items-center">
-                          <BiArrowBack /> Return to Cart
-                        </Link>
-                        <button className="button" type="submit">Place Order</button>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                </div>
+
 
               </form>
 
             </div>
           </div>
-          <div className={isMobile ? "d-none pointer-events none" : "col-5"}>
+          <div className={isMobile ? "col-12" : "col-5"}>
             <div className='border-bottom py-[4.2%]'>
               {
                 cartState && cartState?.map((item, index) => {
@@ -436,7 +809,7 @@ const Checkout = (props) => {
                 : "0"}</h5>
             </div>
           </div>
-        </div>
+        </div> */}
       </Container>
     </>
   )

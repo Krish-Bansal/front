@@ -11,6 +11,7 @@ const Cart = () => {
 
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
+  const fontSize = isMobile ? '12px' : 'inherit';
   const getTokenFromLocalStorage = localStorage.getItem("customer") ? JSON.parse(localStorage.getItem("customer")) : null;
 
   const config2 = {
@@ -150,7 +151,9 @@ const Cart = () => {
                     <div className='d-flex flex-column align-items-end' style={{ "--gap": "1.2%" }}>
                       <h4 style={{ marginBottom: "var(--gap)" }} className='cart-total'>SubTotal: Rs.{totalAmount}</h4>
                       <div style={{ marginTop: "auto", marginBottom: "var(--gap)" }} className=''>
-                        <p className='text-right '>Taxes and Shipping Calculated At Checkout.</p>
+                        <p className='text-right' style={{ fontSize }}>
+                          Taxes and Shipping Calculated At Checkout.
+                        </p>
                       </div>
                       <Link className={isMobile ? 'checkout-button' : 'button'} to="/checkout">
                         Checkout
