@@ -8,7 +8,7 @@ import { deleteCartProduct, getUserCart, updateCartProduct } from '../features/u
 import { useMediaQuery } from 'react-responsive';
 
 const Cart = () => {
-
+  const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
   const fontSize = isMobile ? '12px' : 'inherit';
@@ -40,13 +40,23 @@ const Cart = () => {
     }
     // eslint-disable-next-line
   }, [ProductUpdateDetail])
-
   const deleteACartProduct = (id) => {
+    setLoading(true); // Set loading state to true before dispatching the deleteCartProduct action
+
     dispatch(deleteCartProduct({ id: id, config2: config2 }))
-    setTimeout(() => {
-      dispatch(getUserCart(config2))
-    }, 200)
-  }
+      .then(() => {
+        // Handle the successful deleteCartProduct action response
+        dispatch(getUserCart(config2));
+      })
+      .catch((error) => {
+        // Handle any errors that occur during the deleteCartProduct action
+        // You can display an error message or perform any necessary error handling
+      })
+      .finally(() => {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      });
+  };
+
 
   useEffect(() => {
     let sum = 0;
@@ -130,9 +140,16 @@ const Cart = () => {
                             />
                           </div>
                           <div>
-                            <AiFillDelete className='text-danger cursor-pointer ' onClick={() => {
-                              deleteACartProduct(item?._id)
-                            }} />
+                            {loading ? (
+                              <div className="spinner"></div> // Display the spinner while deleting
+                            ) : (
+                              <AiFillDelete
+                                className="text-danger cursor-pointer"
+                                onClick={() => {
+                                  deleteACartProduct(item?._id);
+                                }}
+                              />
+                            )}
                           </div>
 
                         </div>

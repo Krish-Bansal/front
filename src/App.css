@@ -1133,8 +1133,8 @@ a {
   right: 4.5%;
   z-index: 1;
   background-color: white;
-  width: 12%;
-  height: 9%;
+  width: 11%;
+  height: 8%;
   border-radius: 50%;
   box-shadow: 0px 0px 7px 3px rgba(0, 0, 0, 0.4);
   display: flex;
@@ -1247,7 +1247,7 @@ a {
   width: 100%;
   margin-left: 2px;
   margin-right: 2px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
 }
 
 .single-product-button-wishlist {
@@ -2162,4 +2162,19 @@ a {
 
 .success {
   color: green;
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #ffffff;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

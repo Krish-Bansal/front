@@ -33,15 +33,12 @@ const passwordSchema = yup.object({
   password: yup.string().required("Password is Required")
 })
 const ResetPassword = () => {
+  const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
   const ResetPassErrorMessage = useSelector((state) => state.auth.resetError);
   const ResetPassSuccessMessage = useSelector((state) => state.auth.resetPass);
-  // const [showPassword, setShowPassword] = useState(false);
-  // console.log(showPassword)
-  // const toggleShowPassword = () => {
-  //   setShowPassword(prevShowPassword => !prevShowPassword);
-  // };
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -64,6 +61,8 @@ const ResetPassword = () => {
   })
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true before dispatching the password reset action
+
     try {
       await formik.handleSubmit();
       // Handle successful password reset here
@@ -71,6 +70,8 @@ const ResetPassword = () => {
     } catch (error) {
       // Handle error here
       // You can display an error message or perform any necessary error handling
+    } finally {
+      setLoading(false); // Set loading state to false after handling the response (success or error)
     }
   };
   return (
@@ -107,15 +108,12 @@ const ResetPassword = () => {
                   <div className="error">{ResetPassErrorMessage}</div>
                 )}
                 <button
-                  className="border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]"
+                  className="border-0 rounded-3 px-3 py-1 text-white font-light fs-5 w-100 text-decoration-none my-[2.5%]"
                   type="submit"
                   style={{ backgroundColor: "#FBA71A" }}
+                  disabled={loading} // Disable the button while loading
                 >
-                  {ResetPassSuccessMessage ? (
-                    <a href="/">Return to Login Page</a>
-                  ) : (
-                    'Reset Password'
-                  )}
+                  {loading ? 'Resetting...' : 'Reset Password'}
                 </button>
               </form>
 

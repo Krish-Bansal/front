@@ -35,7 +35,9 @@ const reviewSchema = yup.object().shape({
 
 
 const SingleProduct = () => {
-
+  const [uploadCartLoading, setUploadCartLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   // For Screen less than 768 Pixels  Starts here 
   const isMobile = useMediaQuery({ maxWidth: 767 });
   // For Screen less than 768 Pixels  Ends here 
@@ -62,9 +64,6 @@ const SingleProduct = () => {
     }
   }, []);
   // converting html tags in description Ends Here
-
-
-
   const [quantity, setQuantity] = useState(1)
   const location = useLocation()
   const navigate = useNavigate()
@@ -94,17 +93,38 @@ const SingleProduct = () => {
   }, [])
 
 
-  const uploadCart = () => {
+  const uploadCart = async () => {
     if (selectedSize === null) {
       toast.error("Please choose a size");
       return false;
     } else {
-      dispatch(addProdToCart({ productId: ProductState?._id, quantity, size: selectedSize, price: ProductState?.price, config2: config2, color: ProductState?.color }));
-      navigate("/cart");
-      dispatch(getUserCart(config2));
+      try {
+        setUploadCartLoading(true); // Set loading state to true before dispatching the addProdToCart action
+
+        await dispatch(
+          addProdToCart({
+            productId: ProductState?._id,
+            quantity,
+            size: selectedSize,
+            price: ProductState?.price,
+            config2: config2,
+            color: ProductState?.color,
+          })
+        );
+
+        // Handle the successful addProdToCart action here
+        navigate("/cart");
+        dispatch(getUserCart(config2));
+
+      } catch (error) {
+        // Handle any errors that occur during the addProdToCart action
+        // You can display an error message or perform any necessary error handling
+
+      } finally {
+        setUploadCartLoading(false); // Set loading state to false after handling the response (success or error)
+      }
     }
   };
-
   // image selection Starts Here
   const [selectedImage, setSelectedImage] = useState('');
   useEffect(() => {
@@ -123,14 +143,30 @@ const SingleProduct = () => {
       comment: '',
     },
     validationSchema: reviewSchema,
-    onSubmit: (values) => {
-      const updatedValues = {
-        ...values,
-        postedBy: loggedinUser.name  // Replace `loggedInUserName` with the actual variable holding the user's name
-      };
-      dispatch(addReview({ id: getProductId, values: updatedValues, config: config2 }))
-      formik.resetForm();
-    },
+
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true before dispatching the addReview action
+
+      try {
+        const updatedValues = {
+          ...values,
+          postedBy: loggedinUser.name // Replace `loggedinUser.name` with the actual variable holding the user's name
+        };
+        await dispatch(addReview({ id: getProductId, values: updatedValues, config: config2 }));
+        formik.resetForm();
+        setSubmitted(true); // Set the submitted state to true after successful submission
+
+        // Handle the successful review submission here
+        // You can display a success message or perform any necessary actions
+
+      } catch (error) {
+        // Handle any errors that occur during the review submission process
+        // You can display an error message or perform any necessary error handling
+
+      } finally {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      }
+    }
   });
   // total rating  Starts here
   const reviews = ProductState?.reviews; // Assuming ProductState contains the reviews data
@@ -383,9 +419,11 @@ const SingleProduct = () => {
                       className="single-product-button"
                       type="button"
                       onClick={uploadCart}
+                      disabled={uploadCartLoading} // Disable the button while uploading the cart
                     >
-                      Add to Cart
+                      {uploadCartLoading ? "Adding to Cart..." : "Add to Cart"}
                     </button>
+
                   </div>
                 </div>
                 <div className="flex align-middle">
@@ -524,8 +562,12 @@ const SingleProduct = () => {
                     </div>
                     {/* Submit button */}
                     <div className='d-flex justify-content-end'>
-                      <button type='submit' className='button border-0'>
-                        Submit Review
+                      <button
+                        className="button border-0"
+                        type="submit"
+                        disabled={loading || submitted} // Disable the button while loading or if already submitted
+                      >
+                        {loading ? 'Submitting...' : (submitted ? 'Submitted' : 'Submit Review')}
                       </button>
                     </div>
                   </form>

@@ -38,6 +38,7 @@ const loginSchema = yup.object({
 })
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
   const errorMessage = useSelector((state) => state.auth.errorMessagelogin);
@@ -50,8 +51,19 @@ const Login = () => {
       password: ""
     },
     validationSchema: loginSchema,
-    onSubmit: (values) => {
-      dispatch(loginUser(values))
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true before making the login request
+      try {
+        await dispatch(loginUser(values)); // Make the login request to the backend
+
+        // Handle the successful login response here, such as redirecting to a new page
+
+      } catch (error) {
+        // Handle any errors that occur during the login process, such as displaying an error message
+
+      } finally {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      }
     }
   })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -112,7 +124,14 @@ const Login = () => {
               <div className="error">
                 {formik.touched.password && formik.errors.password ? (<div>{formik.errors.password}</div>) : null}
               </div>
-              <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]' type="submit" style={{ backgroundColor: "#FBA71A" }}>Login</button>
+              <button
+                className="border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]"
+                type="submit"
+                style={{ backgroundColor: "#FBA71A" }}
+                disabled={loading} // Disable the button while loading
+              >
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
               <div className='text-end'>
                 <Link to="/forgot-password" className='text-sm text-[#2F4F5E]' style={{ textDecoration: "none", fontFamily: "unset" }}>FORGOT LOGIN PASSWORD?</Link>
               </div>

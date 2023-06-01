@@ -33,6 +33,8 @@ const emailSchema = yup.object({
 });
 
 const ForgotPassword = () => {
+
+  const [loading, setLoading] = useState(false);
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
   const forgotPassErrorMessage = useSelector((state) => state.auth.forgotMsg);
@@ -51,10 +53,23 @@ const ForgotPassword = () => {
       email: "",
     },
     validationSchema: emailSchema,
-    onSubmit: (values) => {
-      dispatch(resetState())
-      dispatch(forgotPasswordToken(values))
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true
+
+      try {
+        await dispatch(resetState()); // Reset any previous state related to the forgot password process
+        await dispatch(forgotPasswordToken(values)); // Make the request to generate the forgot password token
+
+        // Handle the successful request response here, such as displaying a success message or redirecting to a new page
+
+      } catch (error) {
+        // Handle any errors that occur during the forgot password token generation process, such as displaying an error message
+
+      } finally {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      }
     }
+
   })
   return (
     <div style={{ background: 'white', minHeight: '100vh' }}>
@@ -102,9 +117,11 @@ const ForgotPassword = () => {
                     className="border-0 rounded-3 px-3 py-1 text-white font-light fs-5 w-100 text-decoration-none my-[2.5%]"
                     type="submit"
                     style={{ backgroundColor: "#FBA71A" }}
+                    disabled={loading} // Disable the button while loading
                   >
-                    Send Link
+                    {loading ? 'Sending...' : 'Send Link'}
                   </button>
+
                 </div>
               </form>
             </div>

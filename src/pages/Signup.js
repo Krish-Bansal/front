@@ -43,6 +43,8 @@ const signUpSchema = yup.object({
 })
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
+
   const isDesktop = useMediaQuery({ minWidth: 768 });
   const isMobile = !isDesktop;
   const errorMessage = useSelector((state) => state.auth.errorMessagesignup);
@@ -65,9 +67,22 @@ const Signup = () => {
       password: ""
     },
     validationSchema: signUpSchema,
-    onSubmit: (values) => {
-      dispatch(registerUser(values))
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true before making the registration request
+
+      try {
+        await dispatch(registerUser(values)); // Make the registration request to the backend
+
+        // Handle the successful registration response here, such as displaying a success message or redirecting to a new page
+
+      } catch (error) {
+        // Handle any errors that occur during the registration process, such as displaying an error message
+
+      } finally {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      }
     }
+
   })
   useEffect(() => {
     if (authState?.createdUser !== null && authState?.isSuccess === true && authState?.isError === false) {
@@ -146,7 +161,14 @@ const Signup = () => {
                   {formik.touched.password && formik.errors.password}
                 </div>
                 <p className='text-center mt-[1%]'>By signing up, you agree to the <Link to="/terms-conditions" className='text-blue-400'>terms and conditions</Link></p>
-                <button className='border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]' type="submit" style={{ backgroundColor: "#FBA71A" }}>Create a account</button>
+                <button
+                  className="border-0 rounded-3 px-3 py-1 text-white font-light w-100 fs-5 text-decoration-none my-[2.5%]"
+                  type="submit"
+                  style={{ backgroundColor: "#FBA71A" }}
+                  disabled={loading} // Disable the button while loading
+                >
+                  {loading ? 'Signing Up...' : 'Create an Account'}
+                </button>
               </form>
             </div>
           </Col>

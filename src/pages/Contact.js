@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Meta from '../components/Meta'
 // import BreadCrumb from '../components/BreadCrumb'
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai"
@@ -9,7 +9,6 @@ import { useFormik } from "formik"
 import { useDispatch } from 'react-redux'
 import { createQuery } from '../features/contact/contactSlice'
 import { useMediaQuery } from 'react-responsive';
-
 const contactSchema = yup.object({
   name: yup.string().required("Name is Required"),
   email: yup.string().nullable().email("Email should be valid.").required("Email is Required"),
@@ -18,8 +17,9 @@ const contactSchema = yup.object({
 })
 
 const Contact = () => {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 700 });
-
   const dispatch = useDispatch()
   const formik = useFormik({
     initialValues: {
@@ -29,9 +29,24 @@ const Contact = () => {
       comment: "",
     },
     validationSchema: contactSchema,
-    onSubmit: values => {
-      dispatch(createQuery(values))
+    onSubmit: async (values) => {
+      setLoading(true); // Set loading state to true before dispatching the createQuery action
+
+      try {
+        await dispatch(createQuery(values));
+        setSubmitted(true); // Set submitted state to true after successful submission
+        // Handle the successful query creation here
+        // You can display a success message or perform any necessary actions
+
+      } catch (error) {
+        // Handle any errors that occur during the query creation process
+        // You can display an error message or perform any necessary error handling
+
+      } finally {
+        setLoading(false); // Set loading state to false after handling the response (success or error)
+      }
     }
+
   })
   return (
     <>
@@ -92,9 +107,14 @@ const Contact = () => {
                     </div>
                   </div>
                   <div>
-                    <button className='button border-0'> Submit</button>
+                    <button
+                      className="button border-0"
+                      type="submit"
+                      disabled={loading || submitted} // Disable the button while loading or if already submitted
+                    >
+                      {loading ? 'Submitting...' : (submitted ? 'Submitted' : 'Submit')}
+                    </button>
                   </div>
-
                 </form>
               </div>
               <div>
