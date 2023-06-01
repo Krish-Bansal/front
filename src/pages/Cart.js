@@ -118,16 +118,8 @@ const Cart = () => {
                             <input
                               type="number"
                               name={"quantity" + item?._id}
-                              style={{
-                                width: "100%",
-                                paddingLeft: "10px",
-                                paddingRight: "10px",
-                                maxWidth: "130%",
-                                boxSizing: "border-box",
-                                fontSize: "14px",
-                                backgroundColor: "#fff", // Add background color
-                              }}
-                              className=""
+                              style={{ width: "130%", paddingLeft: "20%", paddingRight: "0%" }}
+                              className="form-control"
                               min={1}
                               max={10}
                               id={"cart" + item?._id}
@@ -137,8 +129,6 @@ const Cart = () => {
                               }}
                             />
                           </div>
-
-
                           <div>
                             <AiFillDelete className='text-danger cursor-pointer ' onClick={() => {
                               deleteACartProduct(item?._id)

@@ -69,7 +69,8 @@ const Home = () => {
     };
   }, []);
   // const [showAllProducts, setShowAllProducts] = useState(false);
-
+  const displayedProducts1 = productState && productState.filter((item) => item.tags === 'Top Selling').slice(0, 8);
+  const displayedProducts2 = productState && productState.filter((item) => item.tags === 'special').slice(0, 8);
   const displayedProducts = productState && productState.filter((item) => item.tags === 'popular').slice(0, 8);
 
 
@@ -241,125 +242,211 @@ const Home = () => {
 
       </Container> */}
       <Container class1="popular-wrapper home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading uppercase">Featured Collection</h3>
-          </div>
-          {productState && productState?.map((item, index) => {
-            if (item.tags === "featured") {
-              return (
-                <div
-                  key={index}
-                  className='col-3' onClick={() => {
-                    navigate("/product/" + item?._id);
-                  }}>
-                  <div
-                    className="product-card position-relative">
-                    {/* <div className="wishlist-icon absolute">
-                      <button className='border-0 bg-transparent' onClick={(e) => { addToWish(item?._id) }}>
-                        <img src={wish} alt="wishlist" />
-                      </button>
-                    </div> */}
-                    <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 2" width={300} />
-                      <img src={item?.images[1]?.url} className='img-fluid' alt="Product 1" />
-
-                    </div>
-                    <div className="product-details">
-                      <h5 className="product-title">
-                        {item?.title}
-                      </h5>
-                      {/* <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} /> */}
-
-
-                      <p className="price">Rs.{item?.price}</p>
-                    </div>
-                    {/* <div className="action-bar absolute">
-                      <div className="flex flex-col gap-15">
-                        <button className='border-0 bg-transparent'>
-                          <img src={view}
-                            alt="view" onClick={() => navigate("/product/" + item?._id)} />
-                        </button>
-                        <button className='border-0 bg-transparent'>
-                          <img src={addcart}
-                            alt="addcart" />
-                        </button>
-
+        <h3 className="section-heading uppercase">
+          Top Selling
+        </h3>
+        <div>
+          {isMobile ? (
+            <div className="row row-scroll">
+              <div className="col-12">
+                <div className="d-flex flex-nowrap overflow-auto">
+                  {displayedProducts1 &&
+                    displayedProducts1.map((item, index) => (
+                      <div
+                        key={index}
+                        className="col-5"
+                        onClick={() => {
+                          navigate("/product/" + item?._id);
+                        }}
+                      >
+                        <div className="product-card position-relative">
+                          <div className="product-image">
+                            <img
+                              src={item?.images[0]?.url}
+                              className="img-fluid d-block mx-auto"
+                              alt="Product 1"
+                              width={300}
+                            />
+                            <img
+                              src={item?.images[1]?.url}
+                              className="img-fluid"
+                              alt="Product 2"
+                            />
+                          </div>
+                          <div className="product-details">
+                            <h5 className="product-title">{item?.title}</h5>
+                            <p className="price">Rs.{item?.price}</p>
+                          </div>
+                        </div>
                       </div>
-                    </div> */}
-                  </div >
-                </div >
-              )
-            }
-            else { return null }
-          })}
-        </div>
-      </Container>
-      <Container class1="popular-wrapper home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading uppercase">
-              Special Products
-            </h3>
-          </div>
-        </div>
-        <div className="row">
-          {productState && productState?.map((item, index) => {
-            if (item.tags === "special") {
-              return (
-                <div
-                  key={index}
-                  className='col-3'
-                  onClick={() => {
-                    navigate("/product/" + item?._id);
-                  }}
-
-                >
-                  <div
-
-                    className="product-card position-relative">
-                    {/* <div className="wishlist-icon absolute">
-                      <button className='border-0 bg-transparent' onClick={(e) => { addToWish(item?._id) }}>
-                        <img src={wish} alt="wishlist" />
-                      </button>
-                    </div> */}
-                    <div className="product-image">
-                      <img src={item?.images[0]?.url} className='img-fluid d-block mx-auto' alt="Product 1" width={300} />
-                      <img src={item?.images[1]?.url} className='img-fluid' alt="Product 2" />
-
-                    </div>
-                    <div className="product-details">
-                      <h5 className="product-title">
-                        {item?.title}
-                      </h5>
-                      {/* <ReactStars count={5} size={24} activeColor='#ffd700' value={item?.totalrating.toString()} edit={false} class /> */}
-
-
-                      <p className="price">Rs.{item?.price}</p>
-                    </div>
-                    {/* <div className="action-bar absolute">
-                      <div className="flex flex-col gap-15">
-                        <button className='border-0 bg-transparent'>
-                          <img src={view}
-                            alt="view"
-                          //  onClick={() => navigate("/product/" + item?._id)}
-                          />
-                        </button>
-                        <button className='border-0 bg-transparent'>
-                          <img src={addcart}
-                            alt="addcart" />
-                        </button>
-
+                    ))}
+                  {Array.isArray(productState) &&
+                    productState.filter((item) => item.tags === "Top Selling").length >
+                    8 && (
+                      <div className="col-2 flex flex-col justify-center items-center">
+                        <NavLink to="/product">
+                          <button className="bg-black text-white px-3 py-1 mb-[70%]">
+                            View All
+                          </button>
+                        </NavLink>
                       </div>
-                    </div> */}
+                    )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="row">
+              {displayedProducts1 &&
+                displayedProducts1.map((item, index) => (
+                  <div
+                    key={index}
+                    className="col-3"
+                    onClick={() => {
+                      navigate("/product/" + item?._id);
+                    }}
+                  >
+                    <div className="product-card position-relative">
+                      <div className="product-image">
+                        <img
+                          src={item?.images[0]?.url}
+                          className="img-fluid d-block mx-auto"
+                          alt="Product 1"
+                          width={300}
+                        />
+                        <img
+                          src={item?.images[1]?.url}
+                          className="img-fluid"
+                          alt="Product 2"
+                        />
+                      </div>
+                      <div className="product-details">
+                        <h5 className="product-title">{item?.title}</h5>
+                        <p className="price">Rs.{item?.price}</p>
+                      </div>
+                    </div>
                   </div>
-                </div >
-              )
-            }
-            else { return null }
-          })}
+                ))}
+              {Array.isArray(productState) &&
+                productState.filter((item) => item.tags === "Top Selling").length > 8 && (
+                  <div className="col-12">
+                    <div className="flex justify-end align-middle">
+                      <NavLink to="/product">
+                        <button className="bg-black text-white px-3 py-1 mt-1">
+                          View All
+                        </button>
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+            </div>
+          )}
         </div>
-      </Container>
+
+
+      </Container >
+      <Container class1="popular-wrapper home-wrapper-2">
+        <h3 className="section-heading uppercase">
+          Special Products
+        </h3>
+        <div>
+          {isMobile ? (
+            <div className="row row-scroll">
+              <div className="col-12">
+                <div className="d-flex flex-nowrap overflow-auto">
+                  {displayedProducts2 &&
+                    displayedProducts2.map((item, index) => (
+                      <div
+                        key={index}
+                        className="col-5"
+                        onClick={() => {
+                          navigate("/product/" + item?._id);
+                        }}
+                      >
+                        <div className="product-card position-relative">
+                          <div className="product-image">
+                            <img
+                              src={item?.images[0]?.url}
+                              className="img-fluid d-block mx-auto"
+                              alt="Product 1"
+                              width={300}
+                            />
+                            <img
+                              src={item?.images[1]?.url}
+                              className="img-fluid"
+                              alt="Product 2"
+                            />
+                          </div>
+                          <div className="product-details">
+                            <h5 className="product-title">{item?.title}</h5>
+                            <p className="price">Rs.{item?.price}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  {Array.isArray(productState) &&
+                    productState.filter((item) => item.tags === "special").length >
+                    8 && (
+                      <div className="col-2 flex flex-col justify-center items-center">
+                        <NavLink to="/product">
+                          <button className="bg-black text-white px-3 py-1 mb-[70%]">
+                            View All
+                          </button>
+                        </NavLink>
+                      </div>
+                    )}
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="row">
+              {displayedProducts2 &&
+                displayedProducts2.map((item, index) => (
+                  <div
+                    key={index}
+                    className="col-3"
+                    onClick={() => {
+                      navigate("/product/" + item?._id);
+                    }}
+                  >
+                    <div className="product-card position-relative">
+                      <div className="product-image">
+                        <img
+                          src={item?.images[0]?.url}
+                          className="img-fluid d-block mx-auto"
+                          alt="Product 1"
+                          width={300}
+                        />
+                        <img
+                          src={item?.images[1]?.url}
+                          className="img-fluid"
+                          alt="Product 2"
+                        />
+                      </div>
+                      <div className="product-details">
+                        <h5 className="product-title">{item?.title}</h5>
+                        <p className="price">Rs.{item?.price}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              {Array.isArray(productState) &&
+                productState.filter((item) => item.tags === "special").length > 8 && (
+                  <div className="col-12">
+                    <div className="flex justify-end align-middle">
+                      <NavLink to="/product">
+                        <button className="bg-black text-white px-3 py-1 mt-1">
+                          View All
+                        </button>
+                      </NavLink>
+                    </div>
+                  </div>
+                )}
+            </div>
+          )}
+        </div>
+
+
+      </Container >
       <Container class1="popular-wrapper home-wrapper-2">
         <h3 className="section-heading uppercase">
           New Arrivals
@@ -409,7 +496,6 @@ const Home = () => {
                           </button>
                         </NavLink>
                       </div>
-
                     )}
                 </div>
               </div>
