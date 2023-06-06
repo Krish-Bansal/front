@@ -70,7 +70,7 @@ const Home = () => {
   }, []);
   // const [showAllProducts, setShowAllProducts] = useState(false);
   const displayedProducts1 = productState && productState.filter((item) => item.tags === 'Top Selling').slice(0, 8);
-  const displayedProducts2 = productState && productState.filter((item) => item.tags === 'special').slice(0, 8);
+  // const displayedProducts2 = productState && productState.filter((item) => item.tags === 'special').slice(0, 8);
   const displayedProducts = productState && productState.filter((item) => item.tags === 'popular').slice(0, 8);
 
 
@@ -344,7 +344,7 @@ const Home = () => {
 
 
       </Container >
-      <Container class1="popular-wrapper home-wrapper-2">
+      {/* <Container class1="popular-wrapper home-wrapper-2">
         <h3 className="section-heading uppercase">
           Special Products
         </h3>
@@ -446,7 +446,7 @@ const Home = () => {
         </div>
 
 
-      </Container >
+      </Container > */}
       <Container class1="popular-wrapper home-wrapper-2">
         <h3 className="section-heading uppercase">
           New Arrivals

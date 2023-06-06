@@ -1247,7 +1247,7 @@ a {
   width: 100%;
   margin-left: 2px;
   margin-right: 2px;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
 }
 
 .single-product-button-wishlist {
@@ -1258,7 +1258,7 @@ a {
   width: 100%;
   margin-left: 2px;
   margin-right: 2px;
-  text-transform: capitalize;
+  text-transform: uppercase;
   border: 1px solid rgba(0, 0, 0, .15)
 }
 

@@ -199,10 +199,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.cartProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product Added to Cart")
-        }
-
       })
       .addCase(addProdToCart.rejected, (state, action) => {
         state.isLoading = false;
@@ -249,9 +245,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.deletedCartProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Product Deleted From Cart Successfully")
-        }
       })
       .addCase(deleteCartProduct.rejected, (state, action) => {
         state.isLoading = false;
@@ -298,9 +291,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.orderedProduct = action.payload;
-        if (state.isSuccess === true) {
-          toast.success("Ordered Successfully")
-        }
       })
       .addCase(createAnOrder.rejected, (state, action) => {
         state.isLoading = false;
@@ -324,9 +314,6 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.getorderedProduct = action.payload;
-        // if (state.isSuccess === true) {
-        //   toast.success("Orders Fetched Successfully");
-        // }
       })
       .addCase(getOrders.rejected, (state, action) => {
         state.isLoading = false;
@@ -362,7 +349,6 @@ export const authSlice = createSlice({
         localStorage.setItem("customer", JSON.stringify(newUserData))
         state.user = newUserData
         toast.success("Profile Updated Successfully")
-
       })
       .addCase(updateProfile.rejected, (state, action) => {
         state.isLoading = false;

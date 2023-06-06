@@ -3,6 +3,7 @@ import './Hero.css';
 import { Carousel } from 'react-bootstrap';
 import { Link } from "react-router-dom"
 
+
 const Hero = () => {
   return (
     <div className='first-carousel'>
@@ -29,7 +30,7 @@ const Hero = () => {
         </Carousel.Item>
         <Carousel.Item>
           <div className='hero' style={{
-            backgroundImage: `url(${require('../assests/281779478_293827942840968_522703434417999603_n.jpg')})`
+            backgroundImage: `url(${require('../assests/350631947_1645595579201241_5208089084256699578_n.jpg')})`
           }}>
             <div className="overlay"></div>
             <div className='content'>
@@ -46,7 +47,7 @@ const Hero = () => {
         </Carousel.Item>
         <Carousel.Item>
           <div className='hero' style={{
-            backgroundImage: `url(${require("../assests/174304971_162941172375004_4470709580256700664_n.jpg")})`
+            backgroundImage: `url(${require("../assests/342396065_782557766760089_2525745211323850467_n.jpg")})`
           }}>
             <div className="overlay"></div>
             <div className='content'>

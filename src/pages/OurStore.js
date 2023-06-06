@@ -11,6 +11,29 @@ const OurStore = () => {
   const isSmall = useMediaQuery({ maxWidth: 575.98 });
   const isMiddle = useMediaQuery({ minWidth: 576, maxWidth: 991.98 });
   const width = isSmall ? '30px' : isMiddle ? '80px' : '100px';
+  const [productsToShow, setProductsToShow] = useState(12);
+  const productsPerLoad = 6;
+  const handleScroll = () => {
+    const scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+    const scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight || window.innerHeight;
+
+    console.log('scrollTop:', scrollTop);
+    console.log('scrollHeight:', scrollHeight);
+    console.log('clientHeight:', clientHeight);
+
+    if (scrollTop + clientHeight >= scrollHeight - 20) {
+      console.log('Reached bottom of the page!');
+      setProductsToShow(prevProducts => prevProducts + productsPerLoad);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // const [grid, setGrid] = useState(4);
   const productState = useSelector((state) => state?.product?.product);
@@ -192,7 +215,7 @@ const OurStore = () => {
             <div className="products-list pb-[3%]">
               <div className="d-flex justify-around flex-wrap" style={{ gap: '0%' }}>
                 <ProductCard
-                  data={productState ? productState : []}
+                  data={productState ? productState.slice(0, productsToShow) : []}
                   grid={isSmall ? 6 : isMiddle ? 4 : 3}
                 />
               </div>
