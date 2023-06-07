@@ -71,7 +71,7 @@ const Home = () => {
   // const [showAllProducts, setShowAllProducts] = useState(false);
   const displayedProducts1 = productState && productState.filter((item) => item.tags === 'Top Selling').slice(0, 8);
   // const displayedProducts2 = productState && productState.filter((item) => item.tags === 'special').slice(0, 8);
-  const displayedProducts = productState && productState.filter((item) => item.tags === 'popular').slice(0, 8);
+  const displayedProducts = productState && productState.filter((item) => item.tags === 'New arrival').slice(0, 8);
 
 
 
@@ -487,7 +487,7 @@ const Home = () => {
                       </div>
                     ))}
                   {Array.isArray(productState) &&
-                    productState.filter((item) => item.tags === "popular").length >
+                    productState.filter((item) => item.tags === "New arrival").length >
                     8 && (
                       <div className="col-2 flex flex-col justify-center items-center">
                         <NavLink to="/product">
@@ -533,7 +533,7 @@ const Home = () => {
                   </div>
                 ))}
               {Array.isArray(productState) &&
-                productState.filter((item) => item.tags === "popular").length > 8 && (
+                productState.filter((item) => item.tags === "New arrival").length > 8 && (
                   <div className="col-12">
                     <div className="flex justify-end align-middle">
                       <NavLink to="/product">

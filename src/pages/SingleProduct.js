@@ -101,20 +101,24 @@ const SingleProduct = () => {
       try {
         setUploadCartLoading(true); // Set loading state to true before dispatching the addProdToCart action
 
-        await dispatch(
-          addProdToCart({
-            productId: ProductState?._id,
-            quantity,
-            size: selectedSize,
-            price: ProductState?.price,
-            config2: config2,
-            color: ProductState?.color,
-          })
-        );
-
-        // Handle the successful addProdToCart action here
-        navigate("/cart");
-        dispatch(getUserCart(config2));
+        if (userState == null) {
+          // User is not logged in, redirect to the login page
+          navigate("/login");
+        } else {
+          // User is logged in, navigate to the cart route
+          await dispatch(
+            addProdToCart({
+              productId: ProductState?._id,
+              quantity,
+              size: selectedSize,
+              price: ProductState?.price,
+              config2: config2,
+              color: ProductState?.color,
+            })
+          );
+          navigate("/cart");
+          dispatch(getUserCart(config2));
+        }
 
       } catch (error) {
         // Handle any errors that occur during the addProdToCart action
