@@ -57,7 +57,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-12 col-md-6">
               <div className="footer-link flex flex-col">
-                <h4 className="mb-[1%]" onClick={handleContactToggle}>
+                <h4 className="mb-[1%] cursor-pointer" onClick={handleContactToggle}>
                   Contact Us
                 </h4>
                 <div className={isContactOpen ? "link-container open" : "link-container"}>
@@ -98,7 +98,7 @@ const Footer = () => {
 
               <div className="footer-link flex flex-col">
                 {isPolicyVisible && (
-                  <h4 className="mb-[1%]" onClick={handlePolicyToggle}>
+                  <h4 className="mb-[1%] cursor-pointer" onClick={handlePolicyToggle}>
                     Terms & Policies
                   </h4>
                 )}
@@ -135,7 +135,7 @@ const Footer = () => {
 
               <div className="footer-link flex flex-col">
                 {isLinkVisible && (
-                  <h4 className="mb-[1%]" onClick={handleLinkToggle}>
+                  <h4 className="mb-[1%] cursor-pointer" onClick={handleLinkToggle}>
                     Links
                   </h4>
                 )}
