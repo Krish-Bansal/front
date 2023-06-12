@@ -33,10 +33,7 @@ const Cart = () => {
   useEffect(() => {
     if (ProductUpdateDetail !== null) {
       dispatch(updateCartProduct({ cartItemId: ProductUpdateDetail?.cartItemId, quantity: ProductUpdateDetail?.quantity, config2: config2 }))
-      setTimeout(() => {
-        dispatch(getUserCart(config2))
-      }, 200)
-
+      dispatch(getUserCart(config2))
     }
     // eslint-disable-next-line
   }, [ProductUpdateDetail])
